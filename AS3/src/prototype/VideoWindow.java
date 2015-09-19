@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.Point;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
@@ -43,7 +44,7 @@ public class VideoWindow extends JFrame {
 		JPanel volumePane = new JPanel();
 		JPanel playbackPane = new JPanel();
 		JPanel buttonsPane = new JPanel();
-		JPanel replaceMeWithVid = new JPanel();
+		JLabel replaceMeWithVid = new JLabel();
 		JButton btnAddAudio = new JButton("Add Audio");
 		JButton btnAddVoice = new JButton("Add Voice");
 		JButton btnPlay = new JButton();
@@ -61,8 +62,7 @@ public class VideoWindow extends JFrame {
 		volumePane.setLayout(new GridLayout(3,1,0,5));
 		
 		//Setting up the video player
-		replaceMeWithVid.setBackground(new Color(135, 206, 235));
-		replaceMeWithVid.setPreferredSize(new Dimension(864, 449));
+		replaceMeWithVid.setIcon(new ImageIcon("Images/dummyImage.png"));
 		
 		//Setting up the add audio button
 		btnAddAudio.addActionListener(new ActionListener() {
