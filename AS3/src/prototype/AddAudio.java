@@ -1,57 +1,49 @@
 package prototype;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class AddAudio extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
 	
 	public AddAudio() {
 		//Setting up the contentPanel
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setLocation(100, 100);
-		setSize(284, 111);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new GridLayout(2,1));
 		setTitle("Add Audio");
 		
 		//Component declarations
-		textField = new JTextField();
-		JLabel lblEnterTheName = new JLabel("Enter the name of an mp3 file");
-		JButton btnConfirm = new JButton("Confirm");
+		JLabel lblMessage = new JLabel("Choose an mp3 file to add");
+		JButton btnSearch = new JButton("Search");
 		JButton btnCancel = new JButton("Cancel");
+		JPanel buttonPane = new JPanel();
 		
 		//Setting up the label
-		lblEnterTheName.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblEnterTheName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEnterTheName.setBounds(10, 11, 264, 25);
-		
-		//Setting up the textField
-		textField.setBounds(10, 47, 264, 20);
-		textField.setColumns(10);
+		lblMessage.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		//Setting up the confirm button
-		btnConfirm.addActionListener(new ActionListener() {
+		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 			}
 		});
-		btnConfirm.setBounds(10, 78, 89, 23);
+		btnSearch.setPreferredSize(new Dimension(120,23));
 		
 		//Setting up the cancel button
 		btnCancel.addActionListener(new ActionListener() {
@@ -59,12 +51,13 @@ public class AddAudio extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnCancel.setBounds(185, 78, 89, 23);
+		btnCancel.setPreferredSize(new Dimension(120,23));
 		
 		//Adding all components to the panel
-		contentPane.add(lblEnterTheName);
-		contentPane.add(textField);
-		contentPane.add(btnConfirm);
-		contentPane.add(btnCancel);
+		contentPane.add(lblMessage);
+		buttonPane.add(btnSearch);
+		buttonPane.add(btnCancel);
+		contentPane.add(buttonPane);
+		pack();
 	}
 }
