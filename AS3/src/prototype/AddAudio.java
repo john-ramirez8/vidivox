@@ -18,44 +18,53 @@ public class AddAudio extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	/**
-	 * Create the frame.
-	 */
+	
 	public AddAudio() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 300, 150);
+		//Setting up the contentPanel
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
+		setLocation(100, 100);
+		setSize(284, 111);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setTitle("Add Audio");
 		
+		//Component declarations
+		textField = new JTextField();
 		JLabel lblEnterTheName = new JLabel("Enter the name of an mp3 file");
+		JButton btnConfirm = new JButton("Confirm");
+		JButton btnCancel = new JButton("Cancel");
+		
+		//Setting up the label
 		lblEnterTheName.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblEnterTheName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEnterTheName.setBounds(10, 11, 264, 25);
-		contentPane.add(lblEnterTheName);
 		
-		textField = new JTextField();
+		//Setting up the textField
 		textField.setBounds(10, 47, 264, 20);
-		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnConfirm = new JButton("Confirm");
+		//Setting up the confirm button
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 			}
 		});
 		btnConfirm.setBounds(10, 78, 89, 23);
-		contentPane.add(btnConfirm);
 		
-		JButton btnCancel = new JButton("Cancel");
+		//Setting up the cancel button
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 			}
 		});
 		btnCancel.setBounds(185, 78, 89, 23);
+		
+		//Adding all components to the panel
+		contentPane.add(lblEnterTheName);
+		contentPane.add(textField);
+		contentPane.add(btnConfirm);
 		contentPane.add(btnCancel);
 	}
 }

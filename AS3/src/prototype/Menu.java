@@ -14,59 +14,53 @@ import java.awt.event.ActionEvent;
 
 public class Menu extends JFrame {
 
-	private JPanel mainMenu;
+	private JPanel contentPane;
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Menu frame = new Menu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	
 	public Menu() {
+		//JFrames to open
 		final VideoWindow vp = new VideoWindow();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		mainMenu = new JPanel();
-		mainMenu.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(mainMenu);
-		mainMenu.setLayout(null);
 		
+		//Setting up the content pane
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocation(100, 100);
+		setSize(434, 250);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		setTitle("Menu");
+		
+		//Component declarations
 		JLabel lblVidiVox = new JLabel("VIDI VOX");
+		JButton btnExit = new JButton("EXIT");
+		JButton btnSelectVideo = new JButton("Select Video");
+		
+		//Setting up the label
 		lblVidiVox.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblVidiVox.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVidiVox.setBounds(17, 11, 400, 78);
-		mainMenu.add(lblVidiVox);
 		
-		JButton btnExit = new JButton("EXIT");
+		//Setting up the exit button
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
 			}
 		});
-		btnExit.setBounds(117, 164, 200, 50);
-		mainMenu.add(btnExit);
+		btnExit.setBounds(117, 154, 200, 50);
 		
-		JButton btnSelectVideo = new JButton("Select Video");
+		//Setting up the selectVideo button
 		btnSelectVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.setVisible(true);
 				setVisible(false);
 			}
 		});
-		btnSelectVideo.setBounds(117, 100, 200, 50);
-		mainMenu.add(btnSelectVideo);
+		btnSelectVideo.setBounds(117, 90, 200, 50);
+		
+		//Adding all components to the panel
+		contentPane.add(lblVidiVox);
+		contentPane.add(btnExit);
+		contentPane.add(btnSelectVideo);
 	}
 }
