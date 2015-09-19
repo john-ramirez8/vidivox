@@ -1,7 +1,6 @@
 package prototype;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -26,9 +25,9 @@ public class AddAudio extends JFrame {
 		setLocation(100, 100);
 		setSize(284, 111);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(30, 0));
+		contentPane.setLayout(null);
 		setTitle("Add Audio");
 		
 		//Component declarations
@@ -43,9 +42,8 @@ public class AddAudio extends JFrame {
 		lblEnterTheName.setBounds(10, 11, 264, 25);
 		
 		//Setting up the textField
-		//textField.setBounds(10, 47, 264, 20);
+		textField.setBounds(10, 47, 264, 20);
 		textField.setColumns(10);
-		textField.setPreferredSize(new Dimension(264,20));
 		
 		//Setting up the confirm button
 		btnConfirm.addActionListener(new ActionListener() {
@@ -53,8 +51,7 @@ public class AddAudio extends JFrame {
 				setVisible(false);
 			}
 		});
-		//btnConfirm.setBounds(10, 78, 89, 23);
-		btnConfirm.setPreferredSize(new Dimension(89,23));
+		btnConfirm.setBounds(10, 78, 89, 23);
 		
 		//Setting up the cancel button
 		btnCancel.addActionListener(new ActionListener() {
@@ -62,13 +59,12 @@ public class AddAudio extends JFrame {
 				setVisible(false);
 			}
 		});
-		//btnCancel.setBounds(185, 78, 89, 23);
-		btnConfirm.setPreferredSize(new Dimension(89,23));
+		btnCancel.setBounds(185, 78, 89, 23);
 		
 		//Adding all components to the panel
-		contentPane.add(lblEnterTheName, BorderLayout.NORTH);
-		contentPane.add(textField, BorderLayout.CENTER);
-		contentPane.add(btnConfirm, BorderLayout.SOUTH);
-		contentPane.add(btnCancel, BorderLayout.SOUTH);
+		contentPane.add(lblEnterTheName);
+		contentPane.add(textField);
+		contentPane.add(btnConfirm);
+		contentPane.add(btnCancel);
 	}
 }
