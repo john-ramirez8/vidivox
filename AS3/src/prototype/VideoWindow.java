@@ -1,11 +1,17 @@
 package prototype;
 
 import java.awt.BorderLayout;
+import java.awt.Canvas;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
