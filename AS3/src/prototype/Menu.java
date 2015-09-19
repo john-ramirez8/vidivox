@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class clickDummy extends JFrame {
+public class Menu extends JFrame {
 
 	private JPanel mainMenu;
 	
@@ -23,7 +23,7 @@ public class clickDummy extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					clickDummy frame = new clickDummy();
+					Menu frame = new Menu();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,8 +35,8 @@ public class clickDummy extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public clickDummy() {
-		final videoPlayerDummy vp = new videoPlayerDummy();
+	public Menu() {
+		final VideoWindow vp = new VideoWindow();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		mainMenu = new JPanel();

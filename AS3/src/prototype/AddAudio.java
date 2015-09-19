@@ -14,14 +14,14 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class addAudio extends JFrame {
+public class AddAudio extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	/**
 	 * Create the frame.
 	 */
-	public addAudio() {
+	public AddAudio() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 150);
 		contentPane = new JPanel();

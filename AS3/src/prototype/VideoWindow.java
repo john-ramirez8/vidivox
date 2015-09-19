@@ -11,15 +11,15 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class videoPlayerDummy extends JFrame {
+public class VideoWindow extends JFrame {
 
 	private JPanel contentPane;
 	/**
 	 * Create the frame.
 	 */
-	public videoPlayerDummy() {
-		final addAudio aA = new addAudio();
-		final addVoice aV = new addVoice();
+	public VideoWindow() {
+		final AddAudio aA = new AddAudio();
+		final AddVoice aV = new AddVoice();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
