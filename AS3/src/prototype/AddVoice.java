@@ -40,8 +40,7 @@ public class addVoice extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnHear = new JButton("Hear Message");
-		btnHear.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		JButton btnHear = new JButton("Play");
 		btnHear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
