@@ -18,6 +18,9 @@ public class VideoWindow extends JFrame {
 	private JPanel contentPane;
 
 	public VideoWindow() {
+		//Helper classes
+		manager = new WindowManager(contentPane);
+		
 		//JFrames to open
 		final AddAudio aA = new AddAudio();
 		final AddVoice aV = new AddVoice();
@@ -30,7 +33,7 @@ public class VideoWindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		manager = new WindowManager(contentPane);
+		setTitle("VidiVox Prototype");
 		
 		//Component declarations
 		JPanel replaceMeWithVid = new JPanel();
