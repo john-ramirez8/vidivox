@@ -19,7 +19,6 @@ public class Menu extends JFrame {
 		final VideoWindow vp = new VideoWindow();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100, 100);
-		//setSize(434, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 100, 20, 100));
 		setContentPane(contentPane);
@@ -55,8 +54,8 @@ public class Menu extends JFrame {
 		
 		//Adding all components to the panel
 		contentPane.add(lblVidiVox);
-		contentPane.add(btnExit);
 		contentPane.add(btnSelectVideo);
+		contentPane.add(btnExit);
 		pack();
 	}
 }
