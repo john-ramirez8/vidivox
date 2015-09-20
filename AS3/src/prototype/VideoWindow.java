@@ -66,7 +66,7 @@ public class VideoWindow extends JFrame {
 		addPane.setLayout(new GridLayout(2,1,0,10));
 		playbackPane.setLayout(new BorderLayout(5,0));
 		volumePane.setLayout(new GridLayout(3,1,0,5));
-		
+
 		//Setting up the video player
 		replaceMeWithVid.setIcon(new ImageIcon("Images/dummyImage.png"));
 		
