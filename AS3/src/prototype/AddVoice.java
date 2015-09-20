@@ -38,6 +38,8 @@ public class AddVoice extends JFrame {
 		JButton btnCancel = new JButton("Cancel");
 		JButton btnCreateMp3 = new JButton("Create MP3");
 		
+		final FileOpener fo = new FileOpener();
+		
 		//Setting up the label
 		lblEnterTheName.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblEnterTheName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -65,6 +67,7 @@ public class AddVoice extends JFrame {
 		//Setting up the createMP3 button
 		btnCreateMp3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				fo.saveFile();
 			}
 		});
 		btnCreateMp3.setPreferredSize(new Dimension(120, 23));

@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class AddAudio extends JFrame {
@@ -33,14 +34,19 @@ public class AddAudio extends JFrame {
 		JButton btnCancel = new JButton("Cancel");
 		JPanel buttonPane = new JPanel();
 		
+		final FileOpener fo = new FileOpener(".mp3");
+		
 		//Setting up the label
 		lblMessage.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		//Setting up the confirm button
+		//Setting up the search button
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
+				File mp3 = fo.openFile();
+				if (mp3 != null){
+					setVisible(false);
+				}
 			}
 		});
 		btnSearch.setPreferredSize(new Dimension(120,23));

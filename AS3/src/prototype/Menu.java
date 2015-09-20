@@ -7,11 +7,14 @@ import javax.swing.JLabel;
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class Menu extends JFrame {
-
+	private File videoFile;
 	private JPanel contentPane;
 	
 	public Menu() {
@@ -30,6 +33,8 @@ public class Menu extends JFrame {
 		JButton btnExit = new JButton("EXIT");
 		JButton btnSelectVideo = new JButton("Select Video");
 		
+		final FileOpener fo = new FileOpener(".avi");
+		
 		//Setting up the label
 		ImageIcon img = new ImageIcon("Images/logo.png");
 		lblVidiVox.setIcon(img);
@@ -46,8 +51,11 @@ public class Menu extends JFrame {
 		//Setting up the selectVideo button
 		btnSelectVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.setVisible(true);
-				setVisible(false);
+				File vid = fo.openFile();
+				if (vid != null){
+					vp.setVisible(true);
+					setVisible(false);
+				}
 			}
 		});
 		btnSelectVideo.setPreferredSize(new Dimension(200, 50));
