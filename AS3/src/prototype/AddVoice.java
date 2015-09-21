@@ -66,7 +66,6 @@ public class AddVoice extends JFrame {
 					try {
 						pb.start();
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 					}
 				}
 			}
@@ -85,6 +84,7 @@ public class AddVoice extends JFrame {
 		btnCreateMp3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fo.saveFile();
+				//possibly use text2wave to create the audio file? not sure
 			}
 		});
 		btnCreateMp3.setPreferredSize(new Dimension(120, 23));
