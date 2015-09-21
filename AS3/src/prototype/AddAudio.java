@@ -34,7 +34,7 @@ public class AddAudio extends JFrame {
 		JButton btnCancel = new JButton("Cancel");
 		JPanel buttonPane = new JPanel();
 		
-		final FileOpener fo = new FileOpener(".mp3");
+		final FileOpener fo = new FileOpener(".mp3", this);
 		
 		//Setting up the label
 		lblMessage.setFont(new Font("Tahoma", Font.PLAIN, 15));

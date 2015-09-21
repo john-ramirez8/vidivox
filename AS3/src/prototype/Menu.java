@@ -31,7 +31,7 @@ public class Menu extends JFrame {
 		JButton btnExit = new JButton("EXIT");
 		JButton btnSelectVideo = new JButton("Select Video");
 		
-		final FileOpener fo = new FileOpener(".avi");
+		final FileOpener fo = new FileOpener(".avi", this);
 		
 		//Setting up the label
 		ImageIcon img = new ImageIcon("Images/logo.png");

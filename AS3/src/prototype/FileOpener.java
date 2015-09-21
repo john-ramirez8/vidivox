@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class FileOpener {
 	private String desiredExtension;
@@ -14,13 +16,16 @@ public class FileOpener {
 	private File savedFile;
 	private ErrorWindow ew;
 	private int errNo;
+	private JFrame parentFrame;
+	private String errMessage;
 
-	public FileOpener(String extension) {
+	public FileOpener(String extension, JFrame parentFrame) {
+		this.parentFrame = parentFrame;
 		this.desiredExtension = extension;
 		if (extension.equals(".avi")){
-			errNo = 1;
+			errMessage = "Please choose a file of .avi type";
 		} else if (extension.equals(".mp3")){
-			errNo = 2;
+			errMessage = "Please choose a file of .mp3 type";
 		}
 		fc.setDialogTitle("Select a " + extension + "type file.");
 	}
@@ -35,8 +40,9 @@ public class FileOpener {
 			openedFile = fc.getSelectedFile();
 			String extension = openedFile.toString().substring(openedFile.toString().length() - 4);
 			if (extension.equals(desiredExtension) == false) {
-				ew = new ErrorWindow(errNo);
-				ew.setVisible(true);
+				JOptionPane.showMessageDialog(parentFrame, errMessage);
+				//ew = new ErrorWindow(errNo);
+				//ew.setVisible(true);
 				return null;
 			} else {
 				return openedFile;
