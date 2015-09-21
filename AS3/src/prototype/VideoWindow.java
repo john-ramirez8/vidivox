@@ -26,7 +26,6 @@ public class VideoWindow extends JFrame {
 	private String vidPath;
 	private WindowManager manager;
 	private JPanel contentPane;
-	private boolean isPaused = false;
 
 	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	private final EmbeddedMediaPlayer video;
@@ -64,11 +63,11 @@ public class VideoWindow extends JFrame {
 		JButton btnAddAudio = new JButton("Add Audio");
 		JButton btnAddVoice = new JButton("Add Voice");
 		final JButton btnPlay = new JButton();
-		JButton btnRewind = new JButton("<<<");
-		JButton btnFastforward = new JButton(">>>");
-		JButton btnVolUp = new JButton("+");
-		JButton btnVolDown = new JButton("-");
-		JButton btnMute = new JButton("Mute");
+		final JButton btnRewind = new JButton("<<<");
+		final JButton btnFastforward = new JButton(">>>");
+		final JButton btnVolUp = new JButton();
+		final JButton btnVolDown = new JButton();
+		final JButton btnMute = new JButton();
 		final JSlider volSlider = new JSlider();
 
 		// Setting up the nested panels
@@ -120,35 +119,53 @@ public class VideoWindow extends JFrame {
 			}
 		});
 		
+		// Setting up the mute button
+		btnMute.setPreferredSize(new Dimension(35, 35));
+		btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
+		btnMute.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(video.isMute() == true){
+					btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
+				} else {
+					btnMute.setIcon(new ImageIcon("Images/muted.png"));
+				}
+				video.mute();
+			}
+		});
+		
 		// Setting up the volume up button
-		btnVolUp.setPreferredSize(new Dimension(29, 29));
+		btnVolUp.setIcon(new ImageIcon("Images/volUp.png"));
+		btnVolUp.setPreferredSize(new Dimension(35, 35));
 		btnVolUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				video.setVolume(100);
-				System.out.println(video.getVolume());
+				if (video.getVolume() < 100){
+					video.setVolume(video.getVolume() + 10);
+					volSlider.setValue(video.getVolume());
+				}
 			}
 		});
 		
 		// Setting up the volume down button
-		btnVolDown.setPreferredSize(new Dimension(29, 29));
+		btnVolDown.setIcon(new ImageIcon("Images/volDown.png"));
+		btnVolDown.setPreferredSize(new Dimension(35, 35));
 		btnVolDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				video.setVolume(100);
-				System.out.println(video.getVolume());
+				if (video.getVolume() > 0){
+					video.setVolume(video.getVolume() - 10);
+					volSlider.setValue(video.getVolume());
+				}
 			}
 		});
 
-		// Setting up the mute button
-		//btnMute.setPreferredSize(new Dimension(29, 0));
-		btnMute.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				video.mute();
-			}
-		});
 
 		// Setting up the volume slider
 		volSlider.setValue(100);
-		volSlider.setPreferredSize(new Dimension(100,54));
+		volSlider.setMaximum(100);
+		volSlider.setMinimum(0);
+		volSlider.setMinorTickSpacing(10);
+		volSlider.setPaintTicks(true);
+		volSlider.setSnapToTicks(true);
+		volSlider.setPreferredSize(new Dimension(100,50));
 		volSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
