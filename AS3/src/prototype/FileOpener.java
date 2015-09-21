@@ -39,8 +39,6 @@ public class FileOpener {
 			String extension = openedFile.toString().substring(openedFile.toString().length() - 4);
 			if (extension.equals(desiredExtension) == false) {
 				JOptionPane.showMessageDialog(parentFrame, errMessage);
-				//ew = new ErrorWindow(errNo);
-				//ew.setVisible(true);
 				return null;
 			} else {
 				return openedFile;

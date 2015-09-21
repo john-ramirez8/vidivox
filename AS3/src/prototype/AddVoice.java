@@ -8,10 +8,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class AddVoice extends JFrame {
@@ -31,7 +33,7 @@ public class AddVoice extends JFrame {
 		
 		//Component declarations
 		textArea = new JTextArea(5, 20);
-		JLabel lblEnterTheName = new JLabel("Enter commentary text");
+		JLabel lblEnterTheName = new JLabel("Enter commentary text (160 char limit)");
 		JPanel buttonPane = new JPanel();
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		JButton btnHear = new JButton("Hear");
@@ -48,10 +50,25 @@ public class AddVoice extends JFrame {
 		textArea.setColumns(10);
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
+		textArea.setDocument(new JTextFieldLimit(160)); //adding text limit
+		
 		
 		//Setting up the hear button
 		btnHear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String message = textArea.getText();
+				if (message.isEmpty()) {
+					JOptionPane.showMessageDialog(contentPane, "Text can't be empty");
+				} else {
+					String cmd = "echo " + message + " | festival --tts";
+					ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
+					
+					try {
+						pb.start();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+					}
+				}
 			}
 		});
 		btnHear.setPreferredSize(new Dimension(120, 23));
