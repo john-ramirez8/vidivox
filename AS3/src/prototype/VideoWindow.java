@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
@@ -22,18 +21,13 @@ import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class VideoWindow extends JFrame {
 
 	private WindowManager manager;
 	private JPanel contentPane;
-	private final EmbeddedMediaPlayer video;
-	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
-	private String videoPath="/home/john/Documents/Uni/SOFTENG206/A3/sample.avi";
-	
-	
+
 	public VideoWindow() {
 		//JFrames to open
 		final AddAudio aA = new AddAudio();
@@ -48,10 +42,6 @@ public class VideoWindow extends JFrame {
 		contentPane.setLayout(new BorderLayout());
 		setTitle("VidiVox Prototype");
 		
-		//Setting up the video player
-		mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
-		video = mediaPlayerComponent.getMediaPlayer();
-		
 		//Setting up WindowMananger
 		manager = new WindowManager(contentPane);
 		
@@ -60,7 +50,7 @@ public class VideoWindow extends JFrame {
 		JPanel volumePane = new JPanel();
 		JPanel playbackPane = new JPanel();
 		JPanel buttonsPane = new JPanel();
-		//JLabel replaceMeWithVid = new JLabel();
+		JLabel replaceMeWithVid = new JLabel();
 		JButton btnAddAudio = new JButton("Add Audio");
 		JButton btnAddVoice = new JButton("Add Voice");
 		JButton btnPlay = new JButton();
@@ -78,7 +68,7 @@ public class VideoWindow extends JFrame {
 		volumePane.setLayout(new GridLayout(3,1,0,5));
 
 		//Setting up the video player
-		//replaceMeWithVid.setIcon(new ImageIcon("Images/dummyImage.png"));
+		replaceMeWithVid.setIcon(new ImageIcon("Images/dummyImage.png"));
 		
 		//Setting up the add audio button
 		btnAddAudio.addActionListener(new ActionListener() {
@@ -121,12 +111,8 @@ public class VideoWindow extends JFrame {
 		//Setting up the mute button
 		btnMute.setPreferredSize(new Dimension(200, 30));
 		
-		//Playing media file
-		setVisible(true);
-		video.playMedia(videoPath);
-		
 		//Adding all components to the panel
-		contentPane.add(mediaPlayerComponent, BorderLayout.CENTER);
+		contentPane.add(replaceMeWithVid, BorderLayout.CENTER);
 		addPane.add(btnAddVoice);
 		addPane.add(btnAddAudio);
 		playbackPane.add(btnRewind, BorderLayout.WEST);
@@ -140,9 +126,5 @@ public class VideoWindow extends JFrame {
 		buttonsPane.add(volumePane);
 		contentPane.add(buttonsPane, BorderLayout.SOUTH);
 		pack();
-	}
-	
-	public void setVideo(String videoPath){
-		this.videoPath = videoPath;	
 	}
 }
