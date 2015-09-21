@@ -7,14 +7,13 @@ import javax.swing.JLabel;
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class Menu extends JFrame {
-	private File videoFile;
+	
 	private JPanel contentPane;
 	
 	public Menu() {
@@ -55,7 +54,6 @@ public class Menu extends JFrame {
 					setVisible(false);
 					final VideoWindow vp = new VideoWindow(vid.getAbsolutePath());
 					vp.setVisible(true);
-					//System.out.println(vid.getAbsolutePath());
 				}
 			}
 		});

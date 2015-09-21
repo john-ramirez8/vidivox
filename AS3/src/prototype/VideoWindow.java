@@ -50,13 +50,11 @@ public class VideoWindow extends JFrame {
 		contentPane.setLayout(new BorderLayout());
 		setTitle("VidiVox Prototype");
 		
-		//////
+		//Setting up media components
 		mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 		video = mediaPlayerComponent.getMediaPlayer();
 		mediaPlayerComponent.setPreferredSize(new Dimension(854,480));
-		
-		
-		
+	
 		//Setting up WindowMananger
 		manager = new WindowManager(contentPane);
 		
@@ -65,7 +63,6 @@ public class VideoWindow extends JFrame {
 		JPanel volumePane = new JPanel();
 		JPanel playbackPane = new JPanel();
 		JPanel buttonsPane = new JPanel();
-		JLabel replaceMeWithVid = new JLabel();
 		JButton btnAddAudio = new JButton("Add Audio");
 		JButton btnAddVoice = new JButton("Add Voice");
 		JButton btnPlay = new JButton();
@@ -81,10 +78,6 @@ public class VideoWindow extends JFrame {
 		addPane.setLayout(new GridLayout(2,1,0,10));
 		playbackPane.setLayout(new BorderLayout(5,0));
 		volumePane.setLayout(new GridLayout(3,1,0,5));
-
-		//Setting up the video player
-		replaceMeWithVid.setIcon(new ImageIcon("Images/dummyImage.png"));
-		
 		
 		//Setting up the add audio button
 		btnAddAudio.addActionListener(new ActionListener() {
