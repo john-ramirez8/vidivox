@@ -14,8 +14,6 @@ public class FileOpener {
 	private FileWriter fw;
 	private File openedFile;
 	private File savedFile;
-	private ErrorWindow ew;
-	private int errNo;
 	private JFrame parentFrame;
 	private String errMessage;
 
