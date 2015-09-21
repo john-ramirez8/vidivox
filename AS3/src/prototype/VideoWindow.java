@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
@@ -25,10 +26,17 @@ import java.awt.event.ActionEvent;
 
 public class VideoWindow extends JFrame {
 
+	private String vidPath;
 	private WindowManager manager;
 	private JPanel contentPane;
 
-	public VideoWindow() {
+	
+	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
+	private final EmbeddedMediaPlayer video;
+	
+	
+	public VideoWindow(String path) {
+		vidPath = path;
 		//JFrames to open
 		final AddAudio aA = new AddAudio();
 		final AddVoice aV = new AddVoice();
@@ -41,6 +49,13 @@ public class VideoWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout());
 		setTitle("VidiVox Prototype");
+		
+		//////
+		mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+		video = mediaPlayerComponent.getMediaPlayer();
+		mediaPlayerComponent.setPreferredSize(new Dimension(854,480));
+		
+		
 		
 		//Setting up WindowMananger
 		manager = new WindowManager(contentPane);
@@ -69,6 +84,7 @@ public class VideoWindow extends JFrame {
 
 		//Setting up the video player
 		replaceMeWithVid.setIcon(new ImageIcon("Images/dummyImage.png"));
+		
 		
 		//Setting up the add audio button
 		btnAddAudio.addActionListener(new ActionListener() {
@@ -112,7 +128,7 @@ public class VideoWindow extends JFrame {
 		btnMute.setPreferredSize(new Dimension(200, 30));
 		
 		//Adding all components to the panel
-		contentPane.add(replaceMeWithVid, BorderLayout.CENTER);
+		contentPane.add(mediaPlayerComponent, BorderLayout.CENTER);
 		addPane.add(btnAddVoice);
 		addPane.add(btnAddAudio);
 		playbackPane.add(btnRewind, BorderLayout.WEST);
@@ -126,5 +142,8 @@ public class VideoWindow extends JFrame {
 		buttonsPane.add(volumePane);
 		contentPane.add(buttonsPane, BorderLayout.SOUTH);
 		pack();
+		
+		//Playing video specified
+		video.playMedia(vidPath);
 	}
 }

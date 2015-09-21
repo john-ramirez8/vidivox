@@ -19,7 +19,6 @@ public class Menu extends JFrame {
 	
 	public Menu() {
 		//JFrames to open
-		final VideoWindow vp = new VideoWindow();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100, 100);
 		contentPane = new JPanel();
@@ -53,8 +52,10 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				File vid = fo.openFile();
 				if (vid != null){
-					vp.setVisible(true);
 					setVisible(false);
+					final VideoWindow vp = new VideoWindow(vid.getAbsolutePath());
+					vp.setVisible(true);
+					//System.out.println(vid.getAbsolutePath());
 				}
 			}
 		});
