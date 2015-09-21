@@ -1,22 +1,15 @@
 package prototype;
 
 import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
-import java.awt.Point;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 
-import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
@@ -29,7 +22,6 @@ public class VideoWindow extends JFrame {
 	private String vidPath;
 	private WindowManager manager;
 	private JPanel contentPane;
-
 	
 	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	private final EmbeddedMediaPlayer video;
@@ -98,6 +90,11 @@ public class VideoWindow extends JFrame {
 		//Setting up the play button
 		btnPlay.setIcon(new ImageIcon("Images/play.png"));
 		btnPlay.setPreferredSize(new Dimension(80, 80));
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				video.pause();
+			}
+		});
 		
 		//Setting up the rewind button
 		btnRewind.addActionListener(new ActionListener() {
@@ -119,6 +116,11 @@ public class VideoWindow extends JFrame {
 		
 		//Setting up the mute button
 		btnMute.setPreferredSize(new Dimension(200, 30));
+		btnMute.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				video.mute();
+			}
+		});
 		
 		//Adding all components to the panel
 		contentPane.add(mediaPlayerComponent, BorderLayout.CENTER);
