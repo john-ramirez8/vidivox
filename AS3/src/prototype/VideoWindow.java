@@ -68,10 +68,11 @@ public class VideoWindow extends JFrame {
 		JPanel addPane = new JPanel();
 		JPanel volumePane = new JPanel();
 		JPanel volumeButtons = new JPanel();
+		JPanel playbackButtonPane = new JPanel();
 		JPanel playbackPane = new JPanel();
 		JPanel buttonsPane = new JPanel();
-		JButton btnAddAudio = new JButton("Add Audio");
-		JButton btnAddVoice = new JButton("Add Voice");
+		final JButton btnAddAudio = new JButton("Add Audio");
+		final JButton btnAddVoice = new JButton("Add Voice");
 		final JButton btnPlay = new JButton();
 		final JButton btnRewind = new JButton("<<<");
 		final JButton btnFastForward = new JButton(">>>");
@@ -79,17 +80,23 @@ public class VideoWindow extends JFrame {
 		final JButton btnVolDown = new JButton();
 		final JButton btnMute = new JButton();
 		final JSlider volSlider = new JSlider();
-        final JProgressBar vidProgress = new JProgressBar(0, 100);
+        final JProgressBar vidProgress = new JProgressBar(0, 0);
         contentPane.add(vidProgress, BorderLayout.EAST);
+        
+		// Setting up the nested panels
+		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+		buttonsPane.setBorder(new EmptyBorder(10, 0, 0, 0));
+		addPane.setLayout(new GridLayout(2, 1, 0, 10));
+		playbackButtonPane.setLayout(new BorderLayout(5, 0));
+		playbackPane.setLayout(new BorderLayout());
+		volumePane.setLayout(new BorderLayout());
         
 		//Setting up video progress timer
         Timer timer = new Timer(100, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int length = (int) video.getLength();
-				int now = (int) video.getTime();
-				int percentage = (now * 100 )/length;
-				vidProgress.setValue(percentage);
+				vidProgress.setMaximum((int) video.getLength());
+				vidProgress.setValue((int) video.getTime());
 			}
 		}); 
         timer.start();
@@ -132,13 +139,6 @@ public class VideoWindow extends JFrame {
 				System.exit(0);
 			}
 		});
-		
-		// Setting up the nested panels
-		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
-		buttonsPane.setBorder(new EmptyBorder(10, 0, 0, 0));
-		addPane.setLayout(new GridLayout(2, 1, 0, 10));
-		playbackPane.setLayout(new BorderLayout(5, 0));
-		volumePane.setLayout(new BorderLayout());
 
 		// Setting up the add audio button
 		btnAddAudio.setPreferredSize(new Dimension (140,29));
@@ -252,22 +252,24 @@ public class VideoWindow extends JFrame {
 		});
   
 		// Adding all components to the panel
-		contentPane.add(mediaPlayerComponent, BorderLayout.CENTER);
-		contentPane.add(menuBar, BorderLayout.NORTH);
 		addPane.add(btnAddVoice);
 		addPane.add(btnAddAudio);
-		playbackPane.add(btnRewind, BorderLayout.WEST);
-		playbackPane.add(btnPlay, BorderLayout.CENTER);
-		playbackPane.add(btnFastForward, BorderLayout.EAST);
+		playbackButtonPane.add(btnRewind, BorderLayout.WEST);
+		playbackButtonPane.add(btnPlay, BorderLayout.CENTER);
+		playbackButtonPane.add(btnFastForward, BorderLayout.EAST);
+		playbackPane.add(mediaPlayerComponent, BorderLayout.NORTH);
+		playbackPane.add(vidProgress, BorderLayout.CENTER);
 		volumePane.add(volSlider, BorderLayout.NORTH);
 		volumeButtons.add(btnVolUp);
 		volumeButtons.add(btnVolDown);
 		volumeButtons.add(btnMute);
 		volumePane.add(volumeButtons, BorderLayout.CENTER);
 		buttonsPane.add(addPane);
-		buttonsPane.add(playbackPane);
+		buttonsPane.add(playbackButtonPane);
 		buttonsPane.add(volumePane);
 		contentPane.add(buttonsPane, BorderLayout.SOUTH);
+		contentPane.add(playbackPane, BorderLayout.CENTER);
+		contentPane.add(menuBar, BorderLayout.NORTH);
 		pack();
 
 		// Playing video specified
