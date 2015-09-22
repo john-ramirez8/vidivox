@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.border.EmptyBorder;
@@ -71,7 +74,43 @@ public class VideoWindow extends JFrame {
 		final JButton btnVolDown = new JButton();
 		final JButton btnMute = new JButton();
 		final JSlider volSlider = new JSlider();
-
+		
+		//Setting up a menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menu = new JMenu("File");
+		JMenuItem openFile = new JMenuItem("Open file...");
+		JMenuItem saveFile = new JMenuItem("Save file as ...");
+		JMenuItem close = new JMenuItem("Exit program");
+		menu.add(openFile);
+		menu.addSeparator();
+		menu.add(saveFile);
+		menu.addSeparator();
+		menu.add(close);
+		menuBar.add(menu);
+		
+		openFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Works");
+			}
+		});
+		
+		saveFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Works");
+			}
+		});
+		
+		close.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		
+		
+		
+		
+		
+		
 		// Setting up the nested panels
 		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 		buttonsPane.setBorder(new EmptyBorder(10, 0, 0, 0));
@@ -193,6 +232,7 @@ public class VideoWindow extends JFrame {
 
 		// Adding all components to the panel
 		contentPane.add(mediaPlayerComponent, BorderLayout.CENTER);
+		contentPane.add(menuBar, BorderLayout.NORTH);
 		addPane.add(btnAddVoice);
 		addPane.add(btnAddAudio);
 		playbackPane.add(btnRewind, BorderLayout.WEST);
