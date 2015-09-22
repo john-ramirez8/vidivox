@@ -158,7 +158,7 @@ public class VideoWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (video.getVolume() < 100){
 					video.setVolume(video.getVolume() + 10);
-					volSlider.setValue(video.getVolume());
+					//volSlider.setValue(video.getVolume());
 				}
 			}
 		});
@@ -170,13 +170,14 @@ public class VideoWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (video.getVolume() > 0){
 					video.setVolume(video.getVolume() - 10);
-					volSlider.setValue(video.getVolume());
+					//volSlider.setValue(video.getVolume());
 				}
 			}
 		});
 
 
 		// Setting up the volume slider
+		/*
 		volSlider.setValue(100);
 		volSlider.setMaximum(100);
 		volSlider.setMinimum(0);
@@ -190,6 +191,7 @@ public class VideoWindow extends JFrame {
 				video.setVolume(volSlider.getValue());
 			}
 		});
+		*/
 
 		// Adding all components to the panel
 		contentPane.add(mediaPlayerComponent, BorderLayout.CENTER);
@@ -198,7 +200,7 @@ public class VideoWindow extends JFrame {
 		playbackPane.add(btnRewind, BorderLayout.WEST);
 		playbackPane.add(btnPlay, BorderLayout.CENTER);
 		playbackPane.add(btnFastForward, BorderLayout.EAST);
-		volumePane.add(volSlider, BorderLayout.NORTH);
+		//volumePane.add(volSlider, BorderLayout.NORTH);
 		volumeButtons.add(btnVolUp);
 		volumeButtons.add(btnVolDown);
 		volumeButtons.add(btnMute);
