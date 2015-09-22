@@ -8,6 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
@@ -78,6 +79,21 @@ public class VideoWindow extends JFrame {
 		final JButton btnVolDown = new JButton();
 		final JButton btnMute = new JButton();
 		final JSlider volSlider = new JSlider();
+        final JProgressBar vidProgress = new JProgressBar(0, 100);
+        contentPane.add(vidProgress, BorderLayout.EAST);
+        
+		//Setting up video progress timer
+        Timer timer = new Timer(100, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int length = (int) video.getLength();
+				int now = (int) video.getTime();
+				int percentage = (now * 100 )/length;
+				vidProgress.setValue(percentage);
+			}
+		}); 
+        timer.start();
+        
 		
 		//Setting up a menu
 		JMenuBar menuBar = new JMenuBar();
@@ -234,16 +250,7 @@ public class VideoWindow extends JFrame {
 				video.setVolume(volSlider.getValue());
 			}
 		});
-		
-        Timer timer = new Timer(200, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(video.getTime()/1000 + " seconds");
-			}
-		}); 
-        timer.start();
-		
-
+  
 		// Adding all components to the panel
 		contentPane.add(mediaPlayerComponent, BorderLayout.CENTER);
 		contentPane.add(menuBar, BorderLayout.NORTH);
