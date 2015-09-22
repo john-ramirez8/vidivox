@@ -205,8 +205,10 @@ public class VideoWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(video.isMute() == true){
 					btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
+					volSlider.setEnabled(true);
 				} else {
 					btnMute.setIcon(new ImageIcon("Images/muted.png"));
+					volSlider.setEnabled(false);
 				}
 				video.mute();
 			}
