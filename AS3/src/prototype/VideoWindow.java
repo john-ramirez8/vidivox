@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -71,6 +72,7 @@ public class VideoWindow extends JFrame {
 		JPanel playbackButtonPane = new JPanel();
 		JPanel playbackPane = new JPanel();
 		JPanel buttonsPane = new JPanel();
+		JPanel progressPane = new JPanel();
 		final JButton btnAddAudio = new JButton("Add Audio");
 		final JButton btnAddVoice = new JButton("Add Voice");
 		final JButton btnPlay = new JButton();
@@ -81,26 +83,49 @@ public class VideoWindow extends JFrame {
 		final JButton btnMute = new JButton();
 		final JSlider volSlider = new JSlider();
         final JProgressBar vidProgress = new JProgressBar(0, 0);
-        contentPane.add(vidProgress, BorderLayout.EAST);
+        final JLabel length = new JLabel();
+        final JLabel currentTime = new JLabel();
         
 		// Setting up the nested panels
 		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 		buttonsPane.setBorder(new EmptyBorder(10, 0, 0, 0));
+		
 		addPane.setLayout(new GridLayout(2, 1, 0, 10));
+		
 		playbackButtonPane.setLayout(new BorderLayout(5, 0));
+		
 		playbackPane.setLayout(new BorderLayout());
+		
 		volumePane.setLayout(new BorderLayout());
-        
+		
+		progressPane.setLayout(new BorderLayout(10,0));
+        progressPane.setBorder(new EmptyBorder(10, 10, 0, 10));
+		
 		//Setting up video progress timer
         Timer timer = new Timer(100, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				vidProgress.setMaximum((int) video.getLength());
+				int lengthS = (int) (video.getLength()/1000);
+				int lengthM = lengthS/60;
+				lengthS = lengthS - lengthM * 60;
+				if (lengthS < 10){
+					length.setText(lengthM + ":" + "0" + lengthS);
+				} else {
+					length.setText(lengthM + ":" + lengthS);
+				}
+				int currentS = (int) video.getTime()/1000;
+				int currentM = currentS/60;
+				currentS = currentS - currentM*60;
+				if (currentS < 10){
+					currentTime.setText(currentM + ":" + "0" + currentS);
+				} else {
+					currentTime.setText(currentM + ":" + currentS);
+				}
 				vidProgress.setValue((int) video.getTime());
 			}
 		}); 
         timer.start();
-        
 		
 		//Setting up a menu
 		JMenuBar menuBar = new JMenuBar();
@@ -256,22 +281,33 @@ public class VideoWindow extends JFrame {
 		// Adding all components to the panel
 		addPane.add(btnAddVoice);
 		addPane.add(btnAddAudio);
+		
 		playbackButtonPane.add(btnRewind, BorderLayout.WEST);
 		playbackButtonPane.add(btnPlay, BorderLayout.CENTER);
 		playbackButtonPane.add(btnFastForward, BorderLayout.EAST);
-		playbackPane.add(mediaPlayerComponent, BorderLayout.CENTER);
-		playbackPane.add(vidProgress, BorderLayout.SOUTH);
+		
 		volumePane.add(volSlider, BorderLayout.NORTH);
+		volumePane.add(volumeButtons, BorderLayout.CENTER);
+		
 		volumeButtons.add(btnVolUp);
 		volumeButtons.add(btnVolDown);
 		volumeButtons.add(btnMute);
-		volumePane.add(volumeButtons, BorderLayout.CENTER);
+		
 		buttonsPane.add(addPane);
 		buttonsPane.add(playbackButtonPane);
 		buttonsPane.add(volumePane);
+		
+		progressPane.add(length, BorderLayout.EAST);
+        progressPane.add(currentTime, BorderLayout.WEST);
+        progressPane.add(vidProgress, BorderLayout.CENTER);
+        
+		playbackPane.add(mediaPlayerComponent, BorderLayout.CENTER);
+		playbackPane.add(progressPane, BorderLayout.SOUTH);
+		
 		contentPane.add(buttonsPane, BorderLayout.SOUTH);
 		contentPane.add(playbackPane, BorderLayout.CENTER);
 		contentPane.add(menuBar, BorderLayout.NORTH);
+        
 		pack();
 
 		// Playing video specified
