@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.border.EmptyBorder;
@@ -21,8 +19,6 @@ import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 
 public class VideoWindow extends JFrame {
@@ -30,7 +26,9 @@ public class VideoWindow extends JFrame {
 	private String vidPath;
 	private WindowManager manager;
 	private JPanel contentPane;
-
+	private FastForward ffTask;
+	private Rewind rwTask;
+	
 	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	private final EmbeddedMediaPlayer video;
 
@@ -45,8 +43,8 @@ public class VideoWindow extends JFrame {
 		setTitle("VidiVox Prototype");
 		setMinimumSize(new Dimension (500,421));
 		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		contentPane.setLayout(new BorderLayout());
-		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 
 		// Setting up media components
@@ -64,29 +62,22 @@ public class VideoWindow extends JFrame {
 		JPanel volumeButtons = new JPanel();
 		JPanel playbackPane = new JPanel();
 		JPanel buttonsPane = new JPanel();
-		JPanel nestedPane = new JPanel();
-		final JButton btnAddAudio = new JButton("Add Audio");
-		final JButton btnAddVoice = new JButton("Add Voice");
+		JButton btnAddAudio = new JButton("Add Audio");
+		JButton btnAddVoice = new JButton("Add Voice");
 		final JButton btnPlay = new JButton();
 		final JButton btnRewind = new JButton("<<<");
-		final JButton btnFastforward = new JButton(">>>");
+		final JButton btnFastForward = new JButton(">>>");
 		final JButton btnVolUp = new JButton();
 		final JButton btnVolDown = new JButton();
 		final JButton btnMute = new JButton();
 		final JSlider volSlider = new JSlider();
-		JMenuBar menuBar = new JMenuBar();
-		JMenu menu  = new JMenu("File");
 
-		menuBar.add(menu);
-		
 		// Setting up the nested panels
 		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 		buttonsPane.setBorder(new EmptyBorder(10, 0, 0, 0));
 		addPane.setLayout(new GridLayout(2, 1, 0, 10));
 		playbackPane.setLayout(new BorderLayout(5, 0));
 		volumePane.setLayout(new BorderLayout());
-		nestedPane.setLayout(new BorderLayout());
-		nestedPane.setBorder(new EmptyBorder(10,10,10,10));
 
 		// Setting up the add audio button
 		btnAddAudio.setPreferredSize(new Dimension (140,29));
@@ -121,12 +112,28 @@ public class VideoWindow extends JFrame {
 		// Setting up the rewind button
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (btnRewind.getText().equals("<<<")) {
+					rwTask = new Rewind(video, video.getRate());
+					rwTask.execute();
+					btnRewind.setText("Play");
+				} else {
+					rwTask.cancel(true);
+					btnRewind.setText("<<<");
+				}
 			}
 		});
 
 		// Setting up the fast forward button
-		btnFastforward.addActionListener(new ActionListener() {
+		btnFastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (btnFastForward.getText().equals(">>>")) {
+					ffTask = new FastForward(video, video.getRate());
+					ffTask.execute();
+					btnFastForward.setText("Play");
+				} else {
+					ffTask.cancel(true);
+					btnFastForward.setText(">>>");
+				}
 			}
 		});
 		
@@ -151,7 +158,7 @@ public class VideoWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (video.getVolume() < 100){
 					video.setVolume(video.getVolume() + 10);
-					//volSlider.setValue(video.getVolume());
+					volSlider.setValue(video.getVolume());
 				}
 			}
 		});
@@ -163,12 +170,12 @@ public class VideoWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (video.getVolume() > 0){
 					video.setVolume(video.getVolume() - 10);
-					//volSlider.setValue(video.getVolume());
+					volSlider.setValue(video.getVolume());
 				}
 			}
 		});
-		
-		/*
+
+
 		// Setting up the volume slider
 		volSlider.setValue(100);
 		volSlider.setMaximum(100);
@@ -183,17 +190,15 @@ public class VideoWindow extends JFrame {
 				video.setVolume(volSlider.getValue());
 			}
 		});
-		*/
 
 		// Adding all components to the panel
-		contentPane.add(menuBar, BorderLayout.NORTH);
-		nestedPane.add(mediaPlayerComponent, BorderLayout.CENTER);
+		contentPane.add(mediaPlayerComponent, BorderLayout.CENTER);
 		addPane.add(btnAddVoice);
 		addPane.add(btnAddAudio);
 		playbackPane.add(btnRewind, BorderLayout.WEST);
 		playbackPane.add(btnPlay, BorderLayout.CENTER);
-		playbackPane.add(btnFastforward, BorderLayout.EAST);
-		//volumePane.add(volSlider, BorderLayout.NORTH);
+		playbackPane.add(btnFastForward, BorderLayout.EAST);
+		volumePane.add(volSlider, BorderLayout.NORTH);
 		volumeButtons.add(btnVolUp);
 		volumeButtons.add(btnVolDown);
 		volumeButtons.add(btnMute);
@@ -201,8 +206,7 @@ public class VideoWindow extends JFrame {
 		buttonsPane.add(addPane);
 		buttonsPane.add(playbackPane);
 		buttonsPane.add(volumePane);
-		nestedPane.add(buttonsPane, BorderLayout.SOUTH);
-		contentPane.add(nestedPane, BorderLayout.CENTER);
+		contentPane.add(buttonsPane, BorderLayout.SOUTH);
 		pack();
 
 		// Playing video specified
