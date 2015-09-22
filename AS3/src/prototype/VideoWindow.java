@@ -22,6 +22,7 @@ import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class VideoWindow extends JFrame {
@@ -55,6 +56,8 @@ public class VideoWindow extends JFrame {
 		mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 		video = mediaPlayerComponent.getMediaPlayer();
 		mediaPlayerComponent.setPreferredSize(new Dimension(854, 480));
+		
+		final FileOpener fo = new FileOpener(".avi", this);
 
 		// Setting up WindowMananger
 		manager = new WindowManager(contentPane);
@@ -90,7 +93,11 @@ public class VideoWindow extends JFrame {
 		
 		openFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Works");
+				File vid  = fo.openFile();
+				if (vid != null){
+					vidPath = vid.getAbsolutePath();
+					video.playMedia(vidPath);
+				}
 			}
 		});
 		
