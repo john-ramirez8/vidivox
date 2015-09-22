@@ -259,8 +259,8 @@ public class VideoWindow extends JFrame {
 		playbackButtonPane.add(btnRewind, BorderLayout.WEST);
 		playbackButtonPane.add(btnPlay, BorderLayout.CENTER);
 		playbackButtonPane.add(btnFastForward, BorderLayout.EAST);
-		playbackPane.add(mediaPlayerComponent, BorderLayout.NORTH);
-		playbackPane.add(vidProgress, BorderLayout.CENTER);
+		playbackPane.add(mediaPlayerComponent, BorderLayout.CENTER);
+		playbackPane.add(vidProgress, BorderLayout.SOUTH);
 		volumePane.add(volSlider, BorderLayout.NORTH);
 		volumeButtons.add(btnVolUp);
 		volumeButtons.add(btnVolDown);
