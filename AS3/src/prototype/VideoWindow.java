@@ -26,7 +26,9 @@ public class VideoWindow extends JFrame {
 	private String vidPath;
 	private WindowManager manager;
 	private JPanel contentPane;
-
+	private FastForward ffTask;
+	private Rewind rwTask;
+	
 	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	private final EmbeddedMediaPlayer video;
 
@@ -64,7 +66,7 @@ public class VideoWindow extends JFrame {
 		JButton btnAddVoice = new JButton("Add Voice");
 		final JButton btnPlay = new JButton();
 		final JButton btnRewind = new JButton("<<<");
-		final JButton btnFastforward = new JButton(">>>");
+		final JButton btnFastForward = new JButton(">>>");
 		final JButton btnVolUp = new JButton();
 		final JButton btnVolDown = new JButton();
 		final JButton btnMute = new JButton();
@@ -110,12 +112,28 @@ public class VideoWindow extends JFrame {
 		// Setting up the rewind button
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (btnRewind.getText().equals("<<<")) {
+					rwTask = new Rewind(video, video.getRate());
+					rwTask.execute();
+					btnRewind.setText("Play");
+				} else {
+					rwTask.cancel(true);
+					btnRewind.setText("<<<");
+				}
 			}
 		});
 
 		// Setting up the fast forward button
-		btnFastforward.addActionListener(new ActionListener() {
+		btnFastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (btnFastForward.getText().equals(">>>")) {
+					ffTask = new FastForward(video, video.getRate());
+					ffTask.execute();
+					btnFastForward.setText("Play");
+				} else {
+					ffTask.cancel(true);
+					btnFastForward.setText(">>>");
+				}
 			}
 		});
 		
@@ -179,7 +197,7 @@ public class VideoWindow extends JFrame {
 		addPane.add(btnAddAudio);
 		playbackPane.add(btnRewind, BorderLayout.WEST);
 		playbackPane.add(btnPlay, BorderLayout.CENTER);
-		playbackPane.add(btnFastforward, BorderLayout.EAST);
+		playbackPane.add(btnFastForward, BorderLayout.EAST);
 		volumePane.add(volSlider, BorderLayout.NORTH);
 		volumeButtons.add(btnVolUp);
 		volumeButtons.add(btnVolDown);

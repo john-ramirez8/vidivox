@@ -10,6 +10,8 @@ File chooser & File saver - Completed (Michael)
 -Need to add file saving features for the video itself (just need to udpate GUI and call the helper)
 
 Fast Forward & Rewind - John
+-Code is pretty much the same so I need to refactor it some more
+-Shows up with a lot of errors in the console, yet still works fine
 
 Volume control - Completed (John/Michael)
 -Need to fix minor issues with volup and voldown buttons 
