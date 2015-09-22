@@ -9,6 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -91,6 +92,7 @@ public class VideoWindow extends JFrame {
 		menu.add(close);
 		menuBar.add(menu);
 		
+		//Setting up openFile option
 		openFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				File vid  = fo.openFile();
@@ -101,22 +103,19 @@ public class VideoWindow extends JFrame {
 			}
 		});
 		
+		//Setting up savefile option
 		saveFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Works");
 			}
 		});
 		
+		//Setting up close option
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		
-		
-		
-		
-		
 		
 		// Setting up the nested panels
 		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
@@ -235,6 +234,14 @@ public class VideoWindow extends JFrame {
 				video.setVolume(volSlider.getValue());
 			}
 		});
+		
+        Timer timer = new Timer(200, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(video.getTime()/1000 + " seconds");
+			}
+		}); 
+        timer.start();
 		
 
 		// Adding all components to the panel
