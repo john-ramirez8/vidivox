@@ -64,7 +64,7 @@ public class AddVoice extends JFrame {
 					String cmd = "echo " + commentary + " | festival --tts";
 					ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
 					try {
-						pb.start();
+						Process p = pb.start();
 					} catch (IOException e1) {
 					}
 				}
