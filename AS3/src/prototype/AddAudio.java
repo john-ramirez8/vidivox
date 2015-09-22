@@ -27,6 +27,7 @@ public class AddAudio extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(2,1));
 		setTitle("Add Audio");
+		setResizable(false);
 		
 		//Component declarations
 		JLabel lblMessage = new JLabel("Choose an mp3 file to add");

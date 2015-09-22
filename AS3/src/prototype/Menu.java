@@ -25,6 +25,7 @@ public class Menu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(3, 1,0 , 10));
 		setTitle("Menu");
+		setResizable(false);
 		
 		//Component declarations
 		JLabel lblVidiVox = new JLabel();

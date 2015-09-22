@@ -21,15 +21,10 @@ public class FileOpener {
 		this.parentFrame = parentFrame;
 		this.desiredExtension = extension;
 		if (extension.equals(".avi")){
-			errMessage = "Please choose a file of .avi type";
+			errMessage = "Please specify a file of .avi type";
 		} else if (extension.equals(".mp3")){
-			errMessage = "Please choose a file of .mp3 type";
+			errMessage = "Please specify a file of .mp3 type";
 		}
-		fc.setDialogTitle("Select a " + extension + "type file.");
-	}
-	
-	public FileOpener() {
-		fc.setDialogTitle("Save as mp3");
 	}
 
 	public File openFile() {
@@ -48,17 +43,19 @@ public class FileOpener {
 		}
 	}
 	
-	public void saveFile() {
+	public String saveFile() {
 		int result = fc.showDialog(null, "Save");
 		if (result == JFileChooser.APPROVE_OPTION) {
 			savedFile = fc.getSelectedFile();
-			try {
-				fw = new FileWriter(savedFile);
-				//To Do with mp3
-			} catch (IOException e) {
-				e.printStackTrace();
+			String extension = savedFile.toString().substring(savedFile.toString().length() - 4);
+			if (extension.equals(desiredExtension) == false) {
+				JOptionPane.showMessageDialog(parentFrame, errMessage);
+				return null;
+			} else {
+				return savedFile.getAbsolutePath();
 			}
-			
+		} else {
+			return null;
 		}
 	}
 }
