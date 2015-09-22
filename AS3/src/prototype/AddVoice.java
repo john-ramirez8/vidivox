@@ -13,7 +13,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.awt.event.ActionEvent;
 
 public class AddVoice extends JFrame {
@@ -91,11 +94,13 @@ public class AddVoice extends JFrame {
 					String cmd2 = "ffmpeg -i " + mp3 + ".wav" + " -f mp3 " + mp3 + ".mp3";
 					ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
 					ProcessBuilder pb2 = new ProcessBuilder("/bin/bash", "-c", cmd2);
+					
 					try {
 						Process p = pb.start();
 						p.waitFor();
 						Process p2 = pb2.start();
 						p2.waitFor();
+						
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

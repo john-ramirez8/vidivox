@@ -35,6 +35,7 @@ public class VideoWindow extends JFrame {
 	private JPanel contentPane;
 	private FastForward ffTask;
 	private Rewind rwTask;
+	public static String vidName;
 	
 	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	private final EmbeddedMediaPlayer video;
@@ -146,12 +147,13 @@ public class VideoWindow extends JFrame {
 				File vid  = fo.openFile();
 				if (vid != null){
 					vidPath = vid.getAbsolutePath();
+					vidName = vid.getName();
 					video.playMedia(vidPath);
 				}
 			}
 		});
 		
-		//Setting up savefile option
+		//Setting up save file option
 		saveFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Works");
@@ -214,6 +216,7 @@ public class VideoWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (btnFastForward.getText().equals(">>>")) {
 					ffTask = new FastForward(video, video.getRate());
+					video.pause();
 					ffTask.execute();
 					btnFastForward.setText("Play");
 				} else {

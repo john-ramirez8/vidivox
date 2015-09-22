@@ -18,6 +18,8 @@ Volume control - Completed (John/Michael)
 -Fixed minor issues with vol up and down buttons
 
 Add mp3 to video file - TODO
+-Added most of the functionality to this, I've tested the commands they work in terminal
+-Problem occurs due to trying to find the associated files (they might be in different directories etc)
 
 Voice adding function (Includes converting festival to mp3 and test playing the sound) - Completed Michael/John
 -Fixed process builder

@@ -53,6 +53,7 @@ public class Menu extends JFrame {
 				File vid = fo.openFile();
 				if (vid != null){
 					setVisible(false);
+					VideoWindow.vidName = vid.getName();
 					final VideoWindow vp = new VideoWindow(vid.getAbsolutePath());
 					vp.setVisible(true);
 				}
