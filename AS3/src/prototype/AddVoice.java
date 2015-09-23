@@ -13,12 +13,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class AddVoice extends JFrame {
 
 	private JPanel contentPane;
@@ -92,14 +90,19 @@ public class AddVoice extends JFrame {
 					commentary = textArea.getText();
 					String cmd = "echo " + "\"" + commentary + "\"" + " | text2wave -o " + mp3 + ".wav";
 					String cmd2 = "ffmpeg -i " + mp3 + ".wav" + " -f mp3 " + mp3 + ".mp3";
+					String cmd3 = "rm " + mp3 + ".wav";
+					
 					ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
 					ProcessBuilder pb2 = new ProcessBuilder("/bin/bash", "-c", cmd2);
+					ProcessBuilder pb3 = new ProcessBuilder("/bin/bash", "-c", cmd3);
 					
 					try {
 						Process p = pb.start();
 						p.waitFor();
 						Process p2 = pb2.start();
 						p2.waitFor();
+						Process p3 = pb3.start();
+						p3.waitFor();
 						
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block

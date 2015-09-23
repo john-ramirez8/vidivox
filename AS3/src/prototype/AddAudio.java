@@ -12,17 +12,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class AddAudio extends JFrame {
 
 	private JPanel contentPane;
 	private final String path;
+	private AudioToVideo bgTask;
 	
 	public AddAudio(String videoPath) {
 		
@@ -57,28 +55,8 @@ public class AddAudio extends JFrame {
 				File mp3 = fo.openFile();
 				if (mp3 != null){
 					setVisible(false);
-					
-					//Extracting audio from video, combining two audio, adding audio to a new video file
-					String cmd1 = "ffmpeg -i " + path + " " +  path.substring(0,path.length()-4) + ".mp3";
-					String cmd2 = "ffmpeg -i " + path.substring(0,path.length()-4) + ".mp3 -i " + mp3.getAbsolutePath() + " -filter_complex amix=inputs=2 " + path.substring(0,path.length()-4) + "_combined.mp3";
-					String cmd3 = "ffmpeg -i " + path + " -i " + path.substring(0,path.length()-4) + "_combined.mp3 -map 0:v -map 1:a " + path.substring(0,path.length()-4) + "_new.avi";
-					
-					ProcessBuilder pb1 = new ProcessBuilder("/bin/bash", "-c", cmd1);
-					ProcessBuilder pb2 = new ProcessBuilder("/bin/bash", "-c", cmd2);
-					ProcessBuilder pb3 = new ProcessBuilder("/bin/bash", "-c", cmd3);
-
-					try {			
-						Process p1 = pb1.start();
-						p1.waitFor();
-						Process p2 = pb2.start();
-						p2.waitFor();
-						Process p3 = pb3.start();
-						p3.waitFor();
-						JOptionPane.showMessageDialog(contentPane, "Successfully saved new mp4.");
-					} catch (IOException | InterruptedException e1) {
-						 //TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					bgTask = new AudioToVideo(path, mp3, contentPane);
+					bgTask.execute();
 				}		
 			}
 		});
