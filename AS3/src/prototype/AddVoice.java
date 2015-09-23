@@ -90,7 +90,7 @@ public class AddVoice extends JFrame {
 				if (mp3 != null) {
 					mp3 = mp3.substring(0, mp3.length() - 4);
 					commentary = textArea.getText();
-					String cmd = "echo " + "\"" + commentary + "\"" + " |text2wave -o " + mp3 + ".wav";
+					String cmd = "echo " + "\"" + commentary + "\"" + " | text2wave -o " + mp3 + ".wav";
 					String cmd2 = "ffmpeg -i " + mp3 + ".wav" + " -f mp3 " + mp3 + ".mp3";
 					ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
 					ProcessBuilder pb2 = new ProcessBuilder("/bin/bash", "-c", cmd2);

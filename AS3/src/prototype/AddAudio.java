@@ -22,8 +22,12 @@ import java.awt.event.ActionEvent;
 public class AddAudio extends JFrame {
 
 	private JPanel contentPane;
+	private final String path;
 	
-	public AddAudio() {
+	public AddAudio(String videoPath) {
+		
+		this.path = videoPath;
+		
 		//Setting up the contentPanel
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setLocation(100, 100);
@@ -35,7 +39,8 @@ public class AddAudio extends JFrame {
 		setResizable(false);
 		
 		//Component declarations
-		JLabel lblMessage = new JLabel("Choose an mp3 file to add");
+		JLabel lblMessage = new JLabel("Choose an mp3 f"
+				+ "ile to add");
 		JButton btnSearch = new JButton("Search");
 		JButton btnCancel = new JButton("Cancel");
 		JPanel buttonPane = new JPanel();
@@ -52,34 +57,33 @@ public class AddAudio extends JFrame {
 				File mp3 = fo.openFile();
 				if (mp3 != null){
 					setVisible(false);
-					String originalVid = VideoWindow.vidName;
 					
 					//Extracting audio from video, combining two audio, adding audio to a new video file
-					String cmd1 = "ffmpeg -i " + originalVid + " " +  originalVid.substring(0,originalVid.length()-4) + ".mp3";
-					String cmd2 = "ffmpeg -i " + originalVid.substring(0,originalVid.length()-4) + ".mp3 -i " + mp3.getName() + " -filter_complex amix=inputs=2 combined.mp3";
-					String cmd3 = "ffmpeg -i " + originalVid + " -i combined.mp3 -map 0:v -map 1:a " + originalVid.substring(0,originalVid.length()-4) + "_new.mp4";
+					String cmd1 = "ffmpeg -i " + path + " " +  path.substring(0,path.length()-4) + ".mp3";
+					String cmd2 = "ffmpeg -i " + path.substring(0,path.length()-4) + ".mp3 -i " + mp3.getAbsolutePath() + " -filter_complex amix=inputs=2 " + path.substring(0,path.length()-4) + "_combined.mp3";
+					String cmd3 = "ffmpeg -i " + path + " -i " + path.substring(0,path.length()-4) + "_combined.mp3 -map 0:v -map 1:a " + path.substring(0,path.length()-4) + "_new.avi";
 					
 					ProcessBuilder pb1 = new ProcessBuilder("/bin/bash", "-c", cmd1);
 					ProcessBuilder pb2 = new ProcessBuilder("/bin/bash", "-c", cmd2);
 					ProcessBuilder pb3 = new ProcessBuilder("/bin/bash", "-c", cmd3);
 
-					//issues here with trying to find the file and therefore the commands fail
-					try {					
+					try {			
 						Process p1 = pb1.start();
 						p1.waitFor();
 						Process p2 = pb2.start();
 						p2.waitFor();
 						Process p3 = pb3.start();
 						p3.waitFor();
+						JOptionPane.showMessageDialog(contentPane, "Successfully saved new mp4.");
 					} catch (IOException | InterruptedException e1) {
-						// TODO Auto-generated catch block
+						 //TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-
-				}
-				
+				}		
 			}
 		});
+		
+		
 		btnSearch.setPreferredSize(new Dimension(120,23));
 		
 		//Setting up the cancel button

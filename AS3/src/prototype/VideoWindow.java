@@ -41,8 +41,11 @@ public class VideoWindow extends JFrame {
 	private final EmbeddedMediaPlayer video;
 
 	public VideoWindow(String path) {
+		
+		vidPath = path;
+
 		// JFrames to open
-		final AddAudio aA = new AddAudio();
+		final AddAudio aA = new AddAudio(vidPath);
 		final AddVoice aV = new AddVoice();
 
 		// Setting up the contentPane & JFrame
@@ -56,7 +59,6 @@ public class VideoWindow extends JFrame {
 		setContentPane(contentPane);
 
 		// Setting up media components
-		vidPath = path;
 		mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 		video = mediaPlayerComponent.getMediaPlayer();
 		mediaPlayerComponent.setPreferredSize(new Dimension(854, 480));
@@ -216,7 +218,6 @@ public class VideoWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (btnFastForward.getText().equals(">>>")) {
 					ffTask = new FastForward(video, video.getRate());
-					video.pause();
 					ffTask.execute();
 					btnFastForward.setText("Play");
 				} else {
