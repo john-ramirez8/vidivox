@@ -104,7 +104,7 @@ public class VideoWindow extends JFrame {
 
 		playbackPane.setLayout(new BorderLayout());
 		playbackPane.setBackground(Color.BLACK);
-		
+
 		volumePane.setLayout(new BorderLayout());
 
 		progressPane.setLayout(new BorderLayout(10, 0));
@@ -114,24 +114,15 @@ public class VideoWindow extends JFrame {
 		Timer timer = new Timer(200, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				vidProgress.setMaximum((int) video.getLength());
-				int lengthS = (int) (video.getLength() / 1000);
-				int lengthM = lengthS / 60;
-				lengthS = lengthS - lengthM * 60;
-				if (lengthS < 10) {
-					length.setText(lengthM + ":" + "0" + lengthS);
-				} else {
-					length.setText(lengthM + ":" + lengthS);
-				}
-				int currentS = (int) video.getTime() / 1000;
-				int currentM = currentS / 60;
-				currentS = currentS - currentM * 60;
-				if (currentS < 10) {
-					currentTime.setText(currentM + ":" + "0" + currentS);
-				} else {
-					currentTime.setText(currentM + ":" + currentS);
-				}
 				vidProgress.setValue((int) video.getTime());
+				currentTime.setText(calculateTime((int) video.getTime()));
+				volSlider.setValue(video.getVolume());
+				if (video.isMute() == true) {
+					btnMute.setIcon(new ImageIcon("Images/muted.png"));
+				} else {
+					btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
+				}
+				
 			}
 		});
 		timer.start();
@@ -238,13 +229,6 @@ public class VideoWindow extends JFrame {
 		btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
 		btnMute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (video.isMute() == true) {
-					btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
-					volSlider.setEnabled(true);
-				} else {
-					btnMute.setIcon(new ImageIcon("Images/muted.png"));
-					volSlider.setEnabled(false);
-				}
 				video.mute();
 			}
 		});
@@ -255,6 +239,7 @@ public class VideoWindow extends JFrame {
 		btnVolUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (video.getVolume() < 100) {
+					volSlider.setValueIsAdjusting(true);
 					volSlider.setValue(video.getVolume() + 10);
 				}
 			}
@@ -266,6 +251,7 @@ public class VideoWindow extends JFrame {
 		btnVolDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (video.getVolume() > 0) {
+					volSlider.setValueIsAdjusting(true);
 					volSlider.setValue(video.getVolume() - 10);
 				}
 			}
@@ -282,17 +268,31 @@ public class VideoWindow extends JFrame {
 		volSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				video.setVolume(volSlider.getValue());
+				if (volSlider.getValueIsAdjusting()) {
+					video.setVolume(volSlider.getValue());
+					video.mute(false);
+				}
+			}
+		});
+
+		//Adding a video playing event listener
+		mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+			@Override
+			public void playing(MediaPlayer mediaPlayer) {			
+				//Initializing progress bar and setting time stamps
+				vidProgress.setMaximum((int) video.getLength());
+				//invokes calculateTime() function to get time in 00:00 format
+				length.setText(calculateTime((int) video.getLength()));
 			}
 		});
 		
-		//Adding a video finished event listener
+		// Adding a video finished event listener
 		mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-		    @Override
-		    public void finished(MediaPlayer mediaPlayer) {
-		        mediaPlayerComponent.setVisible(false);
-		        JOptionPane.showMessageDialog(contentPane, "Video has finished playing");
-		    }
+			@Override
+			public void finished(MediaPlayer mediaPlayer) {
+				mediaPlayerComponent.setVisible(false);
+				JOptionPane.showMessageDialog(contentPane, "Video has finished playing");
+			}
 		});
 
 		// Adding all components to the panel
@@ -328,6 +328,17 @@ public class VideoWindow extends JFrame {
 		pack();
 
 		// Playing video specified
-		video.playMedia(vidPath);
+		video.startMedia(path);
+	}
+	
+	private String calculateTime(int time){		
+		int lengthS = time / 1000;
+		int lengthM = lengthS / 60;
+		lengthS = lengthS - lengthM * 60;
+		if (lengthS < 10) {
+			return lengthM + ":" + "0" + lengthS;
+		} else {
+			return lengthM + ":" + lengthS;
+		}
 	}
 }
