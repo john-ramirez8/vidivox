@@ -49,7 +49,7 @@ public class FileOpener {
 			savedFile = fc.getSelectedFile();
 			String extension = savedFile.toString().substring(savedFile.toString().length() - 4);
 			if (extension.equals(desiredExtension) == false) {
-				JOptionPane.showMessageDialog(parentFrame, errMessage,"File type Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(parentFrame, "Please end your file name with " + desiredExtension,"File type Error", JOptionPane.ERROR_MESSAGE);
 				return saveFile();
 			} else {
 				return savedFile.getAbsolutePath();
