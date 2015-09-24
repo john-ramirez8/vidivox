@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import helpers.FileOpener;
+import helpers.Main;
 
 import javax.swing.JLabel;
 import java.awt.GridLayout;
@@ -38,7 +39,9 @@ public class Menu extends JFrame {
 		final FileOpener fo = new FileOpener(".avi", this);
 		
 		//Setting up the label
-		ImageIcon img = new ImageIcon("Images/logo.png");
+		//ImageIcon img = new ImageIcon("resources/images/logo.png");
+		ImageIcon img = new ImageIcon(Main.class.getResource("/images/logo.png"));
+
 		lblVidiVox.setIcon(img);
 		lblVidiVox.setPreferredSize(new Dimension(300, 80));
 		

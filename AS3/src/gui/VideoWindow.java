@@ -18,6 +18,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import helpers.FileOpener;
+import helpers.Main;
 import helpers.WindowManager;
 import swingworker.FastForward;
 import swingworker.Rewind;
@@ -123,9 +124,9 @@ public class VideoWindow extends JFrame {
 				currentTime.setText(calculateTime((int) video.getTime()));
 				volSlider.setValue(video.getVolume());
 				if (video.isMute() == true) {
-					btnMute.setIcon(new ImageIcon("Images/muted.png"));
+					btnMute.setIcon(new ImageIcon(Main.class.getResource("/images/muted.png")));
 				} else {
-					btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
+					btnMute.setIcon(new ImageIcon(Main.class.getResource("/images/unmuted.png")));
 				}
 
 			}
@@ -187,14 +188,14 @@ public class VideoWindow extends JFrame {
 		});
 
 		// Setting up the play/pause button
-		btnPlay.setIcon(new ImageIcon("Images/pause.png"));
+		btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
 		btnPlay.setPreferredSize(new Dimension(80, 80));
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (video.isPlaying() == true) {
-					btnPlay.setIcon(new ImageIcon("Images/play.png"));
+					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
 				} else {
-					btnPlay.setIcon(new ImageIcon("Images/pause.png"));
+					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
 					if (status.equals("ff")) {
 						ffTask.cancel(true);
 						video.mute(false);
@@ -212,7 +213,7 @@ public class VideoWindow extends JFrame {
 		});
 
 		// Setting up the rewind button
-		btnRewind.setIcon(new ImageIcon("Images/rw.png"));
+		btnRewind.setIcon(new ImageIcon(Main.class.getResource("/images/rw.png")));
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setEnableAudioCont(false);
@@ -222,7 +223,7 @@ public class VideoWindow extends JFrame {
 					rwTask = new Rewind(video);
 					rwTask.execute();
 					video.pause();
-					btnPlay.setIcon(new ImageIcon("Images/play.png"));
+					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
 				} else if (status.equals("ff") == true){
 					status = "rw";
 					video.mute(true);
@@ -234,7 +235,7 @@ public class VideoWindow extends JFrame {
 		});
 
 		// Setting up the fast forward button
-		btnFastForward.setIcon(new ImageIcon("Images/ff.png"));
+		btnFastForward.setIcon(new ImageIcon(Main.class.getResource("/images/ff.png")));
 		btnFastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setEnableAudioCont(false);
@@ -244,7 +245,7 @@ public class VideoWindow extends JFrame {
 					ffTask = new FastForward(video);
 					ffTask.execute();
 					video.pause();
-					btnPlay.setIcon(new ImageIcon("Images/play.png"));
+					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
 				} else if (status.equals("rw") == true){
 					status = "ff";
 					video.mute(true);
@@ -257,7 +258,7 @@ public class VideoWindow extends JFrame {
 
 		// Setting up the mute button
 		btnMute.setPreferredSize(new Dimension(35, 35));
-		btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
+		btnMute.setIcon(new ImageIcon(Main.class.getResource("/images/unmuted.png")));
 		btnMute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				video.mute();
@@ -265,7 +266,7 @@ public class VideoWindow extends JFrame {
 		});
 
 		// Setting up the volume up button
-		btnVolUp.setIcon(new ImageIcon("Images/volUp.png"));
+		btnVolUp.setIcon(new ImageIcon(Main.class.getResource("/images/volUp.png")));
 		btnVolUp.setPreferredSize(new Dimension(35, 35));
 		btnVolUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -277,7 +278,7 @@ public class VideoWindow extends JFrame {
 		});
 
 		// Setting up the volume down button
-		btnVolDown.setIcon(new ImageIcon("Images/volDown.png"));
+		btnVolDown.setIcon(new ImageIcon(Main.class.getResource("/images/volDown.png")));
 		btnVolDown.setPreferredSize(new Dimension(35, 35));
 		btnVolDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
