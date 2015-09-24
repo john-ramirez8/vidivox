@@ -3,8 +3,10 @@ package prototype;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
 public class AudioToVideo extends SwingWorker<Void, Void> {
@@ -13,12 +15,16 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 	private File mp3;
 	private JPanel parentPanel;
 	private String newVideoName;
+	private ProgressBar parentFrame;
+	private JProgressBar progressBar;
 	
-	public AudioToVideo(String videoPath, File mp3, JPanel parentPanel, String newVideoName) {
+	public AudioToVideo(String videoPath, File mp3, JPanel parentPanel, String newVideoName, ProgressBar parentFrame, JProgressBar progressBar) {
 		this.videoPath = videoPath;
 		this.mp3 = mp3;
 		this.parentPanel = parentPanel;
 		this.newVideoName = newVideoName;
+		this.parentFrame = parentFrame;
+		this.progressBar = progressBar;
 	}
 	
 	public Void doInBackground() {
@@ -60,6 +66,8 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 	}
 	
 	protected void done() {
+		parentFrame.setVisible(false);
+		progressBar.setIndeterminate(false);
 		JOptionPane.showMessageDialog(parentPanel, "Successfully saved new video in " + newVideoName);
 	}
 }

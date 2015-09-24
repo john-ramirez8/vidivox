@@ -25,6 +25,7 @@ public class AddAudio extends JFrame {
 	private JPanel contentPane;
 	private final String path;
 	private AudioToVideo bgTask;
+	private ProgressBar progressBar;
 	
 	public AddAudio(String videoPath) throws Exception {
 		
@@ -41,8 +42,7 @@ public class AddAudio extends JFrame {
 		setResizable(false);
 		
 		//Component declarations
-		JLabel lblMessage = new JLabel("Choose an mp3 f"
-				+ "ile to add");
+		JLabel lblMessage = new JLabel("Choose an mp3 file to add");
 		JButton btnSearch = new JButton("Search");
 		JButton btnCancel = new JButton("Cancel");
 		JPanel buttonPane = new JPanel();
@@ -59,11 +59,11 @@ public class AddAudio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				File mp3 = fo.openFile();
 				if (mp3 != null){
+					JOptionPane.showMessageDialog(contentPane, "Now choose the name and where to save the file");
 					String newVideoName = videoOpener.saveFile();
 
-					bgTask = new AudioToVideo(path, mp3, contentPane, newVideoName);
-					bgTask.execute();					
-
+					progressBar = new ProgressBar(path, mp3, newVideoName);				
+					progressBar.setVisible(true);
 					setVisible(false);
 					}		
 			}
