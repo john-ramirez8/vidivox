@@ -111,31 +111,13 @@ public class VideoWindow extends JFrame {
 		Timer timer = new Timer(200, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-				vidProgress.setMaximum((int) video.getLength());
-				int lengthS = (int) (video.getLength() / 1000);
-				int lengthM = lengthS / 60;
-				lengthS = lengthS - lengthM * 60;
-				if (lengthS < 10) {
-					length.setText(lengthM + ":" + "0" + lengthS);
-				} else {
-				}
-				int currentS = (int) video.getTime() / 1000;
-				int currentM = currentS / 60;
-				currentS = currentS - currentM * 60;
-				if (currentS < 10) {
-					currentTime.setText(currentM + ":" + "0" + currentS);
-				} else {
-					currentTime.setText(currentM + ":" + currentS);
-				}
-=======
->>>>>>> refs/remotes/origin/master
 				vidProgress.setValue((int) video.getTime());
 				currentTime.setText(calculateTime((int) video.getTime()));
 				volSlider.setValue(video.getVolume());
 				if (video.isMute() == true) {
 					btnMute.setIcon(new ImageIcon("Images/muted.png"));
 				} else {
+
 					btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
 				}
 				
@@ -202,7 +184,6 @@ public class VideoWindow extends JFrame {
 		btnPlay.setPreferredSize(new Dimension(80, 80));
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				if (video.isPlaying() == true) {
 					btnPlay.setIcon(new ImageIcon("Images/play.png"));
 				} else {
