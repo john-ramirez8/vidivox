@@ -197,12 +197,12 @@ public class VideoWindow extends JFrame {
 					btnPlay.setIcon(new ImageIcon("Images/pause.png"));
 					if (status.equals("ff")) {
 						ffTask.cancel(true);
-						video.mute();
+						video.mute(false);
 						status = "normal";
 						setEnableAudioCont(true);
 					} else if (status.equals("rw")) {
 						rwTask.cancel(true);
-						video.mute();
+						video.mute(false);
 						status = "normal";
 						setEnableAudioCont(true);
 					}
@@ -218,14 +218,14 @@ public class VideoWindow extends JFrame {
 				setEnableAudioCont(false);
 				if (status.equals("normal") == true) {
 					status = "rw";
-					video.mute();
+					video.mute(true);
 					rwTask = new Rewind(video);
 					rwTask.execute();
 					video.pause();
 					btnPlay.setIcon(new ImageIcon("Images/play.png"));
 				} else if (status.equals("ff") == true){
 					status = "rw";
-					video.mute();
+					video.mute(true);
 					rwTask = new Rewind(video);
 					ffTask.cancel(true);
 					rwTask.execute();
@@ -240,14 +240,14 @@ public class VideoWindow extends JFrame {
 				setEnableAudioCont(false);
 				if (status.equals("normal") == true) {
 					status = "ff";
-					video.mute();
+					video.mute(true);
 					ffTask = new FastForward(video);
 					ffTask.execute();
 					video.pause();
 					btnPlay.setIcon(new ImageIcon("Images/play.png"));
 				} else if (status.equals("rw") == true){
 					status = "ff";
-					video.mute();
+					video.mute(true);
 					ffTask = new FastForward(video);
 					rwTask.cancel(true);
 					ffTask.execute();
