@@ -39,6 +39,8 @@ public class VideoWindow extends JFrame {
 	private FastForward ffTask;
 	private Rewind rwTask;
 
+	private String status = "normal";
+
 	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	private final EmbeddedMediaPlayer video;
 
@@ -120,7 +122,7 @@ public class VideoWindow extends JFrame {
 
 					btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
 				}
-				
+
 			}
 		});
 		timer.start();
@@ -188,6 +190,12 @@ public class VideoWindow extends JFrame {
 					btnPlay.setIcon(new ImageIcon("Images/play.png"));
 				} else {
 					btnPlay.setIcon(new ImageIcon("Images/pause.png"));
+					if (status.equals("ff")) {
+						ffTask.cancel(true);
+						status = "normal";
+					} else if (status.equals("rw")) {
+						rwTask.cancel(true);
+					}
 				}
 				video.pause();
 			}
@@ -196,28 +204,22 @@ public class VideoWindow extends JFrame {
 		// Setting up the rewind button
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (rwTask.isCancelled()) {
-					rwTask = new Rewind(video);
-					rwTask.execute();
-					btnRewind.setText("Play");
-				} else {
-					rwTask.cancel(true);
-					btnRewind.setText("<<<");
-				}
+				status = "rw";
+				rwTask = new Rewind(video);
+				rwTask.execute();
+				video.pause();
+				btnPlay.setIcon(new ImageIcon("Images/play.png"));
 			}
 		});
 
 		// Setting up the fast forward button
 		btnFastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (btnFastForward.getText().equals(">>>")) {
-					ffTask = new FastForward(video);
-					ffTask.execute();
-					btnFastForward.setText("Play");
-				} else {
-					ffTask.cancel(true);
-					btnFastForward.setText(">>>");
-				}
+				status = "ff";
+				ffTask = new FastForward(video);
+				ffTask.execute();
+				video.pause();
+				btnPlay.setIcon(new ImageIcon("Images/play.png"));
 			}
 		});
 
@@ -272,17 +274,17 @@ public class VideoWindow extends JFrame {
 			}
 		});
 
-		//Adding a video playing event listener
+		// Adding a video playing event listener
 		mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 			@Override
-			public void playing(MediaPlayer mediaPlayer) {			
-				//Initializing progress bar and setting time stamps
+			public void playing(MediaPlayer mediaPlayer) {
+				// Initializing progress bar and setting time stamps
 				vidProgress.setMaximum((int) video.getLength());
-				//invokes calculateTime() function to get time in 00:00 format
+				// invokes calculateTime() function to get time in 00:00 format
 				length.setText(calculateTime((int) video.getLength()));
 			}
 		});
-		
+
 		// Adding a video finished event listener
 		mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 			@Override
@@ -327,8 +329,8 @@ public class VideoWindow extends JFrame {
 		// Playing video specified
 		video.startMedia(path);
 	}
-	
-	private String calculateTime(int time){		
+
+	private String calculateTime(int time) {
 		int lengthS = time / 1000;
 		int lengthM = lengthS / 60;
 		lengthS = lengthS - lengthM * 60;
