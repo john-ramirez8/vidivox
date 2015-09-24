@@ -50,7 +50,7 @@ public class FileOpener {
 			String extension = savedFile.toString().substring(savedFile.toString().length() - 4);
 			if (extension.equals(desiredExtension) == false) {
 				JOptionPane.showMessageDialog(parentFrame, errMessage,"File type Error", JOptionPane.ERROR_MESSAGE);
-				return null;
+				return saveFile();
 			} else {
 				return savedFile.getAbsolutePath();
 			}
