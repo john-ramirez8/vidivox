@@ -1,4 +1,4 @@
-package prototype;
+package gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
+
+import swingworker.AudioToVideo;
 
 public class ProgressBar extends JFrame {
 	

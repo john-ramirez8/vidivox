@@ -1,4 +1,4 @@
-package prototype;
+package swingworker;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
+
+import gui.ProgressBar;
 
 public class AudioToVideo extends SwingWorker<Void, Void> {
 

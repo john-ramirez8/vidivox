@@ -1,4 +1,4 @@
-package prototype;
+package helpers;
 
 import java.io.File;
 import java.io.FileWriter;

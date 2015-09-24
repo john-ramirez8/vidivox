@@ -1,4 +1,4 @@
-package prototype;
+package swingworker;
 
 import javax.swing.SwingWorker;
 
@@ -8,7 +8,7 @@ public class FastForward extends SwingWorker<Void, Void> {
 
 	private EmbeddedMediaPlayer video;
 	
-	FastForward(EmbeddedMediaPlayer video) {
+	public FastForward(EmbeddedMediaPlayer video) {
 		this.video = video;
 	}
 	

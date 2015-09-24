@@ -1,8 +1,11 @@
-package prototype;
+package gui;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import helpers.FileOpener;
+
 import javax.swing.JLabel;
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;

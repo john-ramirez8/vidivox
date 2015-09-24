@@ -1,9 +1,11 @@
-package prototype;
+package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import helpers.FileOpener;
+import helpers.WindowManager;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 import javax.swing.JLabel;

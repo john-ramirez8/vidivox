@@ -1,4 +1,4 @@
-package prototype;
+package helpers;
 
 import java.io.File;
 
@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import gui.Menu;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 
 //This is the class responsible for launching the application

@@ -1,4 +1,4 @@
-package prototype;
+package helpers;
 
 import java.awt.Point;
 import javax.swing.JFrame;

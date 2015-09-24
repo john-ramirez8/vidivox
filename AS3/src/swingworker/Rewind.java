@@ -1,4 +1,4 @@
-package prototype;
+package swingworker;
 
 import javax.swing.SwingWorker;
 
@@ -8,7 +8,7 @@ public class Rewind extends SwingWorker<Void, Void> {
 
 	private EmbeddedMediaPlayer video;
 	
-	Rewind(EmbeddedMediaPlayer video) {
+	public Rewind(EmbeddedMediaPlayer video) {
 		this.video = video;
 	}
 	

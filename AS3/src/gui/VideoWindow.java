@@ -1,4 +1,4 @@
-package prototype;
+package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,6 +17,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import helpers.FileOpener;
+import helpers.WindowManager;
+import swingworker.FastForward;
+import swingworker.Rewind;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
