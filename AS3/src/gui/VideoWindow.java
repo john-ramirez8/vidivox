@@ -68,7 +68,7 @@ public class VideoWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100, 100);
 		setTitle("VidiVox Prototype");
-		setMinimumSize(new Dimension(500, 421));
+		setMinimumSize(new Dimension(550, 421));
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 10, 0));
 		contentPane.setLayout(new BorderLayout());
