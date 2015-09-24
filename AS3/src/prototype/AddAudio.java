@@ -40,6 +40,9 @@ public class AddAudio extends JFrame {
 		setTitle("Add Audio");
 		setResizable(false);
 		
+		//Setting up window manager
+		final WindowManager wm = new WindowManager(contentPane); 
+		
 		//Component declarations
 		JLabel lblMessage = new JLabel("Choose an mp3 file to add");
 		JButton btnSearch = new JButton("Search");
@@ -63,7 +66,7 @@ public class AddAudio extends JFrame {
 
 					if (newVideoName != null) {
 						progressBar = new ProgressBar(path, mp3, newVideoName);				
-						progressBar.setVisible(true);
+						wm.openWindow(progressBar);
 					}
 					setVisible(false);
 					}		
