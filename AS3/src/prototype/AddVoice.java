@@ -22,6 +22,7 @@ public class AddVoice extends JFrame {
 	private JPanel contentPane;
 	private JTextArea textArea;
 	private String commentary;
+	private CreateMP3 mp3Task;
 
 	public AddVoice() {
 		// Setting up the contentPanel
@@ -88,30 +89,9 @@ public class AddVoice extends JFrame {
 				if (mp3 != null) {
 					mp3 = mp3.substring(0, mp3.length() - 4);
 					commentary = textArea.getText();
-					String cmd = "echo " + "\"" + commentary + "\"" + " | text2wave -o " + mp3 + ".wav";
-					String cmd2 = "ffmpeg -i " + mp3 + ".wav" + " -f mp3 " + mp3 + ".mp3";
-					String cmd3 = "rm " + mp3 + ".wav";
 					
-					ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
-					ProcessBuilder pb2 = new ProcessBuilder("/bin/bash", "-c", cmd2);
-					ProcessBuilder pb3 = new ProcessBuilder("/bin/bash", "-c", cmd3);
-					
-					try {
-						Process p = pb.start();
-						p.waitFor();
-						Process p2 = pb2.start();
-						p2.waitFor();
-						Process p3 = pb3.start();
-						p3.waitFor();
-						
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					JOptionPane.showMessageDialog(contentPane, "Successfully saved");
+					mp3Task = new CreateMP3(commentary, mp3, contentPane);
+					mp3Task.execute();
 				}
 
 			}

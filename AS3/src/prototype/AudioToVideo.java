@@ -44,12 +44,15 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 			Process p4 = pb4.start();
 			p4.waitFor();
 			
-			JOptionPane.showMessageDialog(parentPanel, "Successfully saved new video in " + pathWithoutExtension + "_new.avi");
 		} catch (IOException | InterruptedException e1) {
 			 //TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		return null;
+	}
+	
+	protected void done() {
+		JOptionPane.showMessageDialog(parentPanel, "Successfully saved new video in " + videoPath.substring(0,videoPath.length()-4) + "_with_" + mp3.getName().substring(0,mp3.getName().length()-4) + ".avi");
 	}
 }
