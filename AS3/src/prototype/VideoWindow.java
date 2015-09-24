@@ -79,8 +79,8 @@ public class VideoWindow extends JFrame {
 		JPanel playbackPane = new JPanel();
 		JPanel buttonsPane = new JPanel();
 		JPanel progressPane = new JPanel();
-		final JButton btnAddAudio = new JButton("Add Audio");
-		final JButton btnAddVoice = new JButton("Add Voice");
+		final JButton btnAddAudio = new JButton("Add Audio MP3");
+		final JButton btnAddVoice = new JButton("Create Voice MP3");
 		final JButton btnPlay = new JButton();
 		final JButton btnRewind = new JButton("<<<");
 		final JButton btnFastForward = new JButton(">>>");
