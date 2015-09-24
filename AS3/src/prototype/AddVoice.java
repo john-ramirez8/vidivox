@@ -61,7 +61,7 @@ public class AddVoice extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				commentary = textArea.getText();
 				if (commentary.isEmpty() || commentary.trim().length() == 0) {
-					JOptionPane.showMessageDialog(contentPane, "Text can not be blank");
+					JOptionPane.showMessageDialog(contentPane, "Text can not be blank", "Text Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					String cmd = "echo " + commentary + " | festival --tts";
 					ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
