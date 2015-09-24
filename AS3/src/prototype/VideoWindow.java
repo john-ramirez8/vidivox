@@ -83,8 +83,8 @@ public class VideoWindow extends JFrame {
 		final JButton btnAddAudio = new JButton("Add Audio MP3");
 		final JButton btnAddVoice = new JButton("Create Voice MP3");
 		final JButton btnPlay = new JButton();
-		final JButton btnRewind = new JButton("<<<");
-		final JButton btnFastForward = new JButton(">>>");
+		final JButton btnRewind = new JButton();
+		final JButton btnFastForward = new JButton();
 		final JButton btnVolUp = new JButton();
 		final JButton btnVolDown = new JButton();
 		final JButton btnMute = new JButton();
@@ -202,6 +202,7 @@ public class VideoWindow extends JFrame {
 		});
 
 		// Setting up the rewind button
+		btnRewind.setIcon(new ImageIcon("Images/rw.png"));
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				status = "rw";
@@ -213,6 +214,7 @@ public class VideoWindow extends JFrame {
 		});
 
 		// Setting up the fast forward button
+		btnFastForward.setIcon(new ImageIcon("Images/ff.png"));
 		btnFastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				status = "ff";
