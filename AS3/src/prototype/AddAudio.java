@@ -24,7 +24,6 @@ public class AddAudio extends JFrame {
 
 	private JPanel contentPane;
 	private final String path;
-	private AudioToVideo bgTask;
 	private ProgressBar progressBar;
 	
 	public AddAudio(String videoPath) throws Exception {
@@ -62,8 +61,10 @@ public class AddAudio extends JFrame {
 					JOptionPane.showMessageDialog(contentPane, "Now choose the name and where to save the file");
 					String newVideoName = videoOpener.saveFile();
 
-					progressBar = new ProgressBar(path, mp3, newVideoName);				
-					progressBar.setVisible(true);
+					if (newVideoName != null) {
+						progressBar = new ProgressBar(path, mp3, newVideoName);				
+						progressBar.setVisible(true);
+					}
 					setVisible(false);
 					}		
 			}
