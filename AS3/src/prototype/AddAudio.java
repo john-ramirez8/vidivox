@@ -3,6 +3,9 @@ package prototype;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -13,6 +16,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
@@ -22,7 +26,7 @@ public class AddAudio extends JFrame {
 	private final String path;
 	private AudioToVideo bgTask;
 	
-	public AddAudio(String videoPath) {
+	public AddAudio(String videoPath) throws Exception {
 		
 		this.path = videoPath;
 		
@@ -44,7 +48,8 @@ public class AddAudio extends JFrame {
 		JPanel buttonPane = new JPanel();
 		
 		final FileOpener fo = new FileOpener(".mp3", this);
-		
+		final FileOpener videoOpener = new FileOpener(".avi", this);
+
 		//Setting up the label
 		lblMessage.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
@@ -54,10 +59,13 @@ public class AddAudio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				File mp3 = fo.openFile();
 				if (mp3 != null){
+					String newVideoName = videoOpener.saveFile();
+
+					bgTask = new AudioToVideo(path, mp3, contentPane, newVideoName);
+					bgTask.execute();					
+
 					setVisible(false);
-					bgTask = new AudioToVideo(path, mp3, contentPane);
-					bgTask.execute();
-				}		
+					}		
 			}
 		});
 		

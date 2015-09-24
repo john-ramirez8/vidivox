@@ -19,6 +19,7 @@ public class CreateMP3 extends SwingWorker<Void, Void> {
 	
 	protected Void doInBackground() {
 		
+		//Creating a .wav file from text, converting .wav file to .mp3 file, removing .wav file
 		String cmd = "echo " + "\"" + commentary + "\"" + " | text2wave -o " + mp3Name + ".wav";
 		String cmd2 = "ffmpeg -i " + mp3Name + ".wav" + " -f mp3 " + mp3Name + ".mp3";
 		String cmd3 = "rm " + mp3Name + ".wav";

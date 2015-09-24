@@ -53,9 +53,15 @@ public class Menu extends JFrame {
 				File vid = fo.openFile();
 				if (vid != null){
 					setVisible(false);
-					VideoWindow.vidName = vid.getName();
-					final VideoWindow vp = new VideoWindow(vid.getAbsolutePath());
-					vp.setVisible(true);
+					
+					try {
+						VideoWindow vp;
+						vp = new VideoWindow(vid.getAbsolutePath());
+						vp.setVisible(true);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}		
 				}
 			}
 		});

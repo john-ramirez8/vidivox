@@ -6,11 +6,10 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 public class FastForward extends SwingWorker<Void, Void> {
 
-	private float rate;
 	private EmbeddedMediaPlayer video;
-	FastForward(EmbeddedMediaPlayer video, float rate) {
+	
+	FastForward(EmbeddedMediaPlayer video) {
 		this.video = video;
-		this.rate = rate;
 	}
 	
 	@Override

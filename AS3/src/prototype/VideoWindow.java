@@ -1,6 +1,7 @@
 package prototype;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
@@ -9,10 +10,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.Timer;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -36,12 +35,11 @@ public class VideoWindow extends JFrame {
 	private JPanel contentPane;
 	private FastForward ffTask;
 	private Rewind rwTask;
-	public static String vidName;
 
 	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	private final EmbeddedMediaPlayer video;
 
-	public VideoWindow(String path) {
+	public VideoWindow(String path) throws Exception {
 
 		vidPath = path;
 
@@ -116,7 +114,6 @@ public class VideoWindow extends JFrame {
 				if (lengthS < 10) {
 					length.setText(lengthM + ":" + "0" + lengthS);
 				} else {
-					length.setText(lengthM + ":" + lengthS);
 				}
 				int currentS = (int) video.getTime() / 1000;
 				int currentM = currentS / 60;
@@ -156,7 +153,6 @@ public class VideoWindow extends JFrame {
 				File vid = fo.openFile();
 				if (vid != null) {
 					vidPath = vid.getAbsolutePath();
-					vidName = vid.getName();
 					video.playMedia(vidPath);
 				}
 			}
@@ -190,6 +186,7 @@ public class VideoWindow extends JFrame {
 		btnPlay.setPreferredSize(new Dimension(80, 80));
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				if (video.isPlaying() == true) {
 					btnPlay.setIcon(new ImageIcon("Images/play.png"));
 				} else {
@@ -202,8 +199,8 @@ public class VideoWindow extends JFrame {
 		// Setting up the rewind button
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (btnRewind.getText().equals("<<<")) {
-					rwTask = new Rewind(video, video.getRate());
+				if (rwTask.isCancelled()) {
+					rwTask = new Rewind(video);
 					rwTask.execute();
 					btnRewind.setText("Play");
 				} else {
@@ -217,7 +214,7 @@ public class VideoWindow extends JFrame {
 		btnFastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (btnFastForward.getText().equals(">>>")) {
-					ffTask = new FastForward(video, video.getRate());
+					ffTask = new FastForward(video);
 					ffTask.execute();
 					btnFastForward.setText("Play");
 				} else {
