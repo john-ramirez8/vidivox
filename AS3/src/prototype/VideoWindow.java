@@ -195,6 +195,7 @@ public class VideoWindow extends JFrame {
 						status = "normal";
 					} else if (status.equals("rw")) {
 						rwTask.cancel(true);
+						status = "normal";
 					}
 				}
 				video.pause();
@@ -205,11 +206,13 @@ public class VideoWindow extends JFrame {
 		btnRewind.setIcon(new ImageIcon("Images/rw.png"));
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				status = "rw";
-				rwTask = new Rewind(video);
-				rwTask.execute();
-				video.pause();
-				btnPlay.setIcon(new ImageIcon("Images/play.png"));
+				if (status.equals("ff") == false) {
+					status = "rw";
+					rwTask = new Rewind(video);
+					rwTask.execute();
+					video.pause();
+					btnPlay.setIcon(new ImageIcon("Images/play.png"));
+				}
 			}
 		});
 
@@ -217,11 +220,13 @@ public class VideoWindow extends JFrame {
 		btnFastForward.setIcon(new ImageIcon("Images/ff.png"));
 		btnFastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				status = "ff";
-				ffTask = new FastForward(video);
-				ffTask.execute();
-				video.pause();
-				btnPlay.setIcon(new ImageIcon("Images/play.png"));
+				if (status.equals("rw") == false) {
+					status = "ff";
+					ffTask = new FastForward(video);
+					ffTask.execute();
+					video.pause();
+					btnPlay.setIcon(new ImageIcon("Images/play.png"));
+				}
 			}
 		});
 
