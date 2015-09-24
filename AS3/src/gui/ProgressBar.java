@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.io.File;
 
 import javax.swing.JFrame;

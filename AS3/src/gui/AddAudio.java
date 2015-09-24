@@ -6,7 +6,6 @@ import javax.swing.border.EmptyBorder;
 
 import helpers.FileOpener;
 import helpers.WindowManager;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,7 +17,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
