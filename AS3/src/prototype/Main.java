@@ -12,6 +12,7 @@ public class Main {
 		
 		//Sets look and feel to the users Systems look and feel
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		UIManager.put("Slider.paintValue", false);
 		
 		//Finding the users vlcj library
 		new NativeDiscovery().discover();

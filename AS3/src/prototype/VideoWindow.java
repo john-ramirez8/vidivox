@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -36,12 +37,12 @@ public class VideoWindow extends JFrame {
 	private FastForward ffTask;
 	private Rewind rwTask;
 	public static String vidName;
-	
+
 	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	private final EmbeddedMediaPlayer video;
 
 	public VideoWindow(String path) {
-		
+
 		vidPath = path;
 
 		// JFrames to open
@@ -52,7 +53,7 @@ public class VideoWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100, 100);
 		setTitle("VidiVox Prototype");
-		setMinimumSize(new Dimension (500,421));
+		setMinimumSize(new Dimension(500, 421));
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 10, 0));
 		contentPane.setLayout(new BorderLayout());
@@ -62,7 +63,7 @@ public class VideoWindow extends JFrame {
 		mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 		video = mediaPlayerComponent.getMediaPlayer();
 		mediaPlayerComponent.setPreferredSize(new Dimension(854, 480));
-		
+
 		final FileOpener fo = new FileOpener(".avi", this);
 
 		// Setting up WindowMananger
@@ -85,84 +86,83 @@ public class VideoWindow extends JFrame {
 		final JButton btnVolDown = new JButton();
 		final JButton btnMute = new JButton();
 		final JSlider volSlider = new JSlider();
-        final JProgressBar vidProgress = new JProgressBar(0, 0);
-        final JLabel length = new JLabel();
-        final JLabel currentTime = new JLabel();
-        
+		final JSlider vidProgress = new JSlider();
+		final JLabel length = new JLabel();
+		final JLabel currentTime = new JLabel();
+
 		// Setting up the nested panels
 		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 		buttonsPane.setBorder(new EmptyBorder(10, 0, 0, 0));
-		
+
 		addPane.setLayout(new GridLayout(2, 1, 0, 10));
-		
+
 		playbackButtonPane.setLayout(new BorderLayout(5, 0));
-		
+
 		playbackPane.setLayout(new BorderLayout());
-		
+
 		volumePane.setLayout(new BorderLayout());
-		
-		progressPane.setLayout(new BorderLayout(10,0));
-        progressPane.setBorder(new EmptyBorder(10, 10, 0, 10));
-		
-		//Setting up video progress timer
-        Timer timer = new Timer(100, new ActionListener() {
+
+		progressPane.setLayout(new BorderLayout(10, 0));
+		progressPane.setBorder(new EmptyBorder(10, 10, 0, 10));
+
+		// Setting up video progress timer
+		Timer timer = new Timer(200, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				vidProgress.setMaximum((int) video.getLength());
-				int lengthS = (int) (video.getLength()/1000);
-				int lengthM = lengthS/60;
+				int lengthS = (int) (video.getLength() / 1000);
+				int lengthM = lengthS / 60;
 				lengthS = lengthS - lengthM * 60;
-				if (lengthS < 10){
+				if (lengthS < 10) {
 					length.setText(lengthM + ":" + "0" + lengthS);
 				} else {
 					length.setText(lengthM + ":" + lengthS);
 				}
-				int currentS = (int) video.getTime()/1000;
-				int currentM = currentS/60;
-				currentS = currentS - currentM*60;
-				if (currentS < 10){
+				int currentS = (int) video.getTime() / 1000;
+				int currentM = currentS / 60;
+				currentS = currentS - currentM * 60;
+				if (currentS < 10) {
 					currentTime.setText(currentM + ":" + "0" + currentS);
 				} else {
 					currentTime.setText(currentM + ":" + currentS);
 				}
 				vidProgress.setValue((int) video.getTime());
 			}
-		}); 
-        timer.start();
-		
-		//Setting up a menu
+		});
+		timer.start();
+
+		// Setting up the video progress slider
+		vidProgress.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if (vidProgress.getValueIsAdjusting()) {
+					video.setTime(vidProgress.getValue());
+				}
+			}
+		});
+
+		// Setting up a menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("File");
 		JMenuItem openFile = new JMenuItem("Open file...");
-		JMenuItem saveFile = new JMenuItem("Save file as ...");
 		JMenuItem close = new JMenuItem("Exit program");
 		menu.add(openFile);
-		menu.addSeparator();
-		menu.add(saveFile);
-		menu.addSeparator();
 		menu.add(close);
 		menuBar.add(menu);
-		
-		//Setting up openFile option
+
+		// Setting up openFile option
 		openFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				File vid  = fo.openFile();
-				if (vid != null){
+				File vid = fo.openFile();
+				if (vid != null) {
 					vidPath = vid.getAbsolutePath();
 					vidName = vid.getName();
 					video.playMedia(vidPath);
 				}
 			}
 		});
-		
-		//Setting up save file option
-		saveFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Works");
-			}
-		});
-		
-		//Setting up close option
+
+		// Setting up close option
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -170,7 +170,7 @@ public class VideoWindow extends JFrame {
 		});
 
 		// Setting up the add audio button
-		btnAddAudio.setPreferredSize(new Dimension (140,29));
+		btnAddAudio.setPreferredSize(new Dimension(140, 29));
 		btnAddAudio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				manager.openWindow(aA);
@@ -178,7 +178,7 @@ public class VideoWindow extends JFrame {
 		});
 
 		// Setting up the add voice button
-		btnAddVoice.setPreferredSize(new Dimension (140,29));
+		btnAddVoice.setPreferredSize(new Dimension(140, 29));
 		btnAddVoice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				manager.openWindow(aV);
@@ -190,7 +190,7 @@ public class VideoWindow extends JFrame {
 		btnPlay.setPreferredSize(new Dimension(80, 80));
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (video.isPlaying() == true){
+				if (video.isPlaying() == true) {
 					btnPlay.setIcon(new ImageIcon("Images/play.png"));
 				} else {
 					btnPlay.setIcon(new ImageIcon("Images/pause.png"));
@@ -226,13 +226,13 @@ public class VideoWindow extends JFrame {
 				}
 			}
 		});
-		
+
 		// Setting up the mute button
 		btnMute.setPreferredSize(new Dimension(35, 35));
 		btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
 		btnMute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(video.isMute() == true){
+				if (video.isMute() == true) {
 					btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
 					volSlider.setEnabled(true);
 				} else {
@@ -242,76 +242,74 @@ public class VideoWindow extends JFrame {
 				video.mute();
 			}
 		});
-		
+
 		// Setting up the volume up button
 		btnVolUp.setIcon(new ImageIcon("Images/volUp.png"));
 		btnVolUp.setPreferredSize(new Dimension(35, 35));
 		btnVolUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (video.getVolume() < 100){
+				if (video.getVolume() < 100) {
 					volSlider.setValue(video.getVolume() + 10);
 				}
 			}
 		});
-		
+
 		// Setting up the volume down button
 		btnVolDown.setIcon(new ImageIcon("Images/volDown.png"));
 		btnVolDown.setPreferredSize(new Dimension(35, 35));
 		btnVolDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (video.getVolume() > 0){
+				if (video.getVolume() > 0) {
 					volSlider.setValue(video.getVolume() - 10);
 				}
 			}
 		});
 
-
 		// Setting up the volume slider
-		
 		volSlider.setValue(100);
 		volSlider.setMaximum(100);
 		volSlider.setMinimum(0);
 		volSlider.setMinorTickSpacing(10);
 		volSlider.setPaintTicks(true);
 		volSlider.setSnapToTicks(true);
-		volSlider.setPreferredSize(new Dimension(100,50));
+		volSlider.setPreferredSize(new Dimension(100, 50));
 		volSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				video.setVolume(volSlider.getValue());
 			}
 		});
-  
+
 		// Adding all components to the panel
 		addPane.add(btnAddVoice);
 		addPane.add(btnAddAudio);
-		
+
 		playbackButtonPane.add(btnRewind, BorderLayout.WEST);
 		playbackButtonPane.add(btnPlay, BorderLayout.CENTER);
 		playbackButtonPane.add(btnFastForward, BorderLayout.EAST);
-		
+
 		volumePane.add(volSlider, BorderLayout.NORTH);
 		volumePane.add(volumeButtons, BorderLayout.CENTER);
-		
+
 		volumeButtons.add(btnVolUp);
 		volumeButtons.add(btnVolDown);
 		volumeButtons.add(btnMute);
-		
+
 		buttonsPane.add(addPane);
 		buttonsPane.add(playbackButtonPane);
 		buttonsPane.add(volumePane);
-		
+
 		progressPane.add(length, BorderLayout.EAST);
-        progressPane.add(currentTime, BorderLayout.WEST);
-        progressPane.add(vidProgress, BorderLayout.CENTER);
-        
+		progressPane.add(currentTime, BorderLayout.WEST);
+		progressPane.add(vidProgress, BorderLayout.CENTER);
+
 		playbackPane.add(mediaPlayerComponent, BorderLayout.CENTER);
 		playbackPane.add(progressPane, BorderLayout.SOUTH);
-		
+
 		contentPane.add(buttonsPane, BorderLayout.SOUTH);
 		contentPane.add(playbackPane, BorderLayout.CENTER);
 		contentPane.add(menuBar, BorderLayout.NORTH);
-        
+
 		pack();
 
 		// Playing video specified
