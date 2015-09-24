@@ -119,7 +119,6 @@ public class VideoWindow extends JFrame {
 				if (video.isMute() == true) {
 					btnMute.setIcon(new ImageIcon("Images/muted.png"));
 				} else {
-
 					btnMute.setIcon(new ImageIcon("Images/unmuted.png"));
 				}
 
@@ -206,12 +205,17 @@ public class VideoWindow extends JFrame {
 		btnRewind.setIcon(new ImageIcon("Images/rw.png"));
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (status.equals("ff") == false) {
+				if (status.equals("normal") == true) {
 					status = "rw";
 					rwTask = new Rewind(video);
 					rwTask.execute();
 					video.pause();
 					btnPlay.setIcon(new ImageIcon("Images/play.png"));
+				} else if (status.equals("ff") == true){
+					status = "rw";
+					rwTask = new Rewind(video);
+					ffTask.cancel(true);
+					rwTask.execute();
 				}
 			}
 		});
@@ -220,12 +224,17 @@ public class VideoWindow extends JFrame {
 		btnFastForward.setIcon(new ImageIcon("Images/ff.png"));
 		btnFastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (status.equals("rw") == false) {
+				if (status.equals("normal") == true) {
 					status = "ff";
 					ffTask = new FastForward(video);
 					ffTask.execute();
 					video.pause();
 					btnPlay.setIcon(new ImageIcon("Images/play.png"));
+				} else if (status.equals("rw") == true){
+					status = "ff";
+					ffTask = new FastForward(video);
+					rwTask.cancel(true);
+					ffTask.execute();
 				}
 			}
 		});
