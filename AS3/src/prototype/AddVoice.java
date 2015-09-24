@@ -23,6 +23,7 @@ public class AddVoice extends JFrame {
 	private JTextArea textArea;
 	private String commentary;
 	private CreateMP3 mp3Task;
+	private Festival voiceTask;
 
 	public AddVoice() {
 		// Setting up the contentPanel
@@ -63,12 +64,8 @@ public class AddVoice extends JFrame {
 				if (commentary.isEmpty() || commentary.trim().length() == 0) {
 					JOptionPane.showMessageDialog(contentPane, "Text can not be blank", "Text Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					String cmd = "echo " + commentary + " | festival --tts";
-					ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
-					try {
-						Process p = pb.start();
-					} catch (IOException e1) {
-					}
+					voiceTask = new Festival(commentary);
+					voiceTask.execute();
 				}
 			}
 		});
