@@ -32,14 +32,20 @@ import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class VideoWindow extends JFrame {
-
+	
+	//Declaring useful variables
 	private String vidPath;
 	private WindowManager manager;
 	private JPanel contentPane;
 	private FastForward ffTask;
 	private Rewind rwTask;
-
 	private String status = "normal";
+	
+	//Decalred audio control components below because a method needed to use them
+	private final JButton btnVolUp = new JButton();
+	private final JButton btnVolDown = new JButton();
+	private final JButton btnMute = new JButton();
+	private final JSlider volSlider = new JSlider();
 
 	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	private final EmbeddedMediaPlayer video;
@@ -85,10 +91,6 @@ public class VideoWindow extends JFrame {
 		final JButton btnPlay = new JButton();
 		final JButton btnRewind = new JButton();
 		final JButton btnFastForward = new JButton();
-		final JButton btnVolUp = new JButton();
-		final JButton btnVolDown = new JButton();
-		final JButton btnMute = new JButton();
-		final JSlider volSlider = new JSlider();
 		final JSlider vidProgress = new JSlider();
 		final JLabel length = new JLabel();
 		final JLabel currentTime = new JLabel();
@@ -193,21 +195,12 @@ public class VideoWindow extends JFrame {
 						ffTask.cancel(true);
 						video.mute();
 						status = "normal";
-						volSlider.setEnabled(true);
-						btnMute.setEnabled(true);
-						btnVolUp.setEnabled(true);
-						btnVolDown.setEnabled(true);
-						
-						
+						setEnableAudioCont(true);
 					} else if (status.equals("rw")) {
 						rwTask.cancel(true);
 						video.mute();
 						status = "normal";
-						volSlider.setEnabled(true);
-						btnMute.setEnabled(true);
-						btnVolUp.setEnabled(true);
-						btnVolDown.setEnabled(true);
-						
+						setEnableAudioCont(true);
 					}
 				}
 				video.pause();
@@ -218,10 +211,7 @@ public class VideoWindow extends JFrame {
 		btnRewind.setIcon(new ImageIcon("Images/rw.png"));
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				volSlider.setEnabled(false);
-				btnMute.setEnabled(false);
-				btnVolUp.setEnabled(false);
-				btnVolDown.setEnabled(false);
+				setEnableAudioCont(false);
 				if (status.equals("normal") == true) {
 					status = "rw";
 					video.mute();
@@ -243,10 +233,7 @@ public class VideoWindow extends JFrame {
 		btnFastForward.setIcon(new ImageIcon("Images/ff.png"));
 		btnFastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				volSlider.setEnabled(false);
-				btnMute.setEnabled(false);
-				btnVolUp.setEnabled(false);
-				btnVolDown.setEnabled(false);
+				setEnableAudioCont(false);
 				if (status.equals("normal") == true) {
 					status = "ff";
 					video.mute();
@@ -381,5 +368,13 @@ public class VideoWindow extends JFrame {
 		} else {
 			return lengthM + ":" + lengthS;
 		}
+	}
+	
+	private void setEnableAudioCont(boolean b){
+		volSlider.setEnabled(b);
+		btnMute.setEnabled(b);
+		btnVolUp.setEnabled(b);
+		btnVolDown.setEnabled(b);
+		
 	}
 }
