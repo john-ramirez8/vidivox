@@ -193,10 +193,21 @@ public class VideoWindow extends JFrame {
 						ffTask.cancel(true);
 						video.mute();
 						status = "normal";
+						volSlider.setEnabled(true);
+						btnMute.setEnabled(true);
+						btnVolUp.setEnabled(true);
+						btnVolDown.setEnabled(true);
+						
+						
 					} else if (status.equals("rw")) {
 						rwTask.cancel(true);
 						video.mute();
 						status = "normal";
+						volSlider.setEnabled(true);
+						btnMute.setEnabled(true);
+						btnVolUp.setEnabled(true);
+						btnVolDown.setEnabled(true);
+						
 					}
 				}
 				video.pause();
@@ -207,6 +218,10 @@ public class VideoWindow extends JFrame {
 		btnRewind.setIcon(new ImageIcon("Images/rw.png"));
 		btnRewind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				volSlider.setEnabled(false);
+				btnMute.setEnabled(false);
+				btnVolUp.setEnabled(false);
+				btnVolDown.setEnabled(false);
 				if (status.equals("normal") == true) {
 					status = "rw";
 					video.mute();
@@ -228,6 +243,10 @@ public class VideoWindow extends JFrame {
 		btnFastForward.setIcon(new ImageIcon("Images/ff.png"));
 		btnFastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				volSlider.setEnabled(false);
+				btnMute.setEnabled(false);
+				btnVolUp.setEnabled(false);
+				btnVolDown.setEnabled(false);
 				if (status.equals("normal") == true) {
 					status = "ff";
 					video.mute();
@@ -351,7 +370,8 @@ public class VideoWindow extends JFrame {
 		// Playing video specified
 		video.startMedia(path);
 	}
-
+	
+	//Calculates the time stamp for the video converts int milliseconds into 00:00 string format
 	private String calculateTime(int time) {
 		int lengthS = time / 1000;
 		int lengthM = lengthS / 60;
