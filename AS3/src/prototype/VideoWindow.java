@@ -41,7 +41,7 @@ public class VideoWindow extends JFrame {
 	private Rewind rwTask;
 	private String status = "normal";
 	
-	//Decalred audio control components below because a method needed to use them
+	//Declared audio control components below because a method needed to use them
 	private final JButton btnVolUp = new JButton();
 	private final JButton btnVolDown = new JButton();
 	private final JButton btnMute = new JButton();
