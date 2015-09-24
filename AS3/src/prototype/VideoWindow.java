@@ -1,6 +1,7 @@
 package prototype;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
@@ -8,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
@@ -18,6 +20,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 import java.awt.Dimension;
@@ -99,7 +103,8 @@ public class VideoWindow extends JFrame {
 		playbackButtonPane.setLayout(new BorderLayout(5, 0));
 
 		playbackPane.setLayout(new BorderLayout());
-
+		playbackPane.setBackground(Color.BLACK);
+		
 		volumePane.setLayout(new BorderLayout());
 
 		progressPane.setLayout(new BorderLayout(10, 0));
@@ -155,6 +160,7 @@ public class VideoWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				File vid = fo.openFile();
 				if (vid != null) {
+					mediaPlayerComponent.setVisible(true);
 					vidPath = vid.getAbsolutePath();
 					vidName = vid.getName();
 					video.playMedia(vidPath);
@@ -278,6 +284,15 @@ public class VideoWindow extends JFrame {
 			public void stateChanged(ChangeEvent e) {
 				video.setVolume(volSlider.getValue());
 			}
+		});
+		
+		//Adding a video finished event listener
+		mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+		    @Override
+		    public void finished(MediaPlayer mediaPlayer) {
+		        mediaPlayerComponent.setVisible(false);
+		        JOptionPane.showMessageDialog(contentPane, "Video has finished playing");
+		    }
 		});
 
 		// Adding all components to the panel
