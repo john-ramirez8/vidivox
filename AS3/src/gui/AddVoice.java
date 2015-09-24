@@ -70,6 +70,8 @@ public class AddVoice extends JFrame {
 				if (commentary.isEmpty() || commentary.trim().length() == 0) {
 					JOptionPane.showMessageDialog(contentPane, "Text can not be blank", "Text Error", JOptionPane.ERROR_MESSAGE);
 				} else {
+					
+					// Performs the festival command in the background
 					voiceTask = new Festival(commentary);
 					voiceTask.execute();
 				}
@@ -93,6 +95,7 @@ public class AddVoice extends JFrame {
 					mp3 = mp3.substring(0, mp3.length() - 4);
 					commentary = textArea.getText();
 					
+					// Creates the mp3 file in the background
 					mp3Task = new CreateMP3(commentary, mp3, contentPane);
 					mp3Task.execute();
 				}

@@ -11,6 +11,7 @@ public class JTextFieldLimit extends PlainDocument {
 		this.limit = limit;
 	}
 	
+	// Creates the text character limit
 	public void insertString(int offset, String str, AttributeSet set) throws BadLocationException {
 		if (str.isEmpty() || (str == null)) {
 			return;

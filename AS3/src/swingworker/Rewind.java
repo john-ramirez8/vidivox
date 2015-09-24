@@ -8,10 +8,12 @@ public class Rewind extends SwingWorker<Void, Void> {
 
 	private EmbeddedMediaPlayer video;
 	
+	// Constructor
 	public Rewind(EmbeddedMediaPlayer video) {
 		this.video = video;
 	}
 	
+	// Skips the video backwards (by 20 milliseconds)
 	@Override
 	protected Void doInBackground() throws Exception {
 		while (!isCancelled()) {

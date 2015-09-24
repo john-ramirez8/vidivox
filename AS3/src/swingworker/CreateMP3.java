@@ -11,12 +11,14 @@ public class CreateMP3 extends SwingWorker<Void, Void> {
 	private String mp3Name;
 	private JPanel parentPanel;
 	
+	// Constructor
 	public CreateMP3(String commentary, String mp3Name, JPanel parentPanel) {
 		this.commentary = commentary;
 		this.mp3Name = mp3Name;
 		this.parentPanel = parentPanel;
 	}
 	
+	@Override
 	protected Void doInBackground() {
 		
 		//Creating a .wav file from text, converting .wav file to .mp3 file, removing .wav file
@@ -28,6 +30,7 @@ public class CreateMP3 extends SwingWorker<Void, Void> {
 		ProcessBuilder pb2 = new ProcessBuilder("/bin/bash", "-c", cmd2);
 		ProcessBuilder pb3 = new ProcessBuilder("/bin/bash", "-c", cmd3);
 		
+		// Performs the previous commands in bash
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -37,7 +40,6 @@ public class CreateMP3 extends SwingWorker<Void, Void> {
 			p3.waitFor();
 			
 		} catch (IOException | InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}		
 		return null;

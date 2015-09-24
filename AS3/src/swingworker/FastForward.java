@@ -8,10 +8,12 @@ public class FastForward extends SwingWorker<Void, Void> {
 
 	private EmbeddedMediaPlayer video;
 	
+	// Constructor
 	public FastForward(EmbeddedMediaPlayer video) {
 		this.video = video;
 	}
 	
+	// Skips the video forwards (by 20 milliseconds)
 	@Override
 	protected Void doInBackground() throws Exception {
 		while (!isCancelled()) {

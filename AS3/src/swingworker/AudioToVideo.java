@@ -3,7 +3,6 @@ package swingworker;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -20,6 +19,7 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 	private ProgressBar parentFrame;
 	private JProgressBar progressBar;
 	
+	// Constructor
 	public AudioToVideo(String videoPath, File mp3, JPanel parentPanel, String newVideoName, ProgressBar parentFrame, JProgressBar progressBar) {
 		this.videoPath = videoPath;
 		this.mp3 = mp3;
@@ -29,6 +29,7 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 		this.progressBar = progressBar;
 	}
 	
+	@Override
 	public Void doInBackground() {
 		
 		String pathWithoutExtension = videoPath.substring(0,videoPath.length()-4);
@@ -47,6 +48,7 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 		ProcessBuilder pb4 = new ProcessBuilder("/bin/bash", "-c", cmd4);
 		ProcessBuilder pb5 = new ProcessBuilder("/bin/bash", "-c", cmd5);
 
+		// Performs the previous commands in bash
 		try {			
 			Process p1 = pb1.start();
 			p1.waitFor();
@@ -60,13 +62,14 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 			p5.waitFor();
 			
 		} catch (IOException | InterruptedException e1) {
-			 //TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		return null;
 	}
 	
+	// Ends the progress bar and shows successful message to user
+	@Override
 	protected void done() {
 		parentFrame.setVisible(false);
 		progressBar.setIndeterminate(false);

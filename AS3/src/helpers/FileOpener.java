@@ -1,8 +1,6 @@
 package helpers;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -11,7 +9,6 @@ import javax.swing.JOptionPane;
 public class FileOpener {
 	private String desiredExtension;
 	private JFileChooser fc = new JFileChooser();
-	private FileWriter fw;
 	private File openedFile;
 	private File savedFile;
 	private JFrame parentFrame;
