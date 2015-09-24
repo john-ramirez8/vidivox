@@ -33,7 +33,7 @@ public class FileOpener {
 			openedFile = fc.getSelectedFile();
 			String extension = openedFile.toString().substring(openedFile.toString().length() - 4);
 			if (extension.equals(desiredExtension) == false) {
-				JOptionPane.showMessageDialog(parentFrame, errMessage);
+				JOptionPane.showMessageDialog(parentFrame, errMessage, "File type Error", JOptionPane.ERROR_MESSAGE);
 				return null;
 			} else {
 				return openedFile;
@@ -49,7 +49,7 @@ public class FileOpener {
 			savedFile = fc.getSelectedFile();
 			String extension = savedFile.toString().substring(savedFile.toString().length() - 4);
 			if (extension.equals(desiredExtension) == false) {
-				JOptionPane.showMessageDialog(parentFrame, errMessage);
+				JOptionPane.showMessageDialog(parentFrame, errMessage,"File type Error", JOptionPane.ERROR_MESSAGE);
 				return null;
 			} else {
 				return savedFile.getAbsolutePath();
