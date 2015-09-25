@@ -166,9 +166,11 @@ public class VideoWindow extends JFrame {
 					if (playbackStatus.equals("ff") == true) {
 						ffTask.cancel(true);
 						playbackStatus = "normal";
+						setEnableAudioCont(true);
 					} else if (playbackStatus.equals("rw") == true) {
 						rwTask.cancel(true);
 						playbackStatus = "normal";
+						setEnableAudioCont(true);
 					}
 				}
 			}
