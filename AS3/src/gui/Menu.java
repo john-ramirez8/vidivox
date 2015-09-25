@@ -39,7 +39,6 @@ public class Menu extends JFrame {
 		final FileOpener fo = new FileOpener(".avi", this);
 		
 		//Setting up the label
-		//ImageIcon img = new ImageIcon("resources/images/logo.png");
 		ImageIcon img = new ImageIcon(Main.class.getResource("/images/logo.png"));
 
 		lblVidiVox.setIcon(img);
