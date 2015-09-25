@@ -29,6 +29,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -174,6 +175,7 @@ public class VideoWindow extends JFrame {
 
 		// Setting up the add audio button
 		btnAddAudio.setPreferredSize(new Dimension(140, 29));
+		btnAddAudio.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAddAudio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				manager.openWindow(aA);
@@ -182,6 +184,7 @@ public class VideoWindow extends JFrame {
 
 		// Setting up the add voice button
 		btnAddVoice.setPreferredSize(new Dimension(140, 29));
+		btnAddVoice.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAddVoice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				manager.openWindow(aV);
