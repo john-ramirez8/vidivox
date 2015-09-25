@@ -175,7 +175,7 @@ public class VideoWindow extends JFrame {
 
 		// Setting up the add audio button
 		btnAddAudio.setPreferredSize(new Dimension(140, 29));
-		btnAddAudio.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnAddAudio.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnAddAudio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				manager.openWindow(aA);
@@ -184,7 +184,7 @@ public class VideoWindow extends JFrame {
 
 		// Setting up the add voice button
 		btnAddVoice.setPreferredSize(new Dimension(140, 29));
-		btnAddVoice.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnAddVoice.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnAddVoice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				manager.openWindow(aV);
