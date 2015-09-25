@@ -38,8 +38,8 @@ import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class VideoWindow extends JFrame {
-	
-	//Declaring useful variables
+
+	// Declaring useful variables
 	private String vidPath;
 	private WindowManager manager;
 	private JPanel contentPane;
@@ -47,8 +47,9 @@ public class VideoWindow extends JFrame {
 	private Rewind rwTask;
 	private String playbackStatus = "normal";
 	private String volumeStatus = "unmuted";
-	
-	//Declared audio control components below because a method needed to use them
+
+	// Declared audio control components below because a method needed to use
+	// them
 	private final JButton btnVolUp = new JButton();
 	private final JButton btnVolDown = new JButton();
 	private final JButton btnMute = new JButton();
@@ -162,6 +163,13 @@ public class VideoWindow extends JFrame {
 					mediaPlayerComponent.setVisible(true);
 					vidPath = vid.getAbsolutePath();
 					video.playMedia(vidPath);
+					if (playbackStatus.equals("ff") == true) {
+						ffTask.cancel(true);
+						playbackStatus = "normal";
+					} else if (playbackStatus.equals("rw") == true) {
+						rwTask.cancel(true);
+						playbackStatus = "normal";
+					}
 				}
 			}
 		});
@@ -202,14 +210,14 @@ public class VideoWindow extends JFrame {
 					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
 					if (playbackStatus.equals("ff")) {
 						ffTask.cancel(true);
-						if (volumeStatus.equals("muted") == false){
+						if (volumeStatus.equals("muted") == false) {
 							video.mute(false);
 						}
 						playbackStatus = "normal";
 						setEnableAudioCont(true);
 					} else if (playbackStatus.equals("rw")) {
 						rwTask.cancel(true);
-						if (volumeStatus.equals("muted") == false){
+						if (volumeStatus.equals("muted") == false) {
 							video.mute(false);
 						}
 						playbackStatus = "normal";
@@ -232,7 +240,7 @@ public class VideoWindow extends JFrame {
 					rwTask.execute();
 					video.pause();
 					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
-				} else if (playbackStatus.equals("ff") == true){
+				} else if (playbackStatus.equals("ff") == true) {
 					playbackStatus = "rw";
 					video.mute(true);
 					rwTask = new Rewind(video);
@@ -254,7 +262,7 @@ public class VideoWindow extends JFrame {
 					ffTask.execute();
 					video.pause();
 					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
-				} else if (playbackStatus.equals("rw") == true){
+				} else if (playbackStatus.equals("rw") == true) {
 					playbackStatus = "ff";
 					video.mute(true);
 					ffTask = new FastForward(video);
@@ -269,7 +277,7 @@ public class VideoWindow extends JFrame {
 		btnMute.setIcon(new ImageIcon(Main.class.getResource("/images/unmuted.png")));
 		btnMute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (volumeStatus.equals("unmuted") == true){
+				if (volumeStatus.equals("unmuted") == true) {
 					video.mute(true);
 					volumeStatus = "muted";
 				} else {
@@ -329,6 +337,8 @@ public class VideoWindow extends JFrame {
 				vidProgress.setMaximum((int) video.getLength());
 				// invokes calculateTime() function to get time in 00:00 format
 				length.setText(calculateTime((int) video.getLength()));
+				btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
+
 			}
 		});
 
@@ -337,6 +347,7 @@ public class VideoWindow extends JFrame {
 			@Override
 			public void finished(MediaPlayer mediaPlayer) {
 				mediaPlayerComponent.setVisible(false);
+				btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
 				JOptionPane.showMessageDialog(contentPane, "Video has finished playing");
 			}
 		});
@@ -376,8 +387,9 @@ public class VideoWindow extends JFrame {
 		// Playing video specified
 		video.startMedia(path);
 	}
-	
-	//Calculates the time stamp for the video converts int milliseconds into 00:00 string format
+
+	// Calculates the time stamp for the video converts int milliseconds into
+	// 00:00 string format
 	private String calculateTime(int time) {
 		int lengthS = time / 1000;
 		int lengthM = lengthS / 60;
@@ -388,12 +400,12 @@ public class VideoWindow extends JFrame {
 			return lengthM + ":" + lengthS;
 		}
 	}
-	
-	private void setEnableAudioCont(boolean b){
+
+	private void setEnableAudioCont(boolean b) {
 		volSlider.setEnabled(b);
 		btnMute.setEnabled(b);
 		btnVolUp.setEnabled(b);
 		btnVolDown.setEnabled(b);
-		
+
 	}
 }
