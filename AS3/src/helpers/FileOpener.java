@@ -25,7 +25,7 @@ public class FileOpener {
 		if (extension.equals(".avi")){
 			errMessage = "Please specify a file of .avi type";
 			fc.setFileFilter(aviFilter);
-		} else if (extension.equals(".mp3")){
+		} else if (extension.equals(".mp3")) {
 			errMessage = "Please specify a file of .mp3 type";
 			fc.setFileFilter(mp3Filter);
 		}
@@ -56,9 +56,16 @@ public class FileOpener {
 		int result = fc.showDialog(null, "Save");
 		if (result == JFileChooser.APPROVE_OPTION) {
 			savedFile = fc.getSelectedFile();
-			String extension = savedFile.toString().substring(savedFile.toString().length() - 4);
-			if (extension.equals(desiredExtension) == false) {
-				JOptionPane.showMessageDialog(parentFrame, "Please end your file name with " + desiredExtension,"File type Error", JOptionPane.ERROR_MESSAGE);
+			String filePath = savedFile.getAbsolutePath();
+			if(!filePath.endsWith(desiredExtension)) {
+			    savedFile = new File(filePath + desiredExtension);
+			}
+			
+			if (savedFile.exists()) {
+				JOptionPane.showMessageDialog(parentFrame, "This file name already exists","File type Error", JOptionPane.ERROR_MESSAGE);
+				return saveFile();
+			} else if (savedFile.toString().contains(" ")) {
+				JOptionPane.showMessageDialog(parentFrame, "File name must not contain spaces","File type Error", JOptionPane.ERROR_MESSAGE);
 				return saveFile();
 			} else {
 				return savedFile.getAbsolutePath();

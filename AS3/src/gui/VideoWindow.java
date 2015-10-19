@@ -365,8 +365,8 @@ public class VideoWindow extends JFrame {
 		volumePane.add(volSlider, BorderLayout.NORTH);
 		volumePane.add(volumeButtons, BorderLayout.CENTER);
 
-		volumeButtons.add(btnVolUp);
 		volumeButtons.add(btnVolDown);
+		volumeButtons.add(btnVolUp);
 		volumeButtons.add(btnMute);
 
 		buttonsPane.add(addPane);
