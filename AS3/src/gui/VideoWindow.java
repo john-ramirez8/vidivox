@@ -18,6 +18,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import gui.actionlisteners.*;
+import gui.eventadapters.PlayingEventAdapter;
 import helpers.FileOpener;
 import helpers.Main;
 import helpers.WindowManager;
@@ -35,7 +36,6 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
@@ -57,7 +57,7 @@ public class VideoWindow extends JFrame {
 	private final JButton btnMute = new JButton();
 	private final JSlider volSlider = new JSlider();
 
-	private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
+	private final EmbeddedMediaPlayerComponent mpc;
 	private final EmbeddedMediaPlayer video;
 
 	public VideoWindow(String path) throws Exception {
@@ -79,9 +79,9 @@ public class VideoWindow extends JFrame {
 		setContentPane(contentPane);
 
 		// Setting up media components
-		mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
-		video = mediaPlayerComponent.getMediaPlayer();
-		mediaPlayerComponent.setPreferredSize(new Dimension(854, 480));
+		mpc = new EmbeddedMediaPlayerComponent();
+		video = mpc.getMediaPlayer();
+		mpc.setPreferredSize(new Dimension(854, 480));
 
 		final FileOpener fo = new FileOpener(".avi", this);
 
@@ -114,7 +114,7 @@ public class VideoWindow extends JFrame {
 		menu.add(close);
 		menuBar.add(menu);
 		
-		//Creating ActionListeners for various buttons
+		//Creating ActionListeners/EventListeners for various buttons
 		ActionListener playAL = new PlayActionListener(video, playbackStatus, ffTask, rwTask, btnPlay, volumeStatus, this);
 		ActionListener rewindAL = new RewindActionListener(btnPlay, video, this);
 		ActionListener fastForwardAL = new FastForwardActionListener(video, btnPlay, this);
@@ -122,7 +122,8 @@ public class VideoWindow extends JFrame {
 		ActionListener volDownAL = new VolumeDownActionListener(video, volSlider);
 		ActionListener muteAL = new MuteActionListener(video, this);
 		ActionListener timerAL = new TimerActionListener(vidProgress, currentTime, volSlider, video, btnMute, this);
-		ActionListener fileAL = new FileOpenerActionListener(fo, mediaPlayerComponent, video, this);
+		ActionListener fileAL = new FileOpenerActionListener(fo, mpc, video, this);
+		PlayingEventAdapter mediaAdapter = new PlayingEventAdapter(vidProgress, length, btnPlay, video, this, mpc, contentPane);
 		
 		// Setting up the nested panels
 		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
@@ -229,28 +230,8 @@ public class VideoWindow extends JFrame {
 			}
 		});
 
-		// Adding a video playing event listener
-		mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-			@Override
-			public void playing(MediaPlayer mediaPlayer) {
-				// Initializing progress bar and setting time stamps
-				vidProgress.setMaximum((int) video.getLength());
-				// invokes calculateTime() function to get time in 00:00 format
-				length.setText(calculateTime((int) video.getLength()));
-				btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
-
-			}
-		});
-
-		// Adding a video finished event listener
-		mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-			@Override
-			public void finished(MediaPlayer mediaPlayer) {
-				mediaPlayerComponent.setVisible(false);
-				btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
-				JOptionPane.showMessageDialog(contentPane, "Video has finished playing");
-			}
-		});
+		// Adding a video event listener
+		video.addMediaPlayerEventListener(mediaAdapter);
 
 		// Adding all components to the panel
 		addPane.add(btnAddVoice);
@@ -275,7 +256,7 @@ public class VideoWindow extends JFrame {
 		progressPane.add(currentTime, BorderLayout.WEST);
 		progressPane.add(vidProgress, BorderLayout.CENTER);
 
-		playbackPane.add(mediaPlayerComponent, BorderLayout.CENTER);
+		playbackPane.add(mpc, BorderLayout.CENTER);
 		playbackPane.add(progressPane, BorderLayout.SOUTH);
 
 		contentPane.add(buttonsPane, BorderLayout.SOUTH);
