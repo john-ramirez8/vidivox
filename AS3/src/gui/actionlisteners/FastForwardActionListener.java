@@ -1,0 +1,46 @@
+package gui.actionlisteners;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
+import gui.VideoWindow;
+import helpers.Main;
+import swingworker.FastForward;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+
+public class FastForwardActionListener implements ActionListener {
+
+	private EmbeddedMediaPlayer video;
+	private JButton btnPlay;
+	private VideoWindow vw;
+	
+	public FastForwardActionListener(EmbeddedMediaPlayer video, JButton btnPlay, VideoWindow vw) {
+		this.video = video;
+		this.btnPlay = btnPlay;
+		this.vw = vw;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		vw.setEnableAudioCont(false);
+		if (vw.playbackStatus.equals("normal") == true) {
+			vw.playbackStatus = "ff";
+			video.mute(true);
+			vw.ffTask = new FastForward(video);
+			vw.ffTask.execute();
+			video.pause();
+			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
+		} else if (vw.playbackStatus.equals("rw") == true) {
+			vw.playbackStatus = "ff";
+			video.mute(true);
+			vw.ffTask = new FastForward(video);
+			vw.rwTask.cancel(true);
+			vw.ffTask.execute();
+		}
+		
+	}
+
+}

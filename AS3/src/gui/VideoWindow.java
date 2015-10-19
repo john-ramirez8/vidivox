@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import gui.actionlisteners.*;
 import helpers.FileOpener;
 import helpers.Main;
 import helpers.WindowManager;
@@ -37,16 +38,17 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class VideoWindow extends JFrame {
 
 	// Declaring useful variables
 	private String vidPath;
 	private WindowManager manager;
 	private JPanel contentPane;
-	private FastForward ffTask;
-	private Rewind rwTask;
-	private String playbackStatus = "normal";
-	private String volumeStatus = "unmuted";
+	public FastForward ffTask;
+	public Rewind rwTask;
+	public String playbackStatus = "normal";
+	public String volumeStatus = "unmuted";
 
 	// Declared audio control components below because a method needed to use
 	// them
@@ -103,6 +105,25 @@ public class VideoWindow extends JFrame {
 		final JLabel length = new JLabel();
 		final JLabel currentTime = new JLabel();
 
+		// Setting up a menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menu = new JMenu("File");
+		JMenuItem openFile = new JMenuItem("Open file...");
+		JMenuItem close = new JMenuItem("Exit program");
+		menu.add(openFile);
+		menu.add(close);
+		menuBar.add(menu);
+		
+		//Creating ActionListeners for various buttons
+		ActionListener playAL = new PlayActionListener(video, playbackStatus, ffTask, rwTask, btnPlay, volumeStatus, this);
+		ActionListener rewindAL = new RewindActionListener(btnPlay, video, this);
+		ActionListener fastForwardAL = new FastForwardActionListener(video, btnPlay, this);
+		ActionListener volUpAL = new VolumeUpActionListener(video, volSlider);
+		ActionListener volDownAL = new VolumeDownActionListener(video, volSlider);
+		ActionListener muteAL = new MuteActionListener(video, this);
+		ActionListener timerAL = new TimerActionListener(vidProgress, currentTime, volSlider, video, btnMute, this);
+		ActionListener fileAL = new FileOpenerActionListener(fo, mediaPlayerComponent, video, this);
+		
 		// Setting up the nested panels
 		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 		buttonsPane.setBorder(new EmptyBorder(10, 0, 0, 0));
@@ -120,20 +141,7 @@ public class VideoWindow extends JFrame {
 		progressPane.setBorder(new EmptyBorder(10, 10, 0, 10));
 
 		// Setting up video progress timer
-		Timer timer = new Timer(200, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				vidProgress.setValue((int) video.getTime());
-				currentTime.setText(calculateTime((int) video.getTime()));
-				volSlider.setValue(video.getVolume());
-				if (video.isMute() == true) {
-					btnMute.setIcon(new ImageIcon(Main.class.getResource("/images/muted.png")));
-				} else {
-					btnMute.setIcon(new ImageIcon(Main.class.getResource("/images/unmuted.png")));
-				}
-
-			}
-		});
+		Timer timer = new Timer(200, timerAL);
 		timer.start();
 
 		// Setting up the video progress slider
@@ -146,35 +154,8 @@ public class VideoWindow extends JFrame {
 			}
 		});
 
-		// Setting up a menu
-		JMenuBar menuBar = new JMenuBar();
-		JMenu menu = new JMenu("File");
-		JMenuItem openFile = new JMenuItem("Open file...");
-		JMenuItem close = new JMenuItem("Exit program");
-		menu.add(openFile);
-		menu.add(close);
-		menuBar.add(menu);
-
 		// Setting up openFile option
-		openFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				File vid = fo.openFile();
-				if (vid != null) {
-					mediaPlayerComponent.setVisible(true);
-					vidPath = vid.getAbsolutePath();
-					video.playMedia(vidPath);
-					if (playbackStatus.equals("ff") == true) {
-						ffTask.cancel(true);
-						playbackStatus = "normal";
-						setEnableAudioCont(true);
-					} else if (playbackStatus.equals("rw") == true) {
-						rwTask.cancel(true);
-						playbackStatus = "normal";
-						setEnableAudioCont(true);
-					}
-				}
-			}
-		});
+		openFile.addActionListener(fileAL);
 
 		// Setting up close option
 		close.addActionListener(new ActionListener() {
@@ -204,114 +185,31 @@ public class VideoWindow extends JFrame {
 		// Setting up the play/pause button
 		btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
 		btnPlay.setPreferredSize(new Dimension(80, 80));
-		btnPlay.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (video.isPlaying() == true) {
-					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
-				} else {
-					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
-					if (playbackStatus.equals("ff")) {
-						ffTask.cancel(true);
-						if (volumeStatus.equals("muted") == false) {
-							video.mute(false);
-						}
-						playbackStatus = "normal";
-						setEnableAudioCont(true);
-					} else if (playbackStatus.equals("rw")) {
-						rwTask.cancel(true);
-						if (volumeStatus.equals("muted") == false) {
-							video.mute(false);
-						}
-						playbackStatus = "normal";
-						setEnableAudioCont(true);
-					}
-				}
-				video.pause();
-			}
-		});
+		btnPlay.addActionListener(playAL);
 
 		// Setting up the rewind button
 		btnRewind.setIcon(new ImageIcon(Main.class.getResource("/images/rw.png")));
-		btnRewind.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setEnableAudioCont(false);
-				if (playbackStatus.equals("normal") == true) {
-					playbackStatus = "rw";
-					video.mute(true);
-					rwTask = new Rewind(video);
-					rwTask.execute();
-					video.pause();
-					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
-				} else if (playbackStatus.equals("ff") == true) {
-					playbackStatus = "rw";
-					video.mute(true);
-					rwTask = new Rewind(video);
-					ffTask.cancel(true);
-					rwTask.execute();
-				}
-			}
-		});
+		btnRewind.addActionListener(rewindAL);
 
 		// Setting up the fast forward button
 		btnFastForward.setIcon(new ImageIcon(Main.class.getResource("/images/ff.png")));
-		btnFastForward.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setEnableAudioCont(false);
-				if (playbackStatus.equals("normal") == true) {
-					playbackStatus = "ff";
-					video.mute(true);
-					ffTask = new FastForward(video);
-					ffTask.execute();
-					video.pause();
-					btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
-				} else if (playbackStatus.equals("rw") == true) {
-					playbackStatus = "ff";
-					video.mute(true);
-					ffTask = new FastForward(video);
-					rwTask.cancel(true);
-					ffTask.execute();
-				}
-			}
-		});
+		btnFastForward.addActionListener(fastForwardAL);
+		
 
 		// Setting up the mute button
 		btnMute.setPreferredSize(new Dimension(35, 35));
 		btnMute.setIcon(new ImageIcon(Main.class.getResource("/images/unmuted.png")));
-		btnMute.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (volumeStatus.equals("unmuted") == true) {
-					video.mute(true);
-					volumeStatus = "muted";
-				} else {
-					video.mute(false);
-					volumeStatus = "unmuted";
-				}
-			}
-		});
+		btnMute.addActionListener(muteAL);
 
 		// Setting up the volume up button
 		btnVolUp.setIcon(new ImageIcon(Main.class.getResource("/images/volUp.png")));
 		btnVolUp.setPreferredSize(new Dimension(35, 35));
-		btnVolUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (video.getVolume() < 100) {
-					volSlider.setValueIsAdjusting(true);
-					volSlider.setValue(video.getVolume() + 10);
-				}
-			}
-		});
+		btnVolUp.addActionListener(volUpAL);
 
 		// Setting up the volume down button
 		btnVolDown.setIcon(new ImageIcon(Main.class.getResource("/images/volDown.png")));
 		btnVolDown.setPreferredSize(new Dimension(35, 35));
-		btnVolDown.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (video.getVolume() > 0) {
-					volSlider.setValueIsAdjusting(true);
-					volSlider.setValue(video.getVolume() - 10);
-				}
-			}
-		});
+		btnVolDown.addActionListener(volDownAL);
 
 		// Setting up the volume slider
 		volSlider.setValue(100);
@@ -392,7 +290,7 @@ public class VideoWindow extends JFrame {
 
 	// Calculates the time stamp for the video converts int milliseconds into
 	// 00:00 string format
-	private String calculateTime(int time) {
+	public String calculateTime(int time) {
 		int lengthS = time / 1000;
 		int lengthM = lengthS / 60;
 		lengthS = lengthS - lengthM * 60;
@@ -403,7 +301,7 @@ public class VideoWindow extends JFrame {
 		}
 	}
 
-	private void setEnableAudioCont(boolean b) {
+	public void setEnableAudioCont(boolean b) {
 		volSlider.setEnabled(b);
 		btnMute.setEnabled(b);
 		btnVolUp.setEnabled(b);
