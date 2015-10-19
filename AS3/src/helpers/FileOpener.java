@@ -5,11 +5,14 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 //This class is a helper class, It is used to open and save files
 public class FileOpener {
 	private String desiredExtension;
 	private JFileChooser fc = new JFileChooser();
+	private FileNameExtensionFilter aviFilter = new FileNameExtensionFilter("avi Files", "avi");
+	private FileNameExtensionFilter mp3Filter = new FileNameExtensionFilter("mp3 Files", "mp3");
 	private File openedFile;
 	private File savedFile;
 	private JFrame parentFrame;
@@ -21,8 +24,10 @@ public class FileOpener {
 		this.desiredExtension = extension;
 		if (extension.equals(".avi")){
 			errMessage = "Please specify a file of .avi type";
+			fc.setFileFilter(aviFilter);
 		} else if (extension.equals(".mp3")){
 			errMessage = "Please specify a file of .mp3 type";
+			fc.setFileFilter(mp3Filter);
 		}
 	}
 	
