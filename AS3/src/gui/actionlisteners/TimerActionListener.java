@@ -19,20 +19,37 @@ public class TimerActionListener implements ActionListener {
 	private JSlider volSlider;
 	private EmbeddedMediaPlayer video;
 	private JButton btnMute;
+	private JLabel length;
 	private VideoWindow vw;
 	
-	public TimerActionListener(JSlider vidProgress, JLabel currentTime, JSlider volSlider, EmbeddedMediaPlayer video, JButton btnMute, VideoWindow vw) {
+	public TimerActionListener(JSlider vidProgress, JLabel currentTime, JSlider volSlider,
+			EmbeddedMediaPlayer video, JButton btnMute, JLabel length, VideoWindow vw) {
 		this.vidProgress = vidProgress;
 		this.currentTime = currentTime;
 		this.volSlider = volSlider;
 		this.video = video;
 		this.btnMute = btnMute;
+		this.length = length;
 		this.vw = vw;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		String time = vw.calculateTime((int) video.getTime());
+		String totalTime = length.getText();
+		String[] splitTime = time.split(":");
+		String[] splitTotalTime = totalTime.split(":");
+		
 		vidProgress.setValue((int) video.getTime());
-		currentTime.setText(vw.calculateTime((int) video.getTime()));
+		
+		int totalCurrentTime = Integer.parseInt(splitTime[0])*60 + Integer.parseInt(splitTime[1]);
+		int totalFullTime = Integer.parseInt(splitTotalTime[0])*60 + Integer.parseInt(splitTotalTime[1]);
+		
+		if (totalCurrentTime > totalFullTime) {
+			currentTime.setText(totalTime);
+		} else {
+			currentTime.setText(time);
+		}
+		
 		volSlider.setValue(video.getVolume());
 		if (video.isMute() == true) {
 			btnMute.setIcon(new ImageIcon(Main.class.getResource("/images/muted.png")));

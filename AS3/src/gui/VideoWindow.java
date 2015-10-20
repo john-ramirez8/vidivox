@@ -51,7 +51,7 @@ public class VideoWindow extends JFrame {
 	private final JButton btnVolUp = new JButton();
 	private final JButton btnVolDown = new JButton();
 	private final JButton btnMute = new JButton();
-	private final JSlider volSlider = new JSlider();
+	private final JSlider volSlider = new JSlider(0, 100, 100);
 
 	private final EmbeddedMediaPlayerComponent mpc;
 	private final EmbeddedMediaPlayer video;
@@ -116,7 +116,7 @@ public class VideoWindow extends JFrame {
 		ActionListener volUpAL = new VolumeUpActionListener(video, volSlider);
 		ActionListener volDownAL = new VolumeDownActionListener(video, volSlider);
 		ActionListener muteAL = new MuteActionListener(video, this);
-		ActionListener timerAL = new TimerActionListener(vidProgress, currentTime, volSlider, video, btnMute, this);
+		ActionListener timerAL = new TimerActionListener(vidProgress, currentTime, volSlider, video, btnMute, length, this);
 		ActionListener fileAL = new FileOpenerActionListener(fo, mpc, video, this);
 		ActionListener audioAL = new AddAudioActionListener(contentPane, vidPath, this, video);
 		PlayingEventAdapter mediaListener = new PlayingEventAdapter(vidProgress, length, btnPlay, video, this);
@@ -205,12 +205,10 @@ public class VideoWindow extends JFrame {
 		btnVolDown.addActionListener(volDownAL);
 
 		//Setting up the volume slider
-		volSlider.setValue(100);
-		volSlider.setMaximum(100);
-		volSlider.setMinimum(0);
 		volSlider.setMinorTickSpacing(10);
 		volSlider.setPaintTicks(true);
 		volSlider.setSnapToTicks(true);
+		volSlider.setPaintLabels(true);
 		volSlider.setPreferredSize(new Dimension(100, 50));
 		volSlider.addChangeListener(new ChangeListener() {
 			@Override
@@ -228,7 +226,7 @@ public class VideoWindow extends JFrame {
 		//Adding all components to the panel
 		addPane.add(btnAddVoice);
 		addPane.add(btnAddAudio);
-
+		
 		playbackButtonPane.add(btnRewind, BorderLayout.WEST);
 		playbackButtonPane.add(btnPlay, BorderLayout.CENTER);
 		playbackButtonPane.add(btnFastForward, BorderLayout.EAST);

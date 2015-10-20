@@ -14,7 +14,7 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 public class AudioToVideo extends SwingWorker<Void, Void> {
 
 	private String videoPath;
-	private File mp3;
+	private File mp3ToAdd;
 	private JPanel parentPanel;
 	private String newVideoName;
 	private ProgressBar progressFrame;
@@ -22,10 +22,10 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 	private EmbeddedMediaPlayer video;
 	
 	// Constructor
-	public AudioToVideo(String videoPath, File mp3, JPanel parentPanel,
+	public AudioToVideo(String videoPath, File mp3ToAdd, JPanel parentPanel,
 			String newVideoName, ProgressBar parentFrame, JProgressBar progressBar, EmbeddedMediaPlayer video) {
 		this.videoPath = videoPath;
-		this.mp3 = mp3;
+		this.mp3ToAdd = mp3ToAdd;
 		this.parentPanel = parentPanel;
 		this.newVideoName = newVideoName;
 		this.progressFrame = parentFrame;
@@ -40,11 +40,12 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 		
 		//Extracting audio from video, combining two audio, adding audio to a new video file, removing by-product files, renaming file
 		String cmd1 = "ffmpeg -i " + videoPath + " " +  pathWithoutExtension + ".mp3";
-		String cmd2 = "ffmpeg -i " + pathWithoutExtension + ".mp3 -i " + mp3.getAbsolutePath() + " -filter_complex amix=inputs=2 " + pathWithoutExtension + "_combined.mp3";		
-		String cmd3 = "ffmpeg -i " + videoPath + " -i " + pathWithoutExtension + "_combined.mp3 -map 0:v -map 1:a " + pathWithoutExtension + "_with_" + mp3.getName().substring(0,mp3.getName().length()-4) + ".avi";
+		String cmd2 = "ffmpeg -i " + pathWithoutExtension + ".mp3 -i " + mp3ToAdd.getAbsolutePath() +
+				" -filter_complex amix=inputs=2 " + pathWithoutExtension + "_combined.mp3";		
+		String cmd3 = "ffmpeg -i " + videoPath + " -i " + pathWithoutExtension +
+				"_combined.mp3 -map 0:v -map 1:a " + pathWithoutExtension + "_temp.avi";
 		String cmd4 = "rm " + pathWithoutExtension + ".mp3 " + pathWithoutExtension + "_combined.mp3";
-		String cmd5 = "mv " + pathWithoutExtension + "_with_" + mp3.getName().substring(0,mp3.getName().length()-4) + ".avi " + newVideoName;
-
+		String cmd5 = "mv " + pathWithoutExtension + "_temp.avi " + newVideoName;
 		
 		ProcessBuilder pb1 = new ProcessBuilder("/bin/bash", "-c", cmd1);
 		ProcessBuilder pb2 = new ProcessBuilder("/bin/bash", "-c", cmd2);
