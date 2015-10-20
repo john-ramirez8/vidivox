@@ -50,7 +50,7 @@ public class AddVoice extends JFrame {
 		JLabel frameName = new JLabel("Enter commentary text (160 char limit)");
 		JPanel buttonPane = new JPanel();
 		JScrollPane scrollPane = new JScrollPane(textArea);
-		JButton btnHear = new JButton("Hear");
+		final JButton btnHear = new JButton("Hear");
 		JButton btnCancel = new JButton("Cancel");
 		JButton btnCreateMp3 = new JButton("Create MP3");
 
@@ -70,14 +70,14 @@ public class AddVoice extends JFrame {
 		btnHear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				commentary = textArea.getText();
+				
 				if (commentary.isEmpty() || commentary.trim().length() == 0) {
 					JOptionPane.showMessageDialog(contentPane, "Text can not be blank", "Text Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					
 					// Performs the festival command in the background
-					voiceTask = new Festival(commentary);
+					voiceTask = new Festival(commentary, btnHear);
 					voiceTask.execute();
-				}
+					}
 			}
 		});
 		btnHear.setPreferredSize(new Dimension(120, 23));
