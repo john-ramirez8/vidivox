@@ -63,7 +63,6 @@ public class VideoWindow extends JFrame {
 		vidPath = path;
 
 		//JFrames to open
-		final AddAudio aA = new AddAudio(vidPath);
 		final AddVoice aV = new AddVoice();
 
 		//Setting up the contentPane & JFrame
