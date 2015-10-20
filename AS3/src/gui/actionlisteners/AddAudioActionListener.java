@@ -11,6 +11,7 @@ import gui.ProgressBar;
 import gui.VideoWindow;
 import helpers.FileOpener;
 import helpers.WindowManager;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 public class AddAudioActionListener implements ActionListener {
 
@@ -21,11 +22,13 @@ public class AddAudioActionListener implements ActionListener {
 	private String vidPath;
 	private VideoWindow vw;
 	private ProgressBar progressBar;
+	private EmbeddedMediaPlayer video;
 	
-	public AddAudioActionListener(JPanel contentPane, String vidPath, VideoWindow vw) {
+	public AddAudioActionListener(JPanel contentPane, String vidPath, VideoWindow vw, EmbeddedMediaPlayer video) {
 		this.contentPane = contentPane;
 		this.vidPath = vidPath;
 		this.vw = vw;
+		this.video = video;
 		
 		mp3Opener = new FileOpener(".mp3", this.vw);
 		videoOpener = new FileOpener(".avi", this.vw);
@@ -33,7 +36,7 @@ public class AddAudioActionListener implements ActionListener {
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		File mp3 = mp3Opener.openFile();
 		
 		if (mp3 != null) {
@@ -41,7 +44,7 @@ public class AddAudioActionListener implements ActionListener {
 			String newVidName = videoOpener.saveFile();
 			
 			if (newVidName != null) {
-				progressBar = new ProgressBar(vidPath, mp3, newVidName);
+				progressBar = new ProgressBar(vidPath, mp3, newVidName, video);
 				wm.openWindow(progressBar);
 			}
 		}

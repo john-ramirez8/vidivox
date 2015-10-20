@@ -47,7 +47,7 @@ public class AddVoice extends JFrame {
 
 		// Component declarations
 		textArea = new JTextArea(5, 20);
-		JLabel lblEnterTheName = new JLabel("Enter commentary text (160 char limit)");
+		JLabel frameName = new JLabel("Enter commentary text (160 char limit)");
 		JPanel buttonPane = new JPanel();
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		JButton btnHear = new JButton("Hear");
@@ -57,8 +57,8 @@ public class AddVoice extends JFrame {
 		final FileOpener fo = new FileOpener(".mp3", this);
 
 		// Setting up the label
-		lblEnterTheName.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblEnterTheName.setHorizontalAlignment(SwingConstants.CENTER);
+		frameName.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		frameName.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// Setting up the textArea
 		textArea.setColumns(10);
@@ -93,22 +93,28 @@ public class AddVoice extends JFrame {
 		// Setting up the createMP3 button
 		btnCreateMp3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String mp3 = fo.saveFile();
-				if (mp3 != null) {
-					mp3 = mp3.substring(0, mp3.length() - 4);
-					commentary = textArea.getText();
-					
-					// Creates the mp3 file in the background
-					mp3Task = new CreateMP3(commentary, mp3, contentPane);
-					mp3Task.execute();
-				}
+				commentary = textArea.getText();
 
+				if (commentary.isEmpty() || commentary.trim().isEmpty()) {
+					JOptionPane.showMessageDialog(contentPane, "Text can't be empty", "Error message",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					String mp3 = fo.saveFile();
+
+					if (mp3 != null) {
+						mp3 = mp3.substring(0, mp3.length() - 4);
+
+						// Creates the mp3 file in the background
+						mp3Task = new CreateMP3(commentary, mp3, contentPane);
+						mp3Task.execute();
+					}
+				}
 			}
 		});
 		btnCreateMp3.setPreferredSize(new Dimension(120, 23));
 
 		// Adding all components to the panel
-		contentPane.add(lblEnterTheName, BorderLayout.NORTH);
+		contentPane.add(frameName, BorderLayout.NORTH);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		buttonPane.add(btnHear);
 		buttonPane.add(btnCreateMp3);

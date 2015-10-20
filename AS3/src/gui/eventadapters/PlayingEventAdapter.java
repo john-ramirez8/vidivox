@@ -32,6 +32,7 @@ public class PlayingEventAdapter extends MediaPlayerEventAdapter {
 	public void playing(MediaPlayer mediaPlayer) {
 		//Initializing progress bar and setting time stamps
 		vidProgress.setMaximum((int) video.getLength());
+		
 		//Invokes calculateTime() function to get time in 00:00 format
 		length.setText(vw.calculateTime((int) video.getLength()));
 		btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));

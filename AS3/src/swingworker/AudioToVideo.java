@@ -9,6 +9,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
 import gui.ProgressBar;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 public class AudioToVideo extends SwingWorker<Void, Void> {
 
@@ -16,17 +17,20 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 	private File mp3;
 	private JPanel parentPanel;
 	private String newVideoName;
-	private ProgressBar parentFrame;
+	private ProgressBar progressFrame;
 	private JProgressBar progressBar;
+	private EmbeddedMediaPlayer video;
 	
 	// Constructor
-	public AudioToVideo(String videoPath, File mp3, JPanel parentPanel, String newVideoName, ProgressBar parentFrame, JProgressBar progressBar) {
+	public AudioToVideo(String videoPath, File mp3, JPanel parentPanel,
+			String newVideoName, ProgressBar parentFrame, JProgressBar progressBar, EmbeddedMediaPlayer video) {
 		this.videoPath = videoPath;
 		this.mp3 = mp3;
 		this.parentPanel = parentPanel;
 		this.newVideoName = newVideoName;
-		this.parentFrame = parentFrame;
+		this.progressFrame = parentFrame;
 		this.progressBar = progressBar;
+		this.video = video;
 	}
 	
 	@Override
@@ -71,8 +75,15 @@ public class AudioToVideo extends SwingWorker<Void, Void> {
 	// Ends the progress bar and shows successful message to user
 	@Override
 	protected void done() {
-		parentFrame.setVisible(false);
+		progressFrame.setVisible(false);
 		progressBar.setIndeterminate(false);
-		JOptionPane.showMessageDialog(parentPanel, "Successfully saved new video in " + newVideoName);
+		
+		String message = "Successfully saved new video in " + newVideoName +
+					".\n Would you like to play the new video";
+		int result = JOptionPane.showConfirmDialog(parentPanel, message, "Video successfully saved!", JOptionPane.YES_NO_OPTION);
+		
+		if (result == JOptionPane.YES_OPTION) {
+			video.startMedia(newVideoName);
+		}
 	}
 }

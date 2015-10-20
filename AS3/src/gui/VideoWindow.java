@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.Timer;
@@ -34,7 +33,6 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
@@ -120,7 +118,7 @@ public class VideoWindow extends JFrame {
 		ActionListener muteAL = new MuteActionListener(video, this);
 		ActionListener timerAL = new TimerActionListener(vidProgress, currentTime, volSlider, video, btnMute, this);
 		ActionListener fileAL = new FileOpenerActionListener(fo, mpc, video, this);
-		ActionListener audioAL = new AddAudioActionListener(contentPane, vidPath, this);
+		ActionListener audioAL = new AddAudioActionListener(contentPane, vidPath, this, video);
 		PlayingEventAdapter mediaListener = new PlayingEventAdapter(vidProgress, length, btnPlay, video, this);
 		
 		//Setting up the nested panels
