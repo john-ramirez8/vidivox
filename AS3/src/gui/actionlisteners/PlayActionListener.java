@@ -7,8 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import helpers.Main;
-import swingworker.FastForward;
-import swingworker.Rewind;
 import gui.VideoWindow;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
@@ -18,7 +16,7 @@ public class PlayActionListener implements ActionListener {
 	private JButton btnPlay;
 	private VideoWindow vw;
 	
-	public PlayActionListener(EmbeddedMediaPlayer video, String playbackStatus, FastForward ffTask, Rewind rwTask, JButton btnPlay, String volumeStatus, VideoWindow vw) {
+	public PlayActionListener(EmbeddedMediaPlayer video, JButton btnPlay, VideoWindow vw) {
 		this.video = video;
 		this.btnPlay = btnPlay;
 		this.vw = vw;

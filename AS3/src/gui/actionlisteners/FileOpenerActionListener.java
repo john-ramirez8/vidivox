@@ -30,7 +30,6 @@ public class FileOpenerActionListener implements ActionListener {
 		if (vid != null) {
 			mpc.setVisible(true);
 			vidPath = vid.getAbsolutePath();
-			video.playMedia(vidPath);
 			if (vw.playbackStatus.equals("ff") == true) {
 				vw.ffTask.cancel(true);
 				vw.playbackStatus = "normal";
@@ -40,6 +39,8 @@ public class FileOpenerActionListener implements ActionListener {
 				vw.playbackStatus = "normal";
 				vw.setEnableAudioCont(true);
 			}
+			video.setRepeat(true);
+			video.playMedia(vidPath);
 		}
 	}
 

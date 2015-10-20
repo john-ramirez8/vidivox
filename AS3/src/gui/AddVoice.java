@@ -21,9 +21,13 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
+
 @SuppressWarnings("serial")
 public class AddVoice extends JFrame {
-
+	
+	private final int MAX_CHAR_LIMIT = 160;
+	
 	private JPanel contentPane;
 	private JTextArea textArea;
 	private String commentary;
@@ -60,7 +64,7 @@ public class AddVoice extends JFrame {
 		textArea.setColumns(10);
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
-		textArea.setDocument(new JTextFieldLimit(160)); // adding text limit
+		textArea.setDocument(new JTextFieldLimit(MAX_CHAR_LIMIT)); // adding text limit
 
 		// Setting up the hear button
 		btnHear.addActionListener(new ActionListener() {

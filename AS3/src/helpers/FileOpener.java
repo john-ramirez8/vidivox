@@ -7,7 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-//This class is a helper class, It is used to open and save files
+/*
+ * This class is a helper class that is used to open and save files (such as opening
+ * mp3 or avi files to be used in VIDIVOX.
+ */
 public class FileOpener {
 	private String desiredExtension;
 	private JFileChooser fc = new JFileChooser();
@@ -18,7 +21,7 @@ public class FileOpener {
 	private JFrame parentFrame;
 	private String errMessage;
 
-	//The constructor sets the default error message and which frame is the parent frame of the file chooser
+	//Constructor sets the default error message and the parent frame of the file chooser.
 	public FileOpener(String extension, JFrame parentFrame) {
 		this.parentFrame = parentFrame;
 		this.desiredExtension = extension;
@@ -31,8 +34,11 @@ public class FileOpener {
 		}
 	}
 	
-	//This function returns a variable of File type. It opens a file chooser and allows them to choose a file
-	//If the file is of incorrect file type then the function calls itself recursively to allow the user to try again
+	/**
+	 * This method opens a file chooser and allows the user to choose a file. If the file is
+	 * of incorrect file type, then the function calls itself recursively to allow the user to try again.
+	 * @return the file that's going to be opened by the users
+	 */
 	public File openFile() {
 		int result = fc.showOpenDialog(null);
 		if (result == JFileChooser.APPROVE_OPTION) {
@@ -49,9 +55,12 @@ public class FileOpener {
 		}
 	}
 	
-	//This function returns a variable of String type of the path of the file chosen by the user. If the file is of 
-	//incorrect file type then the function calls itself recursively to allow the user to try again.
-	
+	/**
+	 * This method determines where to save the file by finding the path of it.
+	 * If the file is of incorrect file type then an error message is shown and the
+	 * method recursively calls itself to allow the user to try again.
+	 * @return a string containing the path of the file that is to be saved.
+	 */
 	public String saveFile() {
 		int result = fc.showDialog(null, "Save");
 		if (result == JFileChooser.APPROVE_OPTION) {

@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.Timer;
@@ -25,8 +24,6 @@ import helpers.WindowManager;
 import swingworker.FastForward;
 import swingworker.Rewind;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 import java.awt.Dimension;
@@ -41,7 +38,7 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class VideoWindow extends JFrame {
 
-	// Declaring useful variables
+	//Declaring useful variables
 	private String vidPath;
 	private WindowManager manager;
 	private JPanel contentPane;
@@ -50,8 +47,7 @@ public class VideoWindow extends JFrame {
 	public String playbackStatus = "normal";
 	public String volumeStatus = "unmuted";
 
-	// Declared audio control components below because a method needed to use
-	// them
+	//Declares the audio control buttons
 	private final JButton btnVolUp = new JButton();
 	private final JButton btnVolDown = new JButton();
 	private final JButton btnMute = new JButton();
@@ -64,11 +60,11 @@ public class VideoWindow extends JFrame {
 
 		vidPath = path;
 
-		// JFrames to open
+		//JFrames to open
 		final AddAudio aA = new AddAudio(vidPath);
 		final AddVoice aV = new AddVoice();
 
-		// Setting up the contentPane & JFrame
+		//Setting up the contentPane & JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100, 100);
 		setTitle("VidiVox Prototype");
@@ -78,17 +74,17 @@ public class VideoWindow extends JFrame {
 		contentPane.setLayout(new BorderLayout());
 		setContentPane(contentPane);
 
-		// Setting up media components
+		//Setting up media components
 		mpc = new EmbeddedMediaPlayerComponent();
 		video = mpc.getMediaPlayer();
 		mpc.setPreferredSize(new Dimension(854, 480));
 
 		final FileOpener fo = new FileOpener(".avi", this);
 
-		// Setting up WindowMananger
+		//Setting up WindowMananger
 		manager = new WindowManager(contentPane);
 
-		// Component declarations
+		//Component declarations
 		JPanel addPane = new JPanel();
 		JPanel volumePane = new JPanel();
 		JPanel volumeButtons = new JPanel();
@@ -105,7 +101,7 @@ public class VideoWindow extends JFrame {
 		final JLabel length = new JLabel();
 		final JLabel currentTime = new JLabel();
 
-		// Setting up a menu
+		//Setting up a menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("File");
 		JMenuItem openFile = new JMenuItem("Open file...");
@@ -115,7 +111,7 @@ public class VideoWindow extends JFrame {
 		menuBar.add(menu);
 		
 		//Creating ActionListeners/EventListeners for various buttons
-		ActionListener playAL = new PlayActionListener(video, playbackStatus, ffTask, rwTask, btnPlay, volumeStatus, this);
+		ActionListener playAL = new PlayActionListener(video, btnPlay, this);
 		ActionListener rewindAL = new RewindActionListener(btnPlay, video, this);
 		ActionListener fastForwardAL = new FastForwardActionListener(video, btnPlay, this);
 		ActionListener volUpAL = new VolumeUpActionListener(video, volSlider);
@@ -123,9 +119,9 @@ public class VideoWindow extends JFrame {
 		ActionListener muteAL = new MuteActionListener(video, this);
 		ActionListener timerAL = new TimerActionListener(vidProgress, currentTime, volSlider, video, btnMute, this);
 		ActionListener fileAL = new FileOpenerActionListener(fo, mpc, video, this);
-		PlayingEventAdapter mediaAdapter = new PlayingEventAdapter(vidProgress, length, btnPlay, video, this, mpc, contentPane);
+		PlayingEventAdapter mediaListener = new PlayingEventAdapter(vidProgress, length, btnPlay, video, this);
 		
-		// Setting up the nested panels
+		//Setting up the nested panels
 		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 		buttonsPane.setBorder(new EmptyBorder(10, 0, 0, 0));
 
@@ -141,11 +137,11 @@ public class VideoWindow extends JFrame {
 		progressPane.setLayout(new BorderLayout(10, 0));
 		progressPane.setBorder(new EmptyBorder(10, 10, 0, 10));
 
-		// Setting up video progress timer
+		//Setting up video progress timer
 		Timer timer = new Timer(200, timerAL);
 		timer.start();
 
-		// Setting up the video progress slider
+		//Setting up the video progress slider
 		vidProgress.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -155,17 +151,17 @@ public class VideoWindow extends JFrame {
 			}
 		});
 
-		// Setting up openFile option
+		//Setting up openFile option
 		openFile.addActionListener(fileAL);
 
-		// Setting up close option
+		//Setting up close option
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
 
-		// Setting up the add audio button
+		//Setting up the add audio button
 		btnAddAudio.setPreferredSize(new Dimension(140, 29));
 		btnAddAudio.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnAddAudio.addActionListener(new ActionListener() {
@@ -174,7 +170,7 @@ public class VideoWindow extends JFrame {
 			}
 		});
 
-		// Setting up the add voice button
+		//Setting up the add voice button
 		btnAddVoice.setPreferredSize(new Dimension(140, 29));
 		btnAddVoice.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnAddVoice.addActionListener(new ActionListener() {
@@ -183,36 +179,36 @@ public class VideoWindow extends JFrame {
 			}
 		});
 
-		// Setting up the play/pause button
+		//Setting up the play/pause button
 		btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
 		btnPlay.setPreferredSize(new Dimension(80, 80));
 		btnPlay.addActionListener(playAL);
 
-		// Setting up the rewind button
+		//Setting up the rewind button
 		btnRewind.setIcon(new ImageIcon(Main.class.getResource("/images/rw.png")));
 		btnRewind.addActionListener(rewindAL);
 
-		// Setting up the fast forward button
+		//Setting up the fast forward button
 		btnFastForward.setIcon(new ImageIcon(Main.class.getResource("/images/ff.png")));
 		btnFastForward.addActionListener(fastForwardAL);
 		
 
-		// Setting up the mute button
+		//Setting up the mute button
 		btnMute.setPreferredSize(new Dimension(35, 35));
 		btnMute.setIcon(new ImageIcon(Main.class.getResource("/images/unmuted.png")));
 		btnMute.addActionListener(muteAL);
 
-		// Setting up the volume up button
+		//Setting up the volume up button
 		btnVolUp.setIcon(new ImageIcon(Main.class.getResource("/images/volUp.png")));
 		btnVolUp.setPreferredSize(new Dimension(35, 35));
 		btnVolUp.addActionListener(volUpAL);
 
-		// Setting up the volume down button
+		//Setting up the volume down button
 		btnVolDown.setIcon(new ImageIcon(Main.class.getResource("/images/volDown.png")));
 		btnVolDown.setPreferredSize(new Dimension(35, 35));
 		btnVolDown.addActionListener(volDownAL);
 
-		// Setting up the volume slider
+		//Setting up the volume slider
 		volSlider.setValue(100);
 		volSlider.setMaximum(100);
 		volSlider.setMinimum(0);
@@ -230,10 +226,10 @@ public class VideoWindow extends JFrame {
 			}
 		});
 
-		// Adding a video event listener
-		video.addMediaPlayerEventListener(mediaAdapter);
+		//Adding a video event listener
+		video.addMediaPlayerEventListener(mediaListener);
 
-		// Adding all components to the panel
+		//Adding all components to the panel
 		addPane.add(btnAddVoice);
 		addPane.add(btnAddAudio);
 
@@ -265,12 +261,18 @@ public class VideoWindow extends JFrame {
 
 		pack();
 
-		// Playing video specified
+		//Playing video specified
+		video.setRepeat(true);
 		video.startMedia(path);
 	}
 
-	// Calculates the time stamp for the video converts int milliseconds into
-	// 00:00 string format
+
+	/**
+	 * This method calculates the time stamp for the video and converts
+	 * the int milliseconds into 00:00 string format.
+	 * @param time - the time to convert into 00:00 format
+	 * @return a string of the time in 00:00 format
+	 */
 	public String calculateTime(int time) {
 		int lengthS = time / 1000;
 		int lengthM = lengthS / 60;
@@ -281,7 +283,11 @@ public class VideoWindow extends JFrame {
 			return lengthM + ":" + lengthS;
 		}
 	}
-
+	
+	/**
+	 * This method enables/disables the multiple volume buttons/slider.
+	 * @param b - boolean deciding whether to enable/disable the volume buttons/slider
+	 */
 	public void setEnableAudioCont(boolean b) {
 		volSlider.setEnabled(b);
 		btnMute.setEnabled(b);
