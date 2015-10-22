@@ -14,8 +14,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class FileOpener {
 	private String desiredExtension;
 	private JFileChooser fc = new JFileChooser();
-	private FileNameExtensionFilter aviFilter = new FileNameExtensionFilter("avi Files", "avi");
-	private FileNameExtensionFilter mp3Filter = new FileNameExtensionFilter("mp3 Files", "mp3");
+	private FileNameExtensionFilter aviFilter = new FileNameExtensionFilter("avi Files (*.avi)", "avi");
+	private FileNameExtensionFilter mp3Filter = new FileNameExtensionFilter("mp3 Files (*.mp3)", "mp3");
 	private File openedFile;
 	private File savedFile;
 	private JFrame parentFrame;
@@ -63,6 +63,7 @@ public class FileOpener {
 	 */
 	public String saveFile() {
 		int result = fc.showDialog(null, "Save");
+		
 		if (result == JFileChooser.APPROVE_OPTION) {
 			savedFile = fc.getSelectedFile();
 			String filePath = savedFile.getAbsolutePath();
@@ -71,10 +72,12 @@ public class FileOpener {
 			}
 			
 			if (savedFile.exists()) {
-				JOptionPane.showMessageDialog(parentFrame, "This file name already exists","File type Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(parentFrame, "This file name already exists",
+						"File type Error", JOptionPane.ERROR_MESSAGE);
 				return saveFile();
 			} else if (savedFile.toString().contains(" ")) {
-				JOptionPane.showMessageDialog(parentFrame, "File name must not contain spaces","File type Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(parentFrame, "File name must not contain spaces",
+						"File type Error", JOptionPane.ERROR_MESSAGE);
 				return saveFile();
 			} else {
 				return savedFile.getAbsolutePath();

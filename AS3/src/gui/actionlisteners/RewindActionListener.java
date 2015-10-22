@@ -27,14 +27,17 @@ public class RewindActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		vw.setEnableAudioCont(false);
-		if (vw.playbackStatus.equals("normal") == true) {
+		if (vw.playbackStatus.equals("normal")) {
+			vw.setEnableButtons(false);
+			
 			vw.playbackStatus = "rw";
+			video.pause();
 			video.mute(true);
 			vw.rwTask = new Rewind(video);
 			vw.rwTask.execute();
-			video.pause();
+			
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
-		} else if (vw.playbackStatus.equals("ff") == true) {
+		} else if (vw.playbackStatus.equals("ff")) {
 			vw.playbackStatus = "rw";
 			video.mute(true);
 			vw.rwTask = new Rewind(video);

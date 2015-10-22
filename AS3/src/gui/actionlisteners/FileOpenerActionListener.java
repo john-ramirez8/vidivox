@@ -30,11 +30,11 @@ public class FileOpenerActionListener implements ActionListener {
 		if (vid != null) {
 			mpc.setVisible(true);
 			vidPath = vid.getAbsolutePath();
-			if (vw.playbackStatus.equals("ff") == true) {
+			if (vw.playbackStatus.equals("ff")) {
 				vw.ffTask.cancel(true);
 				vw.playbackStatus = "normal";
 				vw.setEnableAudioCont(true);
-			} else if (vw.playbackStatus.equals("rw") == true) {
+			} else if (vw.playbackStatus.equals("rw")) {
 				vw.rwTask.cancel(true);
 				vw.playbackStatus = "normal";
 				vw.setEnableAudioCont(true);

@@ -51,6 +51,8 @@ public class VideoWindow extends JFrame {
 	private final JButton btnVolUp = new JButton();
 	private final JButton btnVolDown = new JButton();
 	private final JButton btnMute = new JButton();
+	private final JButton btnRewind = new JButton();
+	private final JButton btnFastForward = new JButton();
 	private final JSlider volSlider = new JSlider(0, 100, 100);
 
 	private final EmbeddedMediaPlayerComponent mpc;
@@ -62,6 +64,10 @@ public class VideoWindow extends JFrame {
 
 		//JFrames to open
 		final AddVoice aV = new AddVoice();
+		
+		//JPanel to open
+		final AudioPanel audioPanel = new AudioPanel(this);
+		audioPanel.setVisible(false);
 
 		//Setting up the contentPane & JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,7 +77,17 @@ public class VideoWindow extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 10, 0));
 		contentPane.setLayout(new BorderLayout());
-		setContentPane(contentPane);
+		//setContentPane(contentPane);
+		
+		//Trying this out
+		add(contentPane, BorderLayout.CENTER);
+		
+//		final JPanel randomPanel = new JPanel();
+//		randomPanel.setPreferredSize(new Dimension(300,500));
+//		add(randomPanel, BorderLayout.EAST);
+//		randomPanel.setVisible(false);
+		
+		add(audioPanel, BorderLayout.EAST);
 
 		//Setting up media components
 		mpc = new EmbeddedMediaPlayerComponent();
@@ -94,8 +110,6 @@ public class VideoWindow extends JFrame {
 		final JButton btnAddAudio = new JButton("Add Audio MP3");
 		final JButton btnAddVoice = new JButton("Create Voice MP3");
 		final JButton btnPlay = new JButton();
-		final JButton btnRewind = new JButton();
-		final JButton btnFastForward = new JButton();
 		final JSlider vidProgress = new JSlider();
 		final JLabel length = new JLabel();
 		final JLabel currentTime = new JLabel();
@@ -107,7 +121,7 @@ public class VideoWindow extends JFrame {
 		JMenuItem close = new JMenuItem("Exit program");
 		menu.add(openFile);
 		menu.add(close);
-		menuBar.add(menu);
+		menuBar.add(menu);	
 		
 		//Creating ActionListeners/EventListeners for various buttons
 		ActionListener playAL = new PlayActionListener(video, btnPlay, this);
@@ -208,7 +222,6 @@ public class VideoWindow extends JFrame {
 		volSlider.setMinorTickSpacing(10);
 		volSlider.setPaintTicks(true);
 		volSlider.setSnapToTicks(true);
-		volSlider.setPaintLabels(true);
 		volSlider.setPreferredSize(new Dimension(100, 50));
 		volSlider.addChangeListener(new ChangeListener() {
 			@Override
@@ -251,8 +264,22 @@ public class VideoWindow extends JFrame {
 
 		contentPane.add(buttonsPane, BorderLayout.SOUTH);
 		contentPane.add(playbackPane, BorderLayout.CENTER);
-		contentPane.add(menuBar, BorderLayout.NORTH);
+		//contentPane.add(menuBar, BorderLayout.NORTH);
 
+		this.add(menuBar, BorderLayout.NORTH);
+		
+		JButton test = new JButton("Test");
+		buttonsPane.add(test);
+		test.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (audioPanel.isVisible()) {
+					audioPanel.setVisible(false);
+				} else {
+					audioPanel.setVisible(true);
+				}
+			}
+		});
+		
 		pack();
 
 		//Playing video specified
@@ -287,6 +314,14 @@ public class VideoWindow extends JFrame {
 		btnMute.setEnabled(b);
 		btnVolUp.setEnabled(b);
 		btnVolDown.setEnabled(b);
-
+	}
+	
+	public void setEnableButtons(boolean b) {
+		volSlider.setEnabled(b);
+		btnMute.setEnabled(b);
+		btnVolUp.setEnabled(b);
+		btnVolDown.setEnabled(b);
+		btnRewind.setEnabled(b);
+		btnFastForward.setEnabled(b);
 	}
 }

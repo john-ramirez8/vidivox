@@ -65,7 +65,6 @@ public class Menu extends JFrame {
 						vp = new VideoWindow(vid.getAbsolutePath());
 						vp.setVisible(true);
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}		
 				}

@@ -26,14 +26,17 @@ public class FastForwardActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		vw.setEnableAudioCont(false);
-		if (vw.playbackStatus.equals("normal") == true) {
-			vw.playbackStatus = "ff";
+		if (vw.playbackStatus.equals("normal")) {
+			vw.setEnableButtons(false);
+
+			vw.playbackStatus = "ff";			
+			video.pause();
 			video.mute(true);
 			vw.ffTask = new FastForward(video);
 			vw.ffTask.execute();
-			video.pause();
+			
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
-		} else if (vw.playbackStatus.equals("rw") == true) {
+		} else if (vw.playbackStatus.equals("rw")) {
 			vw.playbackStatus = "ff";
 			video.mute(true);
 			vw.ffTask = new FastForward(video);

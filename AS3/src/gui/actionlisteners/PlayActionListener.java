@@ -23,20 +23,24 @@ public class PlayActionListener implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (video.isPlaying() == true) {
+		if (video.isPlaying()) {
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
 		} else {
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
 			if (vw.playbackStatus.equals("ff")) {
+				vw.setEnableButtons(true);
+				
 				vw.ffTask.cancel(true);
-				if (vw.volumeStatus.equals("muted") == false) {
+				if (!vw.volumeStatus.equals("muted")) {
 					video.mute(false);
 				}
 				vw.playbackStatus = "normal";
 				vw.setEnableAudioCont(true);
 			} else if (vw.playbackStatus.equals("rw")) {
+				vw.setEnableButtons(true);
+				
 				vw.rwTask.cancel(true);
-				if (vw.volumeStatus.equals("muted") == false) {
+				if (!vw.volumeStatus.equals("muted")) {
 					video.mute(false);
 				}
 				vw.playbackStatus = "normal";
