@@ -1,4 +1,4 @@
-package gui.actionlisteners;
+package gui.actionlisteners.audio;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -8,19 +8,22 @@ import javax.swing.SwingWorker;
 public class Festival extends SwingWorker<Void, Void> {
 
 	private String commentary;
-	private JButton btnHear;
+	private JButton hearBtn;
+	private JButton stopBtn;
 	
-	// Constructor
-	public Festival(String commentary, JButton btnHear) {
+	//Constructor
+	public Festival(String commentary, JButton hearBtn, JButton stopBtn) {
 		this.commentary = commentary;
-		this.btnHear = btnHear;
+		this.hearBtn = hearBtn;
+		this.stopBtn = stopBtn;
 	}
 
 	@Override
 	protected Void doInBackground() throws Exception {
 
 		//Disables the Hear button
-		btnHear.setEnabled(false);
+		hearBtn.setEnabled(false);
+		stopBtn.setEnabled(true);
 
 		// Festival command for playing user's commentary
 		String cmd = "echo " + commentary + " | festival --tts";
@@ -41,6 +44,7 @@ public class Festival extends SwingWorker<Void, Void> {
 	@Override
 	protected void done() {
 		//Enables the Hear button again
-		btnHear.setEnabled(true);
+		hearBtn.setEnabled(true);
+		stopBtn.setEnabled(false);
 	}
 }

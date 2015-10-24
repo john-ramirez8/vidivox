@@ -1,4 +1,4 @@
-package gui.actionlisteners;
+package gui.actionlisteners.playback;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,21 +6,20 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import swingworker.Rewind;
 import gui.VideoWindow;
 import helpers.Main;
-
+import swingworker.FastForward;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
-public class RewindActionListener implements ActionListener {
+public class FastForwardActionListener implements ActionListener {
 
-	private JButton btnPlay;
 	private EmbeddedMediaPlayer video;
+	private JButton btnPlay;
 	private VideoWindow vw;
 	
-	public RewindActionListener(JButton btnPlay, EmbeddedMediaPlayer video, VideoWindow vw) {
-		this.btnPlay = btnPlay;
+	public FastForwardActionListener(EmbeddedMediaPlayer video, JButton btnPlay, VideoWindow vw) {
 		this.video = video;
+		this.btnPlay = btnPlay;
 		this.vw = vw;
 	}
 	
@@ -29,20 +28,20 @@ public class RewindActionListener implements ActionListener {
 		vw.setEnableAudioCont(false);
 		if (vw.playbackStatus.equals("normal")) {
 			vw.setEnableButtons(false);
-			
-			vw.playbackStatus = "rw";
+
+			vw.playbackStatus = "ff";			
 			video.pause();
 			video.mute(true);
-			vw.rwTask = new Rewind(video);
-			vw.rwTask.execute();
+			vw.ffTask = new FastForward(video);
+			vw.ffTask.execute();
 			
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
-		} else if (vw.playbackStatus.equals("ff")) {
-			vw.playbackStatus = "rw";
+		} else if (vw.playbackStatus.equals("rw")) {
+			vw.playbackStatus = "ff";
 			video.mute(true);
-			vw.rwTask = new Rewind(video);
-			vw.ffTask.cancel(true);
-			vw.rwTask.execute();
+			vw.ffTask = new FastForward(video);
+			vw.rwTask.cancel(true);
+			vw.ffTask.execute();
 		}
 		
 	}

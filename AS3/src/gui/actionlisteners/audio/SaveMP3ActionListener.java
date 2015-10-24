@@ -1,11 +1,10 @@
-package gui.actionlisteners;
+package gui.actionlisteners.audio;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import gui.CreateMP3Panel;
@@ -16,7 +15,6 @@ public class SaveMP3ActionListener implements ActionListener {
 
 	private String commentary;
 	private JFrame parentFrame;
-	//private JPanel contentPane;
 	private CreateMP3Panel panel;
 	private JTextArea textArea;
 	private FileOpener fo;

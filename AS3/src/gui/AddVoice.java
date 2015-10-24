@@ -75,8 +75,8 @@ public class AddVoice extends JFrame {
 					JOptionPane.showMessageDialog(contentPane, "Text can not be blank", "Text Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					// Performs the festival command in the background
-					voiceTask = new Festival(commentary, btnHear);
-					voiceTask.execute();
+					//voiceTask = new Festival(commentary, btnHear, stopBtn);
+					//voiceTask.execute();
 					}
 			}
 		});
