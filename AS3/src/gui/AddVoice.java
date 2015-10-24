@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class AddVoice extends JFrame {
 	
-	private final int MAX_CHAR_LIMIT = 160;
+	private final int MAX_CHAR_LIMIT = 200;
 	
 	private JPanel contentPane;
 	private JTextArea textArea;
@@ -105,8 +105,8 @@ public class AddVoice extends JFrame {
 						mp3 = mp3.substring(0, mp3.length() - 4);
 
 						// Creates the mp3 file in the background
-						mp3Task = new CreateMP3(commentary, mp3, contentPane);
-						mp3Task.execute();
+						//mp3Task = new CreateMP3(commentary, mp3, contentPane);
+						//mp3Task.execute();
 					}
 				}
 			}

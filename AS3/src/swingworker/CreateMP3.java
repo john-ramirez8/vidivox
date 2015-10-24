@@ -2,20 +2,20 @@ package swingworker;
 
 import java.io.IOException;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 
 public class CreateMP3 extends SwingWorker<Void, Void> {
 	private String commentary;
 	private String mp3Name;
-	private JPanel parentPanel;
+	private JFrame parentFrame;
 	
 	// Constructor
-	public CreateMP3(String commentary, String mp3Name, JPanel parentPanel) {
+	public CreateMP3(String commentary, String mp3Name, JFrame parentFrame) {
 		this.commentary = commentary;
 		this.mp3Name = mp3Name;
-		this.parentPanel = parentPanel;
+		this.parentFrame = parentFrame;
 	}
 	
 	@Override
@@ -46,6 +46,6 @@ public class CreateMP3 extends SwingWorker<Void, Void> {
 	}
 	
 	protected void done() {
-		JOptionPane.showMessageDialog(parentPanel, "Successfully saved " + mp3Name + ".mp3");
+		JOptionPane.showMessageDialog(parentFrame, "Successfully saved " + mp3Name + ".mp3");
 	}
 }

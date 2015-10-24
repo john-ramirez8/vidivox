@@ -44,7 +44,7 @@ public class FileOpener {
 		if (result == JFileChooser.APPROVE_OPTION) {
 			openedFile = fc.getSelectedFile();
 			String extension = openedFile.toString().substring(openedFile.toString().length() - 4);
-			if (extension.equals(desiredExtension) == false) {
+			if (!extension.equals(desiredExtension)) {
 				JOptionPane.showMessageDialog(parentFrame, errMessage, "File type Error", JOptionPane.ERROR_MESSAGE);
 				return openFile();
 			} else {

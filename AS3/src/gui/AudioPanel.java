@@ -13,15 +13,12 @@ import javax.swing.JTabbedPane;
 public class AudioPanel extends JPanel {
 	
 	private JTabbedPane audioPane = new JTabbedPane();
-	private JFrame parent;
 	
 	public AudioPanel(JFrame parent) {
-		
-		this.parent = parent;
-		
+				
 		setPreferredSize(new Dimension(250, 500));
 		setLayout(new BorderLayout());
-		JPanel festivalPanel = new JPanel();
+		JPanel festivalPanel = new CreateMP3Panel(parent);
 		JPanel mergePanel = new JPanel();
 		
 		audioPane.addTab("Create MP3", festivalPanel);
@@ -29,15 +26,5 @@ public class AudioPanel extends JPanel {
 		add(audioPane, BorderLayout.CENTER);
 		
 	}
-
-	protected JPanel createInnerPanel(String title) {
-		JPanel panelToAdd = new JPanel();
-		JLabel panelTitle = new JLabel(title);
-		
-		panelTitle.setHorizontalAlignment(JLabel.CENTER);
-		panelToAdd.setLayout(new GridLayout(1,1));
-		panelToAdd.add(panelTitle);
-		
-		return panelToAdd;
-	}
+	
 }
