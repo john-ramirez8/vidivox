@@ -60,7 +60,6 @@ public class AddAudioToTableActionListener implements ActionListener {
 				timeToAdd = minutesText + ":" + secondsText;			
 				Object[] rowToAdd = { fileName, timeToAdd };
 				
-				System.out.println("Time to add the audio is: " + time);
 				parentPanel.getHashMap().put(fileToAdd.getAbsolutePath(), time);
 				table.addRow(rowToAdd);
 			}
