@@ -31,8 +31,8 @@ public class Festival extends SwingWorker<Void, Void> {
 		stopBtn.setEnabled(true);
 
 		// Festival command for playing user's commentary
-		String cmd = "echo " + commentary + " | festival --tts";
-
+		String cmd = "echo \"" + commentary + "\" | festival --tts";
+		System.out.println("the command within Festival class = " + cmd);
 		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
 		
 		// Performs command in bash
@@ -73,6 +73,7 @@ public class Festival extends SwingWorker<Void, Void> {
 						processPID = processPID.substring(5, processPID.indexOf(")"));
 						String cmd = "kill -9 " + processPID;
 						
+						System.out.println("command to kill festival = " + cmd);
 						ProcessBuilder processKiller = new ProcessBuilder("/bin/bash", "-c", cmd);
 						processKiller.start();
 					}

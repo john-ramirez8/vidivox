@@ -3,6 +3,8 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,6 +13,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import swingworker.AddAudio;
 import swingworker.AudioToVideo;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
@@ -20,9 +23,10 @@ public class ProgressBar extends JFrame {
 	
 	private JPanel contentPane;
 	private JProgressBar progressBar;
-	private AudioToVideo bgTask;
+	private AddAudio bgTask;
 	
-	public ProgressBar(String path, File mp3, String newVideoName, EmbeddedMediaPlayer video) {
+	public ProgressBar(String oldVideoPath, String newVideoPath, EmbeddedMediaPlayer video,
+			HashMap<String, String> audioToAdd, ArrayList<String> listOfAudio) {
 		
 		//Setting up the contentPanel
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -50,9 +54,10 @@ public class ProgressBar extends JFrame {
 		
 		pack();	
 		
-		// Creating the new video file in the background
-		bgTask = new AudioToVideo(path, mp3, contentPane, newVideoName, this, progressBar, video);
-		bgTask.execute();	
+		//Creating the new video file in the background
+		bgTask = new AddAudio(oldVideoPath, audioToAdd, newVideoPath,
+				video, listOfAudio, progressBar, this);
+		bgTask.execute();
 		
 	}
 }

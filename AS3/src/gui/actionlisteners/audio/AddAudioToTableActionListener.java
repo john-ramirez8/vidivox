@@ -41,7 +41,7 @@ public class AddAudioToTableActionListener implements ActionListener {
 		fo = new FileOpener(".mp3", parentFrame);
 		String minutesText = minutes.getText();
 		String secondsText = seconds.getText();
-		videoLength = parentFrame.getVideoLength();
+		videoLength = parentFrame.getVideo().getLength();
 		
 		if (!minutesText.matches("[0-9]+") || !secondsText.matches("[0-9]+")
 				|| (minutesText.length() != 2) || (secondsText.length() != 2)) {
@@ -55,11 +55,13 @@ public class AddAudioToTableActionListener implements ActionListener {
 			fileToAdd = fo.openFile();
 			
 			if (fileToAdd != null) {
-				long time = Integer.parseInt(minutesText)*60 + Integer.parseInt(secondsText);
+				String time = "00:" + minutesText + ":" + secondsText;
 				fileName = fileToAdd.getName();
 				timeToAdd = minutesText + ":" + secondsText;			
 				Object[] rowToAdd = { fileName, timeToAdd };
 				
+				//Adds file path to arraylist and associated insert time to hashmap
+				parentPanel.getArrayList().add(fileToAdd.getAbsolutePath());
 				parentPanel.getHashMap().put(fileToAdd.getAbsolutePath(), time);
 				table.addRow(rowToAdd);
 			}

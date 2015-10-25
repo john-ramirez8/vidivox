@@ -35,12 +35,13 @@ public class FestivalActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (!stopFestival) {
 			commentary = textArea.getText();
-			
+			System.out.println("commentary = " + commentary);
 			if (commentary.isEmpty() || commentary.trim().length() == 0) {
 				JOptionPane.showMessageDialog(parentFrame, "Text can't be blank", "Text Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				commentary = commentary.replace('\n', ' ');
+				System.out.println("commentary after replacing newline char: " + commentary);
 				// Performs the festival command in the background
 				panel.setVoiceTask(new Festival(commentary, hearBtn, stopBtn));
 				panel.getVoiceTask().execute();

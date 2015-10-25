@@ -15,7 +15,7 @@ public class WindowManager {
 	//This function takes as input a JFrame to open and opens in 100 X and 100 Y in from the parent window
 	public void openWindow(JFrame windowToOpen){
 		Point location = parentWindow.getLocationOnScreen();
-		location.setLocation(location.getX() + 200, location.getY() + 150);
+		location.setLocation(location.getX() + 100, location.getY() + 100);
 		windowToOpen.setLocation(location);
 		windowToOpen.setVisible(true);
 	}

@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import gui.actionlisteners.audio.AddAudioToTableActionListener;
+import gui.actionlisteners.audio.MergeAudioActionListener;
 import helpers.JTextFieldLimit;
 
 @SuppressWarnings("serial")
@@ -20,7 +22,8 @@ public class MergePanel extends JPanel {
 
 	private final int MAX_INSERT_TIME_LIMIT = 2;
 	
-	private HashMap<String, Number> audioToAdd = new HashMap<String, Number>();
+	private HashMap<String, String> audioToAdd = new HashMap<String, String>();
+	private ArrayList<String> listOfAudio = new ArrayList<String>();
 	private JTable audioTable;
 	private String[] columnNames = { "Audio file name", "Time to insert" };
 	
@@ -38,8 +41,10 @@ public class MergePanel extends JPanel {
 		
 		//Creating the various panels needed
 		JPanel filePanel = new JPanel();
-		JButton fileChooseBtn = new JButton("Choose audio to add");
+		JButton fileChooseBtn = new JButton("Add audio");
+		JButton mergeBtn = new JButton("Merge with video");
 		filePanel.add(fileChooseBtn);
+		filePanel.add(mergeBtn);
 	
 		JPanel timePanel = new JPanel();
 		JLabel timeLabel = new JLabel("Insert at time:");
@@ -60,7 +65,9 @@ public class MergePanel extends JPanel {
 		//Creating action listener for the audio button
 		ActionListener addAL = new AddAudioToTableActionListener(parent, insertMinutes,
 				insertSeconds, model, this);
+		ActionListener mergeAL = new MergeAudioActionListener(this, parent);
 		fileChooseBtn.addActionListener(addAL);
+		mergeBtn.addActionListener(mergeAL);
 		
 		JPanel buttonsPanel = new JPanel(new BorderLayout());
 		buttonsPanel.add(filePanel, BorderLayout.CENTER);
@@ -70,5 +77,6 @@ public class MergePanel extends JPanel {
 		add(buttonsPanel, BorderLayout.SOUTH);
 	}
 	
-	public HashMap<String, Number> getHashMap() { return audioToAdd; }
+	public HashMap<String, String> getHashMap() { return audioToAdd; }
+	public ArrayList<String> getArrayList() { return listOfAudio; }
 }

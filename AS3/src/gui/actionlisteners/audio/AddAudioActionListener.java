@@ -44,7 +44,7 @@ public class AddAudioActionListener implements ActionListener {
 			String newVidName = videoOpener.saveFile();
 			
 			if (newVidName != null) {
-				progressBar = new ProgressBar(vidPath, mp3, newVidName, video);
+				//progressBar = new ProgressBar(vidPath, mp3, newVidName, video);
 				wm.openWindow(progressBar);
 			}
 		}

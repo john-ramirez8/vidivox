@@ -324,5 +324,6 @@ public class VideoWindow extends JFrame {
 		btnFastForward.setEnabled(b);
 	}
 	
-	public long getVideoLength() { return video.getLength(); }
+	public EmbeddedMediaPlayer getVideo() { return video; }
+	public String getVideoPath() { return vidPath; }
 }
