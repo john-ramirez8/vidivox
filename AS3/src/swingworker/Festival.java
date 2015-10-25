@@ -9,6 +9,12 @@ import java.lang.reflect.Field;
 import javax.swing.JButton;
 import javax.swing.SwingWorker;
 
+/**
+ * This Festival class is used to use Festival to voice
+ * the commentary that the user has typed in.
+ * @author John Ramirez (jram948)
+ * 
+ */
 public class Festival extends SwingWorker<Void, Void> {
 
 	private String commentary;
@@ -26,7 +32,7 @@ public class Festival extends SwingWorker<Void, Void> {
 	@Override
 	protected Void doInBackground() throws Exception {
 
-		//Disables the Hear button
+		//Disables the Preview button and enables Stop button
 		hearBtn.setEnabled(false);
 		stopBtn.setEnabled(true);
 
@@ -48,7 +54,7 @@ public class Festival extends SwingWorker<Void, Void> {
 	
 	@Override
 	protected void done() {
-		//Enables the Hear button again
+		//Enables the Preview button and disables Stop button
 		hearBtn.setEnabled(true);
 		stopBtn.setEnabled(false);
 		

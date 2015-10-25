@@ -6,12 +6,18 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This CreateMP3 class is used to create an mp3 file out of the
+ * commentary that the user has typed.
+ * @author John Ramirez (jram948)
+ * 
+ */
 public class CreateMP3 extends SwingWorker<Void, Void> {
 	private String commentary;
 	private String mp3Name;
 	private JFrame parentFrame;
 	
-	// Constructor
+	//Constructor
 	public CreateMP3(String commentary, String mp3Name, JFrame parentFrame) {
 		this.commentary = commentary;
 		this.mp3Name = mp3Name;
@@ -45,6 +51,8 @@ public class CreateMP3 extends SwingWorker<Void, Void> {
 		return null;
 	}
 	
+	//Shows a completion message to the user
+	@Override
 	protected void done() {
 		JOptionPane.showMessageDialog(parentFrame, "Successfully saved " + mp3Name + ".mp3");
 	}

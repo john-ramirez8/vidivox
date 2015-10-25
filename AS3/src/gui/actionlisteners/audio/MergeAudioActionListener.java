@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 import gui.MergePanel;
 import gui.ProgressBar;
@@ -32,6 +33,7 @@ public class MergeAudioActionListener implements ActionListener {
 	private JPanel contentPane;
 	private ProgressBar progressBar;
 	private String oldVideoPath;
+	private DefaultTableModel table;
 	
 	public MergeAudioActionListener(MergePanel parentPanel, VideoWindow parentFrame) {
 		this.parentFrame = parentFrame;
@@ -39,6 +41,7 @@ public class MergeAudioActionListener implements ActionListener {
 		this.video = parentFrame.getVideo();
 		this.listOfAudio = parentPanel.getArrayList();
 		this.oldVideoPath = parentFrame.getVideoPath();
+		this.table = parentPanel.getTableModel();
 		
 		videoOpener = new FileOpener (".avi", this.parentFrame);
 		wm = new WindowManager(parentPanel);
@@ -54,7 +57,7 @@ public class MergeAudioActionListener implements ActionListener {
 			
 			//Creates a progress bar for the user
 			progressBar = new ProgressBar(oldVideoPath, newVideoPath, video,
-					audioToAdd, listOfAudio);
+					audioToAdd, listOfAudio, table);
 			wm.openWindow(progressBar);
 		}
 	}

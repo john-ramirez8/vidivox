@@ -5,9 +5,11 @@ import javax.swing.JTextArea;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-/*
+/**
  * This class is used to show the number of remaining characters
  * that the user has when typing their commentary.
+ * @author John Ramirez (jram948)
+ * 
  */
 public class RemainingCharacters implements DocumentListener {
 
@@ -19,6 +21,7 @@ public class RemainingCharacters implements DocumentListener {
 		this.textArea = textArea;
 	}
 	
+	//These methods update whenever the user types in the text area.
 	@Override
 	public void changedUpdate(DocumentEvent arg0) {
 		update();
@@ -34,6 +37,7 @@ public class RemainingCharacters implements DocumentListener {
 		update();
 	}
 
+	//Displays how many characters the user has left to type.
 	public void update() {
 		int length = 250 - textArea.getText().length();
 		

@@ -8,9 +8,16 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+/**
+ * This AddAudio class is used to add multiple audio files
+ * to the video file.
+ * @author John Ramirez (jram948)
+ * 
+ */
 public class AddAudio extends SwingWorker<Void, Void> {
 
 	private int count = 1;
@@ -22,10 +29,12 @@ public class AddAudio extends SwingWorker<Void, Void> {
 	private ArrayList<String> listOfAudio;
 	private JProgressBar progressBar;
 	private JFrame parentFrame;
+	private DefaultTableModel table;
 	
+	//Constructor
 	public AddAudio(String oldVideoPath, HashMap<String, String> audioToAdd, String newVideoPath,
 			EmbeddedMediaPlayer video, ArrayList<String> listOfAudio, JProgressBar progressBar,
-			JFrame parentFrame) {
+			JFrame parentFrame, DefaultTableModel table) {
 		this.oldVideoPath = oldVideoPath;
 		this.audioToAdd = audioToAdd;
 		this.newVideoPath = newVideoPath;
@@ -33,11 +42,13 @@ public class AddAudio extends SwingWorker<Void, Void> {
 		this.listOfAudio = listOfAudio;
 		this.progressBar = progressBar;
 		this.parentFrame = parentFrame;
+		this.table = table;
 	}
 	
 	@Override
 	protected Void doInBackground() throws Exception {
 
+		//Creates the bash command that'll be used to overlay audio
 		String cmd = "ffmpeg -i " + oldVideoPath;
 		
 		for (int i = 0; i < audioToAdd.size(); i++) {
@@ -48,9 +59,9 @@ public class AddAudio extends SwingWorker<Void, Void> {
 		
 		cmd += " -filter_complex amix=" + count + " -async 1 " + newVideoPath;
 		
-		System.out.println(cmd);
 		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
 
+		//Performs the command in bash
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -60,6 +71,7 @@ public class AddAudio extends SwingWorker<Void, Void> {
 		return null;
 	}
 
+	//Removes the progress bar and asks if user would like to play the new video
 	@Override
 	protected void done() {
 		parentFrame.setVisible(false);
@@ -70,9 +82,12 @@ public class AddAudio extends SwingWorker<Void, Void> {
 		int result = JOptionPane.showConfirmDialog(parentFrame, message, "Video successfully saved!", JOptionPane.YES_NO_OPTION);
 		
 		if (result == JOptionPane.YES_OPTION) {
-			video.startMedia(newVideoPath);
+			//Clears the hashmap, arraylist and table for the new video
 			audioToAdd.clear();
 			listOfAudio.clear();
+			table.setRowCount(0);
+			
+			video.startMedia(newVideoPath); //Plays the new video
 		}
 	}
 }

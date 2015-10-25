@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import swingworker.AddAudio;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -29,7 +30,8 @@ public class ProgressBar extends JFrame {
 	private AddAudio bgTask;
 	
 	public ProgressBar(String oldVideoPath, String newVideoPath, EmbeddedMediaPlayer video,
-			HashMap<String, String> audioToAdd, ArrayList<String> listOfAudio) {
+			HashMap<String, String> audioToAdd, ArrayList<String> listOfAudio,
+			DefaultTableModel table) {
 		
 		//Setting up the contentPane
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -59,7 +61,7 @@ public class ProgressBar extends JFrame {
 		
 		//Creating the new video file in the background
 		bgTask = new AddAudio(oldVideoPath, audioToAdd, newVideoPath,
-				video, listOfAudio, progressBar, this);
+				video, listOfAudio, progressBar, this, table);
 		bgTask.execute();
 		
 	}

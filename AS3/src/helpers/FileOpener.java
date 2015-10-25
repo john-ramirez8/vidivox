@@ -7,9 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/*
+/**
  * This class is a helper class that is used to open and save files (such as opening
- * mp3 or avi files to be used in VIDIVOX.
+ * .mp3 or .avi files that will be used).
+ * @author John Ramirez (jram948)
+ * 
  */
 public class FileOpener {
 	private String desiredExtension;
@@ -37,7 +39,7 @@ public class FileOpener {
 	/**
 	 * This method opens a file chooser and allows the user to choose a file. If the file is
 	 * of incorrect file type, then the function calls itself recursively to allow the user to try again.
-	 * @return the file that's going to be opened by the users
+	 * @return the file that's going to be opened by the users, or null otherwise.
 	 */
 	public File openFile() {
 		int result = fc.showOpenDialog(null);
