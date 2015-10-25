@@ -28,12 +28,11 @@ public class SaveMP3ActionListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("commentary = " + commentary);
 		commentary = textArea.getText();
 
 		if (commentary.isEmpty() || commentary.trim().isEmpty()) {
-			JOptionPane.showMessageDialog(parentFrame, "Text can't be empty", "Error message",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(parentFrame, "Text can't be blank", "Text Error",
+					JOptionPane.ERROR_MESSAGE);
 		} else {
 			String mp3 = fo.saveFile();
 
