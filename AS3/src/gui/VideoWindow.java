@@ -26,7 +26,6 @@ public class VideoWindow extends JFrame {
 
 	//Declaring useful variables
 	private String vidPath;
-	private WindowManager manager;
 	private JPanel contentPane;
 	public FastForward ffTask;
 	public Rewind rwTask;
@@ -47,9 +46,6 @@ public class VideoWindow extends JFrame {
 	public VideoWindow(String path) throws Exception {
 
 		vidPath = path;
-
-		//JFrames to open
-		final AddVoice aV = new AddVoice();
 
 		//Setting up the contentPane & JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,9 +71,6 @@ public class VideoWindow extends JFrame {
 		
 		final FileOpener fo = new FileOpener(".avi", this);
 
-		//Setting up WindowMananger
-		manager = new WindowManager(contentPane);
-
 		//Component declarations
 		JPanel addPane = new JPanel();
 		JPanel volumePane = new JPanel();
@@ -86,8 +79,6 @@ public class VideoWindow extends JFrame {
 		JPanel playbackPane = new JPanel();
 		JPanel buttonsPane = new JPanel();
 		JPanel progressPane = new JPanel();
-		final JButton btnAddAudio = new JButton("Add Audio MP3");
-		final JButton btnAddVoice = new JButton("Create Voice MP3");
 		final JButton btnPlay = new JButton();
 		final JSlider vidProgress = new JSlider();
 		final JLabel length = new JLabel();
@@ -153,20 +144,6 @@ public class VideoWindow extends JFrame {
 			}
 		});
 
-		//Setting up the add audio button
-		btnAddAudio.setPreferredSize(new Dimension(140, 29));
-		btnAddAudio.setFont(new Font("Tahoma", Font.BOLD, 12));
-		//btnAddAudio.addActionListener(audioAL);
-
-		//Setting up the add voice button
-		btnAddVoice.setPreferredSize(new Dimension(140, 29));
-		btnAddVoice.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnAddVoice.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				manager.openWindow(aV);
-			}
-		});
-
 		//Setting up the play/pause button
 		btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
 		btnPlay.setPreferredSize(new Dimension(80, 80));
@@ -213,9 +190,20 @@ public class VideoWindow extends JFrame {
 		//Adding a video event listener
 		video.addMediaPlayerEventListener(mediaListener);
 
+		JButton test = new JButton("Test");
+		//buttonsPane.add(test);
+		test.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (audioPanel.isVisible()) {
+					audioPanel.setVisible(false);
+				} else {
+					audioPanel.setVisible(true);
+				}
+			}
+		});
+		
 		//Adding all components to the panel
-		addPane.add(btnAddVoice);
-		addPane.add(btnAddAudio);
+		addPane.add(test);
 		
 		playbackButtonPane.add(btnRewind, BorderLayout.WEST);
 		playbackButtonPane.add(btnPlay, BorderLayout.CENTER);
@@ -243,18 +231,6 @@ public class VideoWindow extends JFrame {
 		contentPane.add(playbackPane, BorderLayout.CENTER);
 
 		this.add(menuBar, BorderLayout.NORTH);
-		
-		JButton test = new JButton("Test");
-		buttonsPane.add(test);
-		test.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (audioPanel.isVisible()) {
-					audioPanel.setVisible(false);
-				} else {
-					audioPanel.setVisible(true);
-				}
-			}
-		});
 		
 		pack();
 

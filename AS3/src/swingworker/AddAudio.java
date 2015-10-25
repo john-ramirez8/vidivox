@@ -84,14 +84,12 @@ public class AddAudio extends SwingWorker<Void, Void> {
 		int result = JOptionPane.showConfirmDialog(parentFrame, message, "Video successfully saved!", JOptionPane.YES_NO_OPTION);
 		
 		if (result == JOptionPane.YES_OPTION) {
-			//Clears the hashmap, arraylist and table for the new video
+			//Clears the HashMaps, ArrayList and table for the new video
 			audioTimes.clear();
 			listOfAudio.clear();
 			audioNames.clear();
 			table.setRowCount(0);
 			
-			System.out.println("Is hashmap empty? " + audioTimes.isEmpty());
-			System.out.println("is arraylist empty? " + listOfAudio.isEmpty());
 			video.startMedia(newVideoPath); //Plays the new video
 		}
 	}
