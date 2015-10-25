@@ -23,7 +23,8 @@ public class AddAudio extends SwingWorker<Void, Void> {
 	private int count = 1;
 	
 	private String oldVideoPath;
-	private HashMap<String, String> audioToAdd;
+	private HashMap<String, String> audioTimes;
+	private HashMap<String, String> audioNames;
 	private String newVideoPath;
 	private EmbeddedMediaPlayer video;
 	private ArrayList<String> listOfAudio;
@@ -34,15 +35,16 @@ public class AddAudio extends SwingWorker<Void, Void> {
 	//Constructor
 	public AddAudio(String oldVideoPath, HashMap<String, String> audioToAdd, String newVideoPath,
 			EmbeddedMediaPlayer video, ArrayList<String> listOfAudio, JProgressBar progressBar,
-			JFrame parentFrame, DefaultTableModel table) {
+			JFrame parentFrame, DefaultTableModel table, HashMap<String, String> audioNames) {
 		this.oldVideoPath = oldVideoPath;
-		this.audioToAdd = audioToAdd;
+		this.audioTimes = audioToAdd;
 		this.newVideoPath = newVideoPath;
 		this.video = video;
 		this.listOfAudio = listOfAudio;
 		this.progressBar = progressBar;
 		this.parentFrame = parentFrame;
 		this.table = table;
+		this.audioNames = audioNames;
 	}
 	
 	@Override
@@ -51,9 +53,9 @@ public class AddAudio extends SwingWorker<Void, Void> {
 		//Creates the bash command that'll be used to overlay audio
 		String cmd = "ffmpeg -i " + oldVideoPath;
 		
-		for (int i = 0; i < audioToAdd.size(); i++) {
+		for (int i = 0; i < audioTimes.size(); i++) {
 			String filePath = listOfAudio.get(i);
-			cmd += " -itsoffset " + audioToAdd.get(filePath) + " -i " + filePath;
+			cmd += " -itsoffset " + audioTimes.get(filePath) + " -i " + filePath;
 			count++;
 		}
 		
@@ -83,10 +85,13 @@ public class AddAudio extends SwingWorker<Void, Void> {
 		
 		if (result == JOptionPane.YES_OPTION) {
 			//Clears the hashmap, arraylist and table for the new video
-			audioToAdd.clear();
+			audioTimes.clear();
 			listOfAudio.clear();
+			audioNames.clear();
 			table.setRowCount(0);
 			
+			System.out.println("Is hashmap empty? " + audioTimes.isEmpty());
+			System.out.println("is arraylist empty? " + listOfAudio.isEmpty());
 			video.startMedia(newVideoPath); //Plays the new video
 		}
 	}

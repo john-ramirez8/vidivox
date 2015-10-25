@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import gui.actionlisteners.audio.AddAudioToTableActionListener;
+import gui.actionlisteners.audio.DeleteAudioActionListener;
 import gui.actionlisteners.audio.MergeAudioActionListener;
 import helpers.JTextFieldLimit;
 
@@ -28,7 +29,8 @@ public class MergePanel extends JPanel {
 
 	private final int MAX_INSERT_TIME_LIMIT = 2;
 	
-	private HashMap<String, String> audioToAdd = new HashMap<String, String>();
+	private HashMap<String, String> audioTimes = new HashMap<String, String>();
+	private HashMap<String, String> audioNames = new HashMap<String, String>();
 	private ArrayList<String> listOfAudio = new ArrayList<String>();
 	private JTable audioTable;
 	private String[] columnNames = { "Audio file name", "Time to insert" };
@@ -48,24 +50,27 @@ public class MergePanel extends JPanel {
 		
 		//Creating the various panels needed
 		JPanel filePanel = new JPanel();
-		JButton fileChooseBtn = new JButton("Add audio");
 		JButton mergeBtn = new JButton("Merge with video");
-		filePanel.add(fileChooseBtn);
+		JButton deleteBtn = new JButton("Delete");
 		filePanel.add(mergeBtn);
-	
-		JPanel timePanel = new JPanel();
-		JLabel timeLabel = new JLabel("Insert at time:");
+		filePanel.add(deleteBtn);
+		
+		JPanel insertAudioPanel = new JPanel();
+		JButton fileChooseBtn = new JButton("Add audio");
+		JLabel timeLabel = new JLabel("Time:");
 		JLabel colon = new JLabel(":");
 		JTextField insertMinutes = new JTextField(2);
-		JTextField insertSeconds = new JTextField(2);
-		timePanel.add(timeLabel);
-		timePanel.add(insertMinutes);
-		timePanel.add(colon);
-		timePanel.add(insertSeconds);
-
-		JPanel buttonsPanel = new JPanel(new BorderLayout());
-		buttonsPanel.add(filePanel, BorderLayout.CENTER);
-		buttonsPanel.add(timePanel, BorderLayout.SOUTH);
+		JTextField insertSeconds = new JTextField(2);	
+		insertAudioPanel.add(fileChooseBtn);
+		insertAudioPanel.add(timeLabel);
+		insertAudioPanel.add(insertMinutes);
+		insertAudioPanel.add(colon);
+		insertAudioPanel.add(insertSeconds);
+		
+		//Creates the panel that holds the table and corresponding buttons
+		JPanel tablePanel = new JPanel(new BorderLayout());
+		tablePanel.add(scrollPane, BorderLayout.CENTER);
+		tablePanel.add(insertAudioPanel, BorderLayout.SOUTH);
 		
 		//Setting up the textfield limit and tooltip
 		insertMinutes.setDocument(new JTextFieldLimit(MAX_INSERT_TIME_LIMIT));
@@ -77,15 +82,19 @@ public class MergePanel extends JPanel {
 		ActionListener addAL = new AddAudioToTableActionListener(parent, insertMinutes,
 				insertSeconds, model, this);
 		ActionListener mergeAL = new MergeAudioActionListener(this, parent);
+		ActionListener deleteAL = new DeleteAudioActionListener(this);
 		fileChooseBtn.addActionListener(addAL);
 		mergeBtn.addActionListener(mergeAL);
+		deleteBtn.addActionListener(deleteAL);
 		
-		add(scrollPane, BorderLayout.CENTER);
-		add(buttonsPanel, BorderLayout.SOUTH);
+		add(tablePanel, BorderLayout.CENTER);
+		add(filePanel, BorderLayout.SOUTH);
 	}
 	
-	//Getters for the HashMap, ArrayList and DefaultTableModel
-	public HashMap<String, String> getHashMap() { return audioToAdd; }
+	//Getters for the HashMaps, ArrayList, DefaultTableModel and JTable
+	public HashMap<String, String> getAudioTimesHashMap() { return audioTimes; }
+	public HashMap<String, String> getAudioNamesHashMap() { return audioNames; }
 	public ArrayList<String> getArrayList() { return listOfAudio; }
 	public DefaultTableModel getTableModel() { return model; }
+	public JTable getTable() { return audioTable; }
 }

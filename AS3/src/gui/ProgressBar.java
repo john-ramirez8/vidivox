@@ -30,8 +30,8 @@ public class ProgressBar extends JFrame {
 	private AddAudio bgTask;
 	
 	public ProgressBar(String oldVideoPath, String newVideoPath, EmbeddedMediaPlayer video,
-			HashMap<String, String> audioToAdd, ArrayList<String> listOfAudio,
-			DefaultTableModel table) {
+			HashMap<String, String> audioTimes, ArrayList<String> listOfAudio,
+			DefaultTableModel table, HashMap<String, String> audioNames) {
 		
 		//Setting up the contentPane
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -60,8 +60,8 @@ public class ProgressBar extends JFrame {
 		pack();	
 		
 		//Creating the new video file in the background
-		bgTask = new AddAudio(oldVideoPath, audioToAdd, newVideoPath,
-				video, listOfAudio, progressBar, this, table);
+		bgTask = new AddAudio(oldVideoPath, audioTimes, newVideoPath,
+				video, listOfAudio, progressBar, this, table, audioNames);
 		bgTask.execute();
 		
 	}

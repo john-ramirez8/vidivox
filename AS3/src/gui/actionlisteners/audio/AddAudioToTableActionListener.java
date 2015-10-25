@@ -68,9 +68,10 @@ public class AddAudioToTableActionListener implements ActionListener {
 				timeToAdd = minutesText + ":" + secondsText;			
 				Object[] rowToAdd = { fileName, timeToAdd };
 				
-				//Adds file path to arraylist and associated insert time to hashmap
+				//Adds file path to hashmaps and arraylist
 				parentPanel.getArrayList().add(fileToAdd.getAbsolutePath());
-				parentPanel.getHashMap().put(fileToAdd.getAbsolutePath(), time);
+				parentPanel.getAudioTimesHashMap().put(fileToAdd.getAbsolutePath(), time);
+				parentPanel.getAudioNamesHashMap().put(fileName, fileToAdd.getAbsolutePath());
 				
 				//Adds data to the table
 				table.addRow(rowToAdd);
