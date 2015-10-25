@@ -54,7 +54,7 @@ public class MergeAudioActionListener implements ActionListener {
 			
 			//Creates a progress bar for the user
 			progressBar = new ProgressBar(oldVideoPath, newVideoPath, video, audioTimes,
-					listOfAudio, table, audioNames);
+					listOfAudio, table, audioNames, videoFrame);
 			wm.openWindow(progressBar);
 		}
 	}

@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,10 +32,10 @@ public class ProgressBar extends JFrame {
 	
 	public ProgressBar(String oldVideoPath, String newVideoPath, EmbeddedMediaPlayer video,
 			HashMap<String, String> audioTimes, ArrayList<String> listOfAudio,
-			DefaultTableModel table, HashMap<String, String> audioNames) {
+			DefaultTableModel table, HashMap<String, String> audioNames, VideoWindow videoFrame) {
 		
 		//Setting up the contentPane
-		setDefaultCloseOperation(HIDE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setLocation(100, 100);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,7 +62,7 @@ public class ProgressBar extends JFrame {
 		
 		//Creating the new video file in the background
 		bgTask = new AddAudio(oldVideoPath, audioTimes, newVideoPath,
-				video, listOfAudio, progressBar, this, table, audioNames);
+				video, listOfAudio, this, table, audioNames, videoFrame);
 		bgTask.execute();
 		
 	}

@@ -6,11 +6,11 @@ import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import vidivox.gui.VideoWindow;
 
 /**
  * This AddAudio class is used to add multiple audio files
@@ -28,23 +28,23 @@ public class AddAudio extends SwingWorker<Void, Void> {
 	private String newVideoPath;
 	private EmbeddedMediaPlayer video;
 	private ArrayList<String> listOfAudio;
-	private JProgressBar progressBar;
-	private JFrame parentFrame;
+	private JFrame progressFrame;
 	private DefaultTableModel table;
+	private VideoWindow videoFrame;
 	
 	//Constructor
 	public AddAudio(String oldVideoPath, HashMap<String, String> audioToAdd, String newVideoPath,
-			EmbeddedMediaPlayer video, ArrayList<String> listOfAudio, JProgressBar progressBar,
-			JFrame parentFrame, DefaultTableModel table, HashMap<String, String> audioNames) {
+			EmbeddedMediaPlayer video, ArrayList<String> listOfAudio, JFrame progressFrame,
+			DefaultTableModel table, HashMap<String, String> audioNames, VideoWindow videoFrame) {
 		this.oldVideoPath = oldVideoPath;
 		this.audioTimes = audioToAdd;
 		this.newVideoPath = newVideoPath;
 		this.video = video;
 		this.listOfAudio = listOfAudio;
-		this.progressBar = progressBar;
-		this.parentFrame = parentFrame;
+		this.progressFrame = progressFrame;
 		this.table = table;
 		this.audioNames = audioNames;
+		this.videoFrame = videoFrame;
 	}
 	
 	@Override
@@ -76,12 +76,11 @@ public class AddAudio extends SwingWorker<Void, Void> {
 	//Removes the progress bar and asks if user would like to play the new video
 	@Override
 	protected void done() {
-		parentFrame.setVisible(false);
-		progressBar.setIndeterminate(false);
+		progressFrame.setVisible(false);
 		
 		String message = "Successfully saved new video in " + newVideoPath +
 					".\n Would you like to play the new video?";
-		int result = JOptionPane.showConfirmDialog(parentFrame, message, "Video successfully saved!", JOptionPane.YES_NO_OPTION);
+		int result = JOptionPane.showConfirmDialog(videoFrame, message, "Video successfully saved!", JOptionPane.YES_NO_OPTION);
 		
 		if (result == JOptionPane.YES_OPTION) {
 			//Clears the HashMaps, ArrayList and table for the new video
