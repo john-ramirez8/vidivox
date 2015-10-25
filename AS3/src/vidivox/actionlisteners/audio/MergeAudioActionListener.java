@@ -3,9 +3,12 @@ package vidivox.actionlisteners.audio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import vidivox.gui.MergePanel;
 import vidivox.gui.ProgressBar;
 import vidivox.gui.VideoWindow;
@@ -23,31 +26,35 @@ public class MergeAudioActionListener implements ActionListener {
 	private final FileOpener videoOpener;
 	private final WindowManager wm;
 	private MergePanel parentPanel;
-	private VideoWindow parentFrame;
-	private ArrayList<String> listOfAudio;
+	private VideoWindow videoFrame;
 	private ProgressBar progressBar;
 	
-	public MergeAudioActionListener(MergePanel parentPanel, VideoWindow parentFrame) {
+	public MergeAudioActionListener(MergePanel parentPanel, VideoWindow videoFrame) {
 		this.parentPanel = parentPanel;
-		this.parentFrame = parentFrame;
-		this.listOfAudio = parentPanel.getArrayList();
+		this.videoFrame = videoFrame;
 		
-		videoOpener = new FileOpener (".avi", this.parentFrame);
+		videoOpener = new FileOpener (".avi", this.videoFrame);
 		wm = new WindowManager(parentPanel);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//Prompts the user to name the file and also location to save.
-		JOptionPane.showMessageDialog(parentFrame, "Choose the name and where to save the file");
+		JOptionPane.showMessageDialog(videoFrame, "Choose the name and where to save the file");
 		String newVideoPath = videoOpener.saveFile();
 		
 		if (newVideoPath != null) {
 			
+			String oldVideoPath = videoFrame.getVideoPath();
+			EmbeddedMediaPlayer video = videoFrame.getVideo();
+			HashMap<String, String> audioTimes = parentPanel.getAudioTimesHashMap();
+			ArrayList<String> listOfAudio = parentPanel.getArrayList();
+			DefaultTableModel table = parentPanel.getTableModel();
+			HashMap<String, String> audioNames = parentPanel.getAudioNamesHashMap();
+			
 			//Creates a progress bar for the user
-			progressBar = new ProgressBar(parentFrame.getVideoPath(), newVideoPath, parentFrame.getVideo(),
-					parentPanel.getAudioTimesHashMap(), listOfAudio, parentPanel.getTableModel(),
-					parentPanel.getAudioNamesHashMap());
+			progressBar = new ProgressBar(oldVideoPath, newVideoPath, video, audioTimes,
+					listOfAudio, table, audioNames);
 			wm.openWindow(progressBar);
 		}
 	}
