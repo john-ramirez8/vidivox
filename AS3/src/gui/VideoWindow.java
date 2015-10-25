@@ -1,47 +1,26 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.Timer;
+import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
+import gui.actionlisteners.playback.*;
 import gui.actionlisteners.*;
-import gui.actionlisteners.audio.AddAudioActionListener;
-import gui.actionlisteners.playback.FastForwardActionListener;
-import gui.actionlisteners.playback.MuteActionListener;
-import gui.actionlisteners.playback.PlayActionListener;
-import gui.actionlisteners.playback.RewindActionListener;
-import gui.actionlisteners.playback.VolumeDownActionListener;
-import gui.actionlisteners.playback.VolumeUpActionListener;
 import gui.eventadapters.PlayingEventAdapter;
-import helpers.FileOpener;
-import helpers.Main;
-import helpers.WindowManager;
-import swingworker.FastForward;
-import swingworker.Rewind;
+import helpers.*;
+import swingworker.*;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.event.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
+/**
+ * This class is the main JFrame that contains all the GUI of the video player.
+ * @author John Ramirez (jram948)
+ * 
+ */
 @SuppressWarnings("serial")
 public class VideoWindow extends JFrame {
 
@@ -132,7 +111,6 @@ public class VideoWindow extends JFrame {
 		ActionListener muteAL = new MuteActionListener(video, this);
 		ActionListener timerAL = new TimerActionListener(vidProgress, currentTime, volSlider, video, btnMute, length, this);
 		ActionListener fileAL = new FileOpenerActionListener(fo, mpc, video, this);
-		ActionListener audioAL = new AddAudioActionListener(contentPane, vidPath, this, video);
 		PlayingEventAdapter mediaListener = new PlayingEventAdapter(vidProgress, length, btnPlay, video, this);
 		
 		//Setting up the nested panels
@@ -178,7 +156,7 @@ public class VideoWindow extends JFrame {
 		//Setting up the add audio button
 		btnAddAudio.setPreferredSize(new Dimension(140, 29));
 		btnAddAudio.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnAddAudio.addActionListener(audioAL);
+		//btnAddAudio.addActionListener(audioAL);
 
 		//Setting up the add voice button
 		btnAddVoice.setPreferredSize(new Dimension(140, 29));
@@ -202,7 +180,6 @@ public class VideoWindow extends JFrame {
 		btnFastForward.setIcon(new ImageIcon(Main.class.getResource("/images/ff.png")));
 		btnFastForward.addActionListener(fastForwardAL);
 		
-
 		//Setting up the mute button
 		btnMute.setPreferredSize(new Dimension(35, 35));
 		btnMute.setIcon(new ImageIcon(Main.class.getResource("/images/unmuted.png")));
@@ -306,7 +283,7 @@ public class VideoWindow extends JFrame {
 	
 	/**
 	 * This method enables/disables the multiple volume buttons/slider.
-	 * @param b - boolean deciding whether to enable/disable the volume buttons/slider
+	 * @param b - boolean deciding whether to enable/disable the volume buttons/slider.
 	 */
 	public void setEnableAudioCont(boolean b) {
 		volSlider.setEnabled(b);
@@ -315,6 +292,10 @@ public class VideoWindow extends JFrame {
 		btnVolDown.setEnabled(b);
 	}
 	
+	/**
+	 * This method enables/disables the various playback buttons.
+	 * @param b - boolean deciding whether to enable/disable the buttons.
+	 */
 	public void setEnableButtons(boolean b) {
 		volSlider.setEnabled(b);
 		btnMute.setEnabled(b);
@@ -323,7 +304,8 @@ public class VideoWindow extends JFrame {
 		btnRewind.setEnabled(b);
 		btnFastForward.setEnabled(b);
 	}
-	
+
+	//Getters for the video and video path
 	public EmbeddedMediaPlayer getVideo() { return video; }
 	public String getVideoPath() { return vidPath; }
 }

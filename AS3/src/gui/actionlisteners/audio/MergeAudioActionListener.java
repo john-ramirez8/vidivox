@@ -15,6 +15,12 @@ import helpers.FileOpener;
 import helpers.WindowManager;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+/**
+ * This class is used to invoke overlaying multiple audio over
+ * the audio of the video (this will be done in a swingworker thread).
+ * @author John Ramirez (jram948)
+ *
+ */
 public class MergeAudioActionListener implements ActionListener {
 
 	private final FileOpener videoOpener;
@@ -40,11 +46,13 @@ public class MergeAudioActionListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//Prompts the user to name the file and also location to save.
 		JOptionPane.showMessageDialog(contentPane, "Choose the name and where to save the file");
 		String newVideoPath = videoOpener.saveFile();
 		
 		if (newVideoPath != null) {
 			
+			//Creates a progress bar for the user
 			progressBar = new ProgressBar(oldVideoPath, newVideoPath, video,
 					audioToAdd, listOfAudio);
 			wm.openWindow(progressBar);

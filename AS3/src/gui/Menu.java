@@ -16,6 +16,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.event.ActionEvent;
 
+/**
+ * This Menu class is the first thing the user sees when opening the program.
+ * It allows the user to either open a video to play, or exit. 
+ * @author John Ramirez (jram948)
+ *
+ */
 @SuppressWarnings("serial")
 public class Menu extends JFrame {
 	

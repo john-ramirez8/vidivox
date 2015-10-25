@@ -11,6 +11,11 @@ import gui.CreateMP3Panel;
 import helpers.FileOpener;
 import swingworker.CreateMP3;
 
+/**
+ * This class is used to invoke the creation of an MP3 file in a swingworker thread.
+ * @author John Ramirez (jram948)
+ *
+ */
 public class SaveMP3ActionListener implements ActionListener {
 
 	private String commentary;
@@ -30,6 +35,7 @@ public class SaveMP3ActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		commentary = textArea.getText();
 
+		//Ensures the commentary isn't empty.
 		if (commentary.isEmpty() || commentary.trim().isEmpty()) {
 			JOptionPane.showMessageDialog(parentFrame, "Text can't be blank", "Text Error",
 					JOptionPane.ERROR_MESSAGE);

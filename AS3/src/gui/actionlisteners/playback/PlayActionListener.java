@@ -10,6 +10,11 @@ import helpers.Main;
 import gui.VideoWindow;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+/**
+ * This class is used to play/pause the video.
+ * @author John Ramirez (jram948)
+ *
+ */
 public class PlayActionListener implements ActionListener {
 
 	private EmbeddedMediaPlayer video;
@@ -23,10 +28,13 @@ public class PlayActionListener implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//Changes the icon of the button
 		if (video.isPlaying()) {
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
 		} else {
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
+			
+			//If video is fast forwarding, cancels this process
 			if (vw.playbackStatus.equals("ff")) {
 				vw.setEnableButtons(true);
 				
@@ -36,6 +44,8 @@ public class PlayActionListener implements ActionListener {
 				}
 				vw.playbackStatus = "normal";
 				vw.setEnableAudioCont(true);
+	
+			//If video is rewinding, cancels this process
 			} else if (vw.playbackStatus.equals("rw")) {
 				vw.setEnableButtons(true);
 				

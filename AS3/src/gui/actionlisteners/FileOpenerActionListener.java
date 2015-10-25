@@ -9,6 +9,11 @@ import helpers.FileOpener;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+/**
+ * This class is used to open up a video file that is going to be played.
+ * @author John Ramirez (jram948)
+ *
+ */
 public class FileOpenerActionListener implements ActionListener {
 
 	private FileOpener fo;
@@ -17,7 +22,8 @@ public class FileOpenerActionListener implements ActionListener {
 	private VideoWindow vw;
 	private String vidPath;
 
-	public FileOpenerActionListener(FileOpener fo, EmbeddedMediaPlayerComponent mpc, EmbeddedMediaPlayer video, VideoWindow vw) {
+	public FileOpenerActionListener(FileOpener fo, EmbeddedMediaPlayerComponent mpc,
+			EmbeddedMediaPlayer video, VideoWindow vw) {
 		this.fo = fo;
 		this.mpc = mpc;
 		this.video = video;
@@ -27,9 +33,12 @@ public class FileOpenerActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		File vid = fo.openFile();
+		
 		if (vid != null) {
 			mpc.setVisible(true);
 			vidPath = vid.getAbsolutePath();
+			
+			//Cancels any fast forwarding/rewinding
 			if (vw.playbackStatus.equals("ff")) {
 				vw.ffTask.cancel(true);
 				vw.playbackStatus = "normal";
@@ -39,6 +48,8 @@ public class FileOpenerActionListener implements ActionListener {
 				vw.playbackStatus = "normal";
 				vw.setEnableAudioCont(true);
 			}
+			
+			//Plays the video
 			video.setRepeat(true);
 			video.playMedia(vidPath);
 		}

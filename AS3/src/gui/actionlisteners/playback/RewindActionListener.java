@@ -12,6 +12,11 @@ import helpers.Main;
 
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+/**
+ * This class is used to invoke the rewinding of the video.
+ * @author John Ramirez (jram948)
+ *
+ */
 public class RewindActionListener implements ActionListener {
 
 	private JButton btnPlay;
@@ -27,21 +32,23 @@ public class RewindActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		vw.setEnableAudioCont(false);
+		
 		if (vw.playbackStatus.equals("normal")) {
 			vw.setEnableButtons(false);
-			
 			vw.playbackStatus = "rw";
+			
 			video.pause();
 			video.mute(true);
 			vw.rwTask = new Rewind(video);
-			vw.rwTask.execute();
+			vw.rwTask.execute(); //Rewinds the video
 			
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
 		} else if (vw.playbackStatus.equals("ff")) {
 			vw.playbackStatus = "rw";
+			
 			video.mute(true);
 			vw.rwTask = new Rewind(video);
-			vw.ffTask.cancel(true);
+			vw.ffTask.cancel(true); //Cancels the fast forwarding
 			vw.rwTask.execute();
 		}
 		

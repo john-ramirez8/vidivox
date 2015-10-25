@@ -11,6 +11,11 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+/**
+ * This class is used to update the slider to show the progress of the video.
+ * @author John Ramirez (jram948)
+ *
+ */
 public class PlayingEventAdapter extends MediaPlayerEventAdapter {
 	
 	private JSlider vidProgress;

@@ -11,6 +11,12 @@ import javax.swing.JTextArea;
 import gui.CreateMP3Panel;
 import swingworker.Festival;
 
+/**
+ * This class is used to invoke the festival command in a swingworker thread.
+ * It is also used to cancel the festival process that could be currently playing.
+ * @author John Ramirez (jram948)
+ *
+ */
 public class FestivalActionListener implements ActionListener {
 
 	private String commentary;
@@ -33,20 +39,25 @@ public class FestivalActionListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		
+		//Creates a festival process or cancels it
 		if (!stopFestival) {
 			commentary = textArea.getText();
-			System.out.println("commentary = " + commentary);
+			
+			//Ensures text isn't empty
 			if (commentary.isEmpty() || commentary.trim().length() == 0) {
 				JOptionPane.showMessageDialog(parentFrame, "Text can't be blank", "Text Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
+				//Replaces newline characters with spaces
 				commentary = commentary.replace('\n', ' ');
-				System.out.println("commentary after replacing newline char: " + commentary);
+				
 				// Performs the festival command in the background
 				panel.setVoiceTask(new Festival(commentary, hearBtn, stopBtn));
 				panel.getVoiceTask().execute();
 				}
 		} else {
+			//Cancels current festival process
 			panel.getVoiceTask().cancel(true);
 		}
 

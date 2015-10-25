@@ -16,6 +16,12 @@ import helpers.RemainingCharacters;
 import swingworker.CreateMP3;
 import swingworker.Festival;
 
+/**
+ * This CreateMP3Panel class is used to show the panel where users
+ * can create MP3 files out of commentary that they type in.
+ * @author John Ramirez (jram948)
+ *
+ */
 @SuppressWarnings("serial")
 public class CreateMP3Panel extends JPanel {
 	
@@ -86,6 +92,7 @@ public class CreateMP3Panel extends JPanel {
 		add(buttonsPanel, BorderLayout.SOUTH);
 	}
 
+	//Getters and setters
 	public CreateMP3 getMp3Task() { return mp3Task; }
 	public Festival getVoiceTask() { return voiceTask; }
 	public void setMp3Task(CreateMP3 mp3Task) {

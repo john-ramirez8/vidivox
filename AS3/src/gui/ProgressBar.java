@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,13 +13,17 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import swingworker.AddAudio;
-import swingworker.AudioToVideo;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+/**
+ * This ProgressBar class is a JFrame that contains the progress bar
+ * and is used to show the progress of the process to the user.
+ * @author John Ramirez (jram948)
+ * 
+ */
 @SuppressWarnings("serial")
 public class ProgressBar extends JFrame {
-	
-	
+
 	private JPanel contentPane;
 	private JProgressBar progressBar;
 	private AddAudio bgTask;
@@ -28,7 +31,7 @@ public class ProgressBar extends JFrame {
 	public ProgressBar(String oldVideoPath, String newVideoPath, EmbeddedMediaPlayer video,
 			HashMap<String, String> audioToAdd, ArrayList<String> listOfAudio) {
 		
-		//Setting up the contentPanel
+		//Setting up the contentPane
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setLocation(100, 100);
 		contentPane = new JPanel();

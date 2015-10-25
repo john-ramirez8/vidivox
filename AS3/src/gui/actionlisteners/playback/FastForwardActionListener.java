@@ -11,6 +11,11 @@ import helpers.Main;
 import swingworker.FastForward;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+/**
+ * This class is used to invoke the fast forwarding of the video.
+ * @author John Ramirez (jram948)
+ *
+ */
 public class FastForwardActionListener implements ActionListener {
 
 	private EmbeddedMediaPlayer video;
@@ -26,6 +31,7 @@ public class FastForwardActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		vw.setEnableAudioCont(false);
+		
 		if (vw.playbackStatus.equals("normal")) {
 			vw.setEnableButtons(false);
 
@@ -33,14 +39,15 @@ public class FastForwardActionListener implements ActionListener {
 			video.pause();
 			video.mute(true);
 			vw.ffTask = new FastForward(video);
-			vw.ffTask.execute();
+			vw.ffTask.execute(); //Fast forward the video
 			
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
 		} else if (vw.playbackStatus.equals("rw")) {
 			vw.playbackStatus = "ff";
+			
 			video.mute(true);
 			vw.ffTask = new FastForward(video);
-			vw.rwTask.cancel(true);
+			vw.rwTask.cancel(true); //Cancels the rewinding
 			vw.ffTask.execute();
 		}
 		
