@@ -52,11 +52,12 @@ public class VideoWindow extends JFrame {
 		setLocation(100, 100);
 		setTitle("VidiVox Prototype");
 		setMinimumSize(new Dimension(550, 512));
+				
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 10, 0));
 		contentPane.setLayout(new BorderLayout());
 		
-		//Trying this out
+		//Adding contentPane to the center
 		add(contentPane, BorderLayout.CENTER);
 
 		//Setting up media components
@@ -67,7 +68,6 @@ public class VideoWindow extends JFrame {
 		//JPanel to open
 		final AudioPanel audioPanel = new AudioPanel(this);
 		audioPanel.setVisible(false);
-		add(audioPanel, BorderLayout.EAST);
 		
 		final FileOpener fo = new FileOpener(".avi", this);
 
@@ -230,8 +230,10 @@ public class VideoWindow extends JFrame {
 		contentPane.add(buttonsPane, BorderLayout.SOUTH);
 		contentPane.add(playbackPane, BorderLayout.CENTER);
 
-		this.add(menuBar, BorderLayout.NORTH);
-		
+		//Adding the rest of the components to the frame
+		add(menuBar, BorderLayout.NORTH);
+		add(audioPanel, BorderLayout.EAST);
+
 		pack();
 
 		//Playing video specified
