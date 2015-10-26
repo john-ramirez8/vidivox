@@ -15,6 +15,7 @@ import vidivox.helpers.JTextFieldLimit;
 import vidivox.helpers.RemainingCharacters;
 import vidivox.swingworker.CreateMP3;
 import vidivox.swingworker.Festival;
+import vidivox.swingworker.StopFestival;
 
 /**
  * This CreateMP3Panel class is used to show the panel where users
@@ -32,6 +33,7 @@ public class CreateMP3Panel extends JPanel {
 	private JTextArea textArea;
 	private CreateMP3 mp3Task;
 	private Festival voiceTask;
+	private StopFestival stopVoiceTask;
 	
 	public CreateMP3Panel(JFrame parent) {
 		
@@ -95,11 +97,15 @@ public class CreateMP3Panel extends JPanel {
 	//Getters and setters
 	public CreateMP3 getMp3Task() { return mp3Task; }
 	public Festival getVoiceTask() { return voiceTask; }
+	public StopFestival getStopVoiceTask() { return stopVoiceTask; }
 	public void setMp3Task(CreateMP3 mp3Task) {
 		this.mp3Task = mp3Task;
 	}
 	public void setVoiceTask(Festival voiceTask) {
 		this.voiceTask = voiceTask;
+	}
+	public void setStopVoiceTask(StopFestival stopVoiceTask) {
+		this.stopVoiceTask = stopVoiceTask;
 	}
 	
 }

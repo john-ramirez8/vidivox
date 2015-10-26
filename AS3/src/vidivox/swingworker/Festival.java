@@ -1,10 +1,6 @@
 package vidivox.swingworker;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
 
 import javax.swing.JButton;
 import javax.swing.SwingWorker;
@@ -56,36 +52,6 @@ public class Festival extends SwingWorker<Void, Void> {
 		//Enables the Preview button and disables Stop button
 		hearBtn.setEnabled(true);
 		stopBtn.setEnabled(false);
-		
-		if (isCancelled()) {
-			if(_process.getClass().getName().equals("java.lang.UNIXProcess")){
-				
-				try {
-					Field f = _process.getClass().getDeclaredField("pid");
-					f.setAccessible(true); //pid is private in UNIXProcess
-					int pid = f.getInt(_process);
-					
-					ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", "pstree -lp | grep " + pid);
-					Process p = pb.start();
-			
-					InputStream stdout = p.getInputStream();
-					BufferedReader br = new BufferedReader(new InputStreamReader(stdout));
-					String line = br.readLine();
-				
-					if (line.contains("play")) {
-						String processPID = line.substring(line.indexOf("play("));
-						processPID = processPID.substring(5, processPID.indexOf(")"));
-						String cmd = "kill -9 " + processPID;
-						
-						ProcessBuilder processKiller = new ProcessBuilder("/bin/bash", "-c", cmd);
-						processKiller.start();
-					}
-							
-					} catch (NoSuchFieldException | SecurityException | IOException
-	                        | IllegalArgumentException | IllegalAccessException e) {
-						e.printStackTrace();
-					}
-			}
-		}
 	}
+	
 }

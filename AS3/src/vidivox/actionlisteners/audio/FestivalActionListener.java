@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 
 import vidivox.gui.CreateMP3Panel;
 import vidivox.swingworker.Festival;
+import vidivox.swingworker.StopFestival;
 
 /**
  * This class is used to invoke the festival command in a swingworker thread.
@@ -51,6 +52,7 @@ public class FestivalActionListener implements ActionListener {
 			} else {
 				//Replaces newline characters with spaces
 				commentary = commentary.replace('\n', ' ');
+				commentary = commentary.toLowerCase();
 				
 				// Performs the festival command in the background
 				panel.setVoiceTask(new Festival(commentary, hearBtn, stopBtn));
@@ -58,7 +60,8 @@ public class FestivalActionListener implements ActionListener {
 				}
 		} else {
 			//Cancels current festival process
-			panel.getVoiceTask().cancel(true);
+			panel.setStopVoiceTask(new StopFestival(hearBtn, stopBtn));
+			panel.getStopVoiceTask().execute();
 		}
 
 	}
