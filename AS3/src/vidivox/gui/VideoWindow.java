@@ -70,7 +70,6 @@ public class VideoWindow extends JFrame {
 		final FileOpener fo = new FileOpener(".avi", this);
 
 		//Component declarations
-		//JPanel addPane = new JPanel();
 		JPanel volumePane = new JPanel();
 		JPanel volumeButtons = new JPanel();
 		JPanel playbackButtonPane = new JPanel();
@@ -106,8 +105,6 @@ public class VideoWindow extends JFrame {
 		//Setting up the nested panels
 		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 		buttonsPane.setBorder(new EmptyBorder(10, 0, 0, 0));
-
-		//addPane.setLayout(new GridLayout(2, 1, 0, 10));
 
 		playbackButtonPane.setLayout(new BorderLayout(5, 0));
 
