@@ -26,7 +26,7 @@ import vidivox.swingworker.StopFestival;
 @SuppressWarnings("serial")
 public class CreateMP3Panel extends JPanel {
 	
-	private final int MAX_CHAR_LIMIT = 250;
+	private final int MAX_CHAR_LIMIT = 160;
 	
 	private JLabel panelTitle;
 	private JPanel textPanel;

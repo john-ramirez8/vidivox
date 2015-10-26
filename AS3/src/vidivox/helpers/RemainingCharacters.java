@@ -39,7 +39,7 @@ public class RemainingCharacters implements DocumentListener {
 
 	//Displays how many characters the user has left to type.
 	public void update() {
-		int length = 250 - textArea.getText().length();
+		int length = 160 - textArea.getText().length();
 		
 		label.setText(length + " characters remaining");
 	}
