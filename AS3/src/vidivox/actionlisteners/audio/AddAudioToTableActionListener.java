@@ -50,15 +50,15 @@ public class AddAudioToTableActionListener implements ActionListener {
 		fo = new FileOpener(".mp3", parentFrame);
 		String minutesText = minutes.getText();
 		String secondsText = seconds.getText();
-		videoLength = parentFrame.getVideo().getLength();
-		
+		videoLength = parentFrame.getVideo().getLength()/1000;
+				
 		//Checks that the text entered is only numbers, and is of length 2 (2 digits)
 		if (!minutesText.matches("[0-9]+") || !secondsText.matches("[0-9]+")
 				|| (minutesText.length() != 2) || (secondsText.length() != 2)) {
 			JOptionPane.showMessageDialog(parentFrame, "Time must be in mm:ss format, digits only",
 					"Input Error", JOptionPane.ERROR_MESSAGE);
 		//Checks that entered time isn't past the length of the video
-		} else if ((Integer.parseInt(minutes.getText())*60 +
+		} else if ((long)(Integer.parseInt(minutes.getText())*60 +
 				Integer.parseInt(seconds.getText())) > videoLength) {
 			JOptionPane.showMessageDialog(parentFrame, "Time must be less than video length",
 					"Input Error", JOptionPane.ERROR_MESSAGE);
