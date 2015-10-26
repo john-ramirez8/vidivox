@@ -31,6 +31,7 @@ public class PlayActionListener implements ActionListener {
 		//Changes the icon of the button
 		if (video.isPlaying()) {
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
+			vw.playbackStatus = "paused";
 		} else {
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/pause.png")));
 			
@@ -42,7 +43,6 @@ public class PlayActionListener implements ActionListener {
 				if (!vw.volumeStatus.equals("muted")) {
 					video.mute(false);
 				}
-				vw.playbackStatus = "normal";
 				vw.setEnableAudioCont(true);
 	
 			//If video is rewinding, cancels this process
@@ -53,12 +53,12 @@ public class PlayActionListener implements ActionListener {
 				if (!vw.volumeStatus.equals("muted")) {
 					video.mute(false);
 				}
-				vw.playbackStatus = "normal";
 				vw.setEnableAudioCont(true);
 			}
+			vw.playbackStatus = "normal";
 		}
 		video.pause();
-		
+		System.out.println("playbackStatus = " + vw.playbackStatus);
 	}
 
 }

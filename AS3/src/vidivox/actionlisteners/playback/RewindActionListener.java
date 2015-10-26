@@ -33,15 +33,22 @@ public class RewindActionListener implements ActionListener {
 		vw.setEnableAudioCont(false);
 		
 		if (vw.playbackStatus.equals("normal")) {
-			vw.setEnableButtons(false);
 			vw.playbackStatus = "rw";
-			
 			video.pause();
 			video.mute(true);
-			vw.rwTask = new Rewind(video);
-			vw.rwTask.execute(); //Rewinds the video
 			
+			vw.rwTask = new Rewind(video);
+			vw.rwTask.execute(); //Rewinds the video	
+			vw.setEnableButtons(false);
+
 			btnPlay.setIcon(new ImageIcon(Main.class.getResource("/images/play.png")));
+		} else if (vw.playbackStatus.equals("paused")) {
+			vw.playbackStatus = "rw";
+			
+			video.mute(true);
+			vw.rwTask = new Rewind(video);
+			vw.rwTask.execute();
+			vw.setEnableButtons(false);
 		} else if (vw.playbackStatus.equals("ff")) {
 			vw.playbackStatus = "rw";
 			
