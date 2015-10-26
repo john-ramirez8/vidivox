@@ -38,7 +38,6 @@ public class Festival extends SwingWorker<Void, Void> {
 
 		// Festival command for playing user's commentary
 		String cmd = "echo \"" + commentary + "\" | festival --tts";
-
 		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
 		
 		// Performs command in bash
@@ -63,8 +62,7 @@ public class Festival extends SwingWorker<Void, Void> {
 				
 				try {
 					Field f = _process.getClass().getDeclaredField("pid");
-					f.setAccessible(true);
-					// pid is private in UNIXProcess
+					f.setAccessible(true); //pid is private in UNIXProcess
 					int pid = f.getInt(_process);
 					
 					ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", "pstree -lp | grep " + pid);
