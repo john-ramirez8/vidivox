@@ -20,7 +20,7 @@ public class StopFestival extends SwingWorker<Void, Void> {
 	@Override
 	protected Void doInBackground() throws Exception {
 		
-		String cmd = "pkill -9 aplay";
+		String cmd = "pkill -9 play";
 		
 		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
 		

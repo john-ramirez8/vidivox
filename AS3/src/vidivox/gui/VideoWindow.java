@@ -149,10 +149,14 @@ public class VideoWindow extends JFrame {
 
 		//Setting up the rewind button
 		btnRewind.setIcon(new ImageIcon(Main.class.getResource("/images/rw.png")));
+		btnRewind.setPreferredSize(new Dimension(80, 80));
+		btnRewind.setContentAreaFilled(false);
 		btnRewind.addActionListener(rewindAL);
 
 		//Setting up the fast forward button
 		btnFastForward.setIcon(new ImageIcon(Main.class.getResource("/images/ff.png")));
+		btnFastForward.setPreferredSize(new Dimension(80, 80));
+		btnFastForward.setContentAreaFilled(false);
 		btnFastForward.addActionListener(fastForwardAL);
 		
 		//Setting up the mute button
