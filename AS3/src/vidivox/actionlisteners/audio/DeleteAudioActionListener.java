@@ -3,6 +3,7 @@ package vidivox.actionlisteners.audio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import vidivox.gui.MergePanel;
@@ -17,9 +18,11 @@ import vidivox.gui.MergePanel;
 public class DeleteAudioActionListener implements ActionListener {
 
 	private MergePanel parentPanel;
+	private JButton mergeBtn;
 	
-	public DeleteAudioActionListener(MergePanel parentPanel) {
+	public DeleteAudioActionListener(MergePanel parentPanel, JButton mergeBtn) {
 		this.parentPanel = parentPanel;
+		this.mergeBtn = mergeBtn;
 	}
 	
 	@Override
@@ -39,6 +42,10 @@ public class DeleteAudioActionListener implements ActionListener {
 			parentPanel.getAudioTimesHashMap().remove(filePath);
 			parentPanel.getArrayList().remove(filePath);
 			parentPanel.getTableModel().removeRow(row);
+			
+			if (parentPanel.getArrayList().isEmpty()) {
+				mergeBtn.setEnabled(false);
+			}
 			
 		}
 		

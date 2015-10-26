@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +27,7 @@ public class AddAudioToTableActionListener implements ActionListener {
 	private JTextField seconds;
 	private DefaultTableModel table;
 	private MergePanel parentPanel;
+	private JButton mergeBtn;
 	
 	private long videoLength;
 	private String timeToAdd;
@@ -34,12 +36,13 @@ public class AddAudioToTableActionListener implements ActionListener {
 
 	
 	public AddAudioToTableActionListener(VideoWindow parentFrame, JTextField minutes,
-			JTextField seconds, DefaultTableModel table, MergePanel parentPanel) {
+			JTextField seconds, DefaultTableModel table, MergePanel parentPanel, JButton mergeBtn) {
 		this.parentFrame = parentFrame;
 		this.minutes = minutes;
 		this.seconds = seconds;
 		this.table = table;
 		this.parentPanel = parentPanel;
+		this.mergeBtn = mergeBtn;
 	}
 	
 	@Override
@@ -75,6 +78,7 @@ public class AddAudioToTableActionListener implements ActionListener {
 				
 				//Adds data to the table
 				table.addRow(rowToAdd);
+				mergeBtn.setEnabled(true); //Enables merge audio button
 			}
 		}
 	}

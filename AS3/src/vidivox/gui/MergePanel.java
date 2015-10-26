@@ -54,6 +54,7 @@ public class MergePanel extends JPanel {
 		JButton deleteBtn = new JButton("Delete");
 		filePanel.add(mergeBtn);
 		filePanel.add(deleteBtn);
+		mergeBtn.setEnabled(false);
 		
 		JPanel insertAudioPanel = new JPanel();
 		JButton fileChooseBtn = new JButton("Add audio");
@@ -80,9 +81,9 @@ public class MergePanel extends JPanel {
 		
 		//Creating action listeners for the buttons
 		ActionListener addAL = new AddAudioToTableActionListener(parent, insertMinutes,
-				insertSeconds, model, this);
+				insertSeconds, model, this, mergeBtn);
 		ActionListener mergeAL = new MergeAudioActionListener(this, parent);
-		ActionListener deleteAL = new DeleteAudioActionListener(this);
+		ActionListener deleteAL = new DeleteAudioActionListener(this, mergeBtn);
 		fileChooseBtn.addActionListener(addAL);
 		mergeBtn.addActionListener(mergeAL);
 		deleteBtn.addActionListener(deleteAL);
