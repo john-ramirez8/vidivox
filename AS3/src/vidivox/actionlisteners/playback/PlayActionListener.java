@@ -58,7 +58,6 @@ public class PlayActionListener implements ActionListener {
 			vw.playbackStatus = "normal";
 		}
 		video.pause();
-		System.out.println("playbackStatus = " + vw.playbackStatus);
 	}
 
 }
